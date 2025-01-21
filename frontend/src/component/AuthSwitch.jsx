@@ -3,17 +3,17 @@ import { useNavigate } from 'react-router-dom';
 
 const AuthSwitch = ({ currentState, setCurrentState }) => {
   const navigate = useNavigate();
-  return(
+  return (
     <div className="w-full flex justify-between pt-3 text-sm">
-      <p className="cursor-pointer"
-        onClick={()=>{navigate("/forgot")}}
+      <p className="cursor-pointer text-blue-400 ml-1"
+        onClick={() => { navigate("/forgot") }}
       >Forgot password?</p>
       {currentState === 'Login' ? (
-        <p onClick={() => setCurrentState('Sign Up')} className="cursor-pointer">
+        <p onClick={() => setCurrentState('Sign Up')} className="cursor-pointer text-blue-400 mr-1">
           Create Account
         </p>
       ) : (
-        <p onClick={() => setCurrentState('Login')} className="cursor-pointer">
+        <p onClick={() => setCurrentState('Login')} className="cursor-pointer text-blue-400 ml-1">
           Login Here
         </p>
       )}

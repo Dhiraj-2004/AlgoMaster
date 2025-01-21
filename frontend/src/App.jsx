@@ -14,23 +14,23 @@ import ForgotPassword from './component/ForgotPassword'
 const App = () => {
   return (
     <div>
-    <BrowserRouter>
+      <BrowserRouter>
         <ThemeContext>
           <Navbar />
           <div className='mt-40'>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/codechef' element={<Codechef />} />
-            <Route path='/leetcode' element={<Leetcode />} />
-            <Route path='/codeforces' element={<Codeforces />} />
-            <Route path='/about' element={<About />} />
-            <Route path='/add' element={<Add></Add>}></Route>
-            <Route path='/logout' element={<Logout></Logout>}></Route>
-            <Route path='/support' element={<Add></Add>}></Route>
-            <Route path='/team' element={<Add></Add>}></Route>
-            <Route path='/forgot' element={<ForgotPassword></ForgotPassword>}></Route>
-          </Routes>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/codechef' element={<Codechef />} />
+              <Route path='/leetcode' element={<Leetcode />} />
+              <Route path='/codeforces' element={<Codeforces />} />
+              <Route path='/about' element={<About />} />
+              <Route path='/add' element={<Add></Add>}></Route>
+              <Route path='/logout' element={<Logout></Logout>}></Route>
+              <Route path='/support' element={<Add></Add>}></Route>
+              <Route path='/team' element={<Add></Add>}></Route>
+              <Route path='/forgot' element={<ForgotPassword></ForgotPassword>}></Route>
+            </Routes>
           </div>
         </ThemeContext>
       </BrowserRouter>

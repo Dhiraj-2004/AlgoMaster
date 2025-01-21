@@ -5,6 +5,8 @@ import InputField from '../component/InputField';
 import Dropdown from '../component/Dropdown';
 import AuthSwitch from '../component/AuthSwitch';
 import SubmitButton from '../component/SubmitButton';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const LoginForm = () => {
   const [currentState, setCurrentState] = useState('Login');
@@ -23,6 +25,7 @@ const LoginForm = () => {
     'MIT-WPU',
     'Dr. D. Y. Patil Institute Of Technology, Pune',
     'Army Institute of Technology',
+    'None'
   ];
 
   const years = [
@@ -44,25 +47,31 @@ const LoginForm = () => {
           college,
           year,
         });
-        alert('Account created');
         localStorage.setItem('token', response.data.token);
-        navigate('/add');
+        toast.success('Sign Up successful!');
+        setTimeout(() => {
+          navigate('/add');
+        }, 2000);
       } catch (error) {
         console.error('Error in signup:', error);
-        alert('Sign-up failed. Please try again.');
+        toast.error('Failed to sign up. Try again!');
       }
     } else {
       try {
+
         const response = await axios.post('http://localhost:4000/api/user/login', {
           email,
           password,
         });
-        navigate("/")
-        alert('Login successful');
+        toast.success('Login successful!');
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
         localStorage.setItem('token', response.data.token);
       } catch (error) {
         console.error('Error during login:', error);
-        alert('Login failed. Please check your credentials.');
+        toast.error('Failed to login!');
+
       }
     }
   };
@@ -83,16 +92,19 @@ const LoginForm = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Name"
+            label="Name"
           />
           <Dropdown
             options={colleges}
             value={college}
             onChange={(e) => setCollege(e.target.value)}
+            label="Select Collage"
           />
           <Dropdown
             options={years}
             value={year}
             onChange={(e) => setYear(e.target.value)}
+            label="Select Year"
           />
         </>
       )}
@@ -102,16 +114,31 @@ const LoginForm = () => {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
+        label="Email"
       />
       <InputField
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder={currentState === 'Login' ? 'Password' : 'Set Password'}
+        label="Password"
       />
 
       <AuthSwitch currentState={currentState} setCurrentState={setCurrentState} />
       <SubmitButton currentState={currentState} />
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      ></ToastContainer>
     </form>
   );
 };

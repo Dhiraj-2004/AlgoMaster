@@ -1,6 +1,7 @@
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import ArcDesign from "../component/ArcDesign"
 
 const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
   const [username, setUsername] = useState(null);
@@ -56,6 +57,7 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
         <div className="loader"></div>
       ) : (
         <div>
+          <ArcDesign data={userData}></ArcDesign>
           <span>{username}</span>
           <br />
           <br />

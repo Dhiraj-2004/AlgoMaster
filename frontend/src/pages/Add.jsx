@@ -1,11 +1,15 @@
 import { useState } from "react";
 import InputField from "../component/InputField";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 const Add = () => {
   const [leetUser, setLeetUser] = useState('');
   const [codeforcesUser, setCodeforcesUser] = useState('');
   const [codechefUser, setCodechefUser] = useState('');
+  const navigate = useNavigate();
+
 
   const handleSubmit = async () => {
     try {
@@ -23,8 +27,11 @@ const Add = () => {
           },
         }
       );
+      toast.success('Data Added successfully!');
+      setTimeout(() => { navigate("/") }, 2000)
       console.log('User added successfully:', response.data);
     } catch (error) {
+      toast.error('Failed to Add!');
       console.error('Error inserting user:', error);
     }
   };
@@ -36,6 +43,7 @@ const Add = () => {
         value={leetUser}
         onChange={(e) => setLeetUser(e.target.value)}
         placeholder="LeetCode Username"
+        label="LeetCode"
       />
 
       <InputField
@@ -43,6 +51,7 @@ const Add = () => {
         value={codeforcesUser}
         onChange={(e) => setCodeforcesUser(e.target.value)}
         placeholder="Codeforces Username"
+        label="Codeforces"
       />
 
       <InputField
@@ -50,14 +59,28 @@ const Add = () => {
         value={codechefUser}
         onChange={(e) => setCodechefUser(e.target.value)}
         placeholder="CodeChef Username"
+        label="Codeforces"
       />
 
       <button
-        className="bg-[#ff5757] rounded-[24px] text-black font-light px-8 py-2 mt-5"
+        className="bg-[#ff5757] rounded-[24px] text-white font-semibold px-8 py-2 mt-5 w-[40%]"
         onClick={handleSubmit}
       >
         Submit
       </button>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      ></ToastContainer>
     </div>
   );
 }
