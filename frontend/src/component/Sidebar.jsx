@@ -1,45 +1,10 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { SidebarData } from './SidebarData';
 import SubMenu from './SubMenu';
 import { IconContext } from 'react-icons/lib';
-
-const Nav = styled.div`
-  height: 80px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-const NavIcon = styled(Link)`
-  margin-left: 2rem;
-  font-size: 2rem;
-  height: 80px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-const SidebarNav = styled.nav`
-  background: #15171c;
-  width: 300px;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  right: ${({ $sidebar }) => ($sidebar ? '0' : '-100%')};
-  transition: 350ms;
-  z-index: 10;
-`;
-
-
-const SidebarWrap = styled.div`
-  width: 100%;
-`;
 
 const Sidebar = () => {
   const [sidebar, setSidebar] = useState(false);
@@ -49,21 +14,28 @@ const Sidebar = () => {
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
-        <Nav>
-          <NavIcon to='#'>
+        <div className="h-20 flex items-center justify-start bg-[#15171c]">
+          <Link to="#" className="ml-8 text-3xl flex items-center">
             <FaIcons.FaBars onClick={showSidebar} />
-          </NavIcon>
-        </Nav>
-        <SidebarNav $sidebar={sidebar}>
-          <SidebarWrap>
-            <NavIcon to='#'>
+          </Link>
+        </div>
+
+        <nav
+          className={`bg-[#15171c] w-72 h-screen fixed top-0 right-0 transition-transform duration-300 z-50 ${
+            sidebar ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
+          <div className="w-full">
+            
+            <Link to="#" className="flex justify-start items-center h-20 text-3xl ml-8">
               <AiIcons.AiOutlineClose onClick={showSidebar} />
-            </NavIcon>
-            {SidebarData.map((item, index) => {
-              return <SubMenu item={item} key={index} />;
-            })}
-          </SidebarWrap>
-        </SidebarNav>
+            </Link>
+            
+            {SidebarData.map((item, index) => (
+              <SubMenu item={item} key={index} />
+            ))}
+          </div>
+        </nav>
       </IconContext.Provider>
     </>
   );

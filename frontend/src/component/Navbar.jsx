@@ -14,23 +14,23 @@ export const Navbar = () => {
   }, [navigate]);
 
   return (
-    <nav className="border-gray-200 bg-[#15171c] fixed top-0 left-0 w-full z-50 shadow-lg">
+    <nav className="bg-[#15171c] fixed top-0 left-0 w-full z-50">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <NavLink to="/">
           <img src={assets.logo} alt="Logo" className="w-48 xl:w-48 lg:w-44 md:w-40 sm:w-40 object-contain" />
         </NavLink>
 
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          {!isLoggedIn ?
+          {!isLoggedIn ?    
             <button
               type="button"
-              className="text-white bg-[#ff5757] hover:bg-red-800 focus:ring-4 font-medium text-sm px-4 py-2 text-center dark:hover:bg-red-700 dark:focus:ring-red-800 w-28 rounded-3xl"
+              className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 font-medium text-lg px-4 py-2 text-center dark:hover:bg-red-700 dark:focus:ring-red-800 w-28 h-12 rounded-2xl"
               onClick={() => { navigate("/login") }}
             >
               Login
             </button>
             :
-            <div className='flex'>
+            <div className='flex items-center space-x-4'>
               <ThemeToggle />
               <Sidebar />
             </div>

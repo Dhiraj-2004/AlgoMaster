@@ -79,10 +79,10 @@ const LoginForm = () => {
   return (
     <form
       onSubmit={onSubmitHandler}
-      className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-16 gap-4"
+      className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-16 gap-4 mb-24"
     >
       <div className="inline-flex items-center gap-2 mb-6 mt-10">
-        <p className="prata-regular text-4xl">{currentState}</p>
+        <p className="text-4xl font-semibold text-pretty text-blue-500">{currentState}</p>
       </div>
 
       {currentState === 'Sign Up' && (

@@ -11,7 +11,7 @@ const InputField = ({ type, value, onChange, placeholder, label }) => {
 
   const inputStyles = themes === 'dark'
     ? 'border-gray-600 bg-gray-800 text-white'
-    : 'border-gray-300 bg-white text-black';
+    : 'border-gray-400 bg-white text-black';
 
   const labelStyles = themes === 'dark'
     ? ' text-white'
@@ -20,7 +20,7 @@ const InputField = ({ type, value, onChange, placeholder, label }) => {
     <div className="flex flex-col space-y-2 w-full">
       {label && <label className={`text-sm font-medium ${labelStyles} text-sm font-medium`}>{label}</label>}
       <input
-        className={`w-full px-4 py-2 border ${inputStyles} rounded-md focus:ring-2 focus:ring-[#ff5757] focus:outline-none `}
+        className={`w-full h-14 p-4 border ${inputStyles} rounded-xl focus:ring-2 focus:ring-[#ff5757] focus:outline-none`}
         type={type}
         value={value}
         onChange={onChange}

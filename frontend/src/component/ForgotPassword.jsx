@@ -41,8 +41,8 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="items-center w-[90%] sm:max-w-96 m-auto mt-16 pt-3 text-sm space-y-4">
-      <p className="prata-regular text-4xl">Forgot Password</p>
+    <div className="flex flex-col items-center justify-center w-[90%] sm:max-w-96 m-auto mt-16 pt-3 text-sm space-y-4">
+      <p className="text-4xl font-semibold text-pretty text-blue-500 mb-10">Forgot Password</p>
       <InputField
         type="email"
         value={email}
@@ -51,7 +51,7 @@ const ForgotPassword = () => {
         label="Email"
       />
       {otpSent && (
-        <div className='space-y-4'>
+        <div className='space-y-4 w-full'>
           <InputField
             type="text"
             value={otp}
@@ -68,19 +68,19 @@ const ForgotPassword = () => {
           />
         </div>
       )}
-      <p onClick={() => { navigate("/login") }} className='cursor-pointer text-blue-400 ml-1'>
+      <p onClick={() => { navigate("/login") }} className='cursor-pointer text-blue-400 mr-auto'>
         Back to login
       </p>
 
       <div className="flex justify-center mt-5">
         {otpSent ? (
           <button onClick={handleChangeForgotPassword}
-            className="bg-[#ff5757] rounded-[24px] px-8 py-2 text-white font-semibold"
+            className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 font-medium text-lg px-4 py-2 text-center dark:hover:bg-red-700 dark:focus:ring-red-800 w-32 h-12 rounded-2xl"
           >Login</button>
         ) :
           <button
             onClick={handleForgotPassword}
-            className="bg-[#ff5757] rounded-[24px] px-8 py-2 text-white font-semibold"
+            className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 font-medium text-lg px-4 py-2 text-center dark:hover:bg-red-700 dark:focus:ring-red-800 w-32 h-12 rounded-2xl"
           >Send OTP</button>
         }
       </div>
