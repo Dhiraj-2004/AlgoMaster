@@ -12,6 +12,8 @@ import team from "./team.svg"
 import support from "./support.svg"
 import about from "./about.svg"
 import profile from "./profile.svg"
+import college from "./college.svg";
+import Gmail from "./gamil.svg";
 
 export const assets = {
     logo,
@@ -28,5 +30,7 @@ export const assets = {
     support,
     about,
     profile,
+    college,
+    Gmail,
     
 }

@@ -30,7 +30,7 @@ const Dropdown = ({ options, value, onChange, label }) => {
         id="dropdown"
         value={value}
         onChange={handleSelectChange}
-        className={`w-full px-4 py-2 border ${inputStyles} rounded-md focus:ring-2 focus:ring-[#ff5757] focus:outline-none ${selet ? 'text-white' : 'text-gray-400'} `}
+        className={`w-full h-14 px-4 py-2 border ${inputStyles} rounded-md focus:ring-2 focus:ring-[#ff5757] focus:outline-none ${selet ? 'text-white' : 'text-gray-400'} `}
       >
         {options.map((option, index) => (
           <option key={index} value={option}>

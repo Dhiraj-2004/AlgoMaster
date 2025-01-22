@@ -1,14 +1,12 @@
-// import Footer from "../component/Footer"
 
-import { useNavigate } from "react-router-dom"
+
+import LeetCodeDesign from "./LeetCodeDesign";
+
 
 const Home = () => {
-  const navigate=useNavigate();
-  const token = localStorage.getItem("token");
-  if(!token) navigate("/login");
   return (
     <div className="mt-10">
-      {/* <Footer></Footer> */}
+      <LeetCodeDesign></LeetCodeDesign>
     </div>
   ) 
 }

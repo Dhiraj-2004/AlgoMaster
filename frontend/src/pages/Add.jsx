@@ -28,7 +28,7 @@ const Add = () => {
         }
       );
       toast.success('Data Added successfully!');
-      setTimeout(() => { navigate("/") }, 2000)
+      setTimeout(() => { navigate("/") }, 1000)
       console.log('User added successfully:', response.data);
     } catch (error) {
       toast.error('Failed to Add!');

@@ -10,11 +10,11 @@ const generateToken = (id) => {
 };
 
 // login
-
 const loginBody = zod.object({
     email: zod.string().email(),
     password: zod.string().min(6)
 });
+
 
 exports.loginUser = async (req, res) => {
     try {
@@ -141,7 +141,6 @@ exports.forgotPassword = async (req, res) => {
         user.otp = otp;
         user.otpExpiration = Date.now() + 10 * 60 * 1000;
         await user.save();
-        console.log('EMAIL_USER:', process.env.EMAIL_PASS);
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
@@ -285,6 +284,32 @@ exports.updateUsernames = async (req, res) => {
         })
     }
 }
+
+exports.getUserData = async (req, res) => {
+    try {
+      if (!req.user || !req.user.id) {
+        return res.status(401).json({ msg: "Unauthorized" });
+      }
+      const user = await User.findById(req.user.id);
+      if (user) {
+        res.json({
+          name: user.name,
+          email: user.email,
+          college: user.college,
+          usernames: user.usernames,
+        });
+      } else {
+        res.status(404).json({
+          msg: "User not found",
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        msg: "Server error",
+        error,
+      });
+    }
+};  
 
 exports.getCodechefUsername = async (req, res) => {
     const user = await User.findById(req.user.id);

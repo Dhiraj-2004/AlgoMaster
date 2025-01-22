@@ -1,7 +1,7 @@
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import ArcDesign from "../component/ArcDesign"
+import LeetCodeDesign from "./LeetCodeDesign";
 
 const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
   const [username, setUsername] = useState(null);
@@ -39,11 +39,9 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
       try {
         setLoader(true);
         const response = await axios.get(`${apiEndpoint}/${username}`);
-        console.log("API Response:", response.data);
         setUserData(response.data);
       } catch (error) {
-        setError("Failed to fetch user data");
-        console.log(error);
+        setError("Failed to fetch user data",error);
       } finally {
         setLoader(false);
       }
@@ -52,16 +50,18 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
   }, [apiEndpoint, username]);
 
   return (
-    <div className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-16 gap-4">
+    <div>
       {loader ? (
+        <div className="flex items-center justify-center mt-60">
         <div className="loader"></div>
+        </div>
       ) : (
         <div>
-          <ArcDesign data={userData}></ArcDesign>
-          <span>{username}</span>
+         {platformUser === "leetUser" && <LeetCodeDesign data={userData}></LeetCodeDesign>}
+          {/* <span>{username}</span>
           <br />
           <br />
-          <pre>{JSON.stringify(userData, null, 2)}</pre>
+          <pre>{JSON.stringify(userData, null, 2)}</pre> */}
         </div>
       )}
       {error && <span className="text-red-500">{error}</span>}

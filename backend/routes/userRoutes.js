@@ -9,6 +9,7 @@ const {
     resetPassword,
     insertUsernames,
     updateUsernames,
+    getUserData,
     getCodechefUsername,
     getCodeforcesUsername,
     getLeetcodeUsername,
@@ -26,6 +27,7 @@ router.post("/changePassword", verifyOTPAndChangePassword);
 router.put("/resetPass", resetPassword);
 router.put('/updateUser', protect, updateUsernames);
 
+router.get('/userdata',protect,getUserData);
 router.get('/chefuser', protect, getCodechefUsername);
 router.get('/forcesuser', protect, getCodeforcesUsername);
 router.get('/leetuser', protect, getLeetcodeUsername);
