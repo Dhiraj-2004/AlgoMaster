@@ -5,10 +5,12 @@ const {
     loginUser,
     signUser,
     forgotPassword,
+    userRank,
     verifyOTPAndChangePassword,
     resetPassword,
     insertUsernames,
     updateUsernames,
+    getUserRank,
     getUserData,
     getCodechefUsername,
     getCodeforcesUsername,
@@ -25,11 +27,13 @@ router.post("/forgotPass", forgotPassword);
 router.post("/changePassword", verifyOTPAndChangePassword);
 
 router.put("/resetPass", resetPassword);
+router.put("/rank",protect,userRank);
 router.put('/updateUser', protect, updateUsernames);
 
 router.get('/userdata',protect,getUserData);
 router.get('/chefuser', protect, getCodechefUsername);
 router.get('/forcesuser', protect, getCodeforcesUsername);
 router.get('/leetuser', protect, getLeetcodeUsername);
+router.get("/college-rank/:username/:college",protect,getUserRank);
 
 module.exports = router;

@@ -10,6 +10,7 @@ import Add from "./pages/Add"
 import ThemeContext from "./context/ThemeContext"
 import Logout from './component/Logout'
 import ForgotPassword from './component/ForgotPassword'
+import Profile from './pages/Profile'
 
 const App = () => {
   return (
@@ -19,17 +20,18 @@ const App = () => {
           <Navbar />
           <div className='mt-40'>
             <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/codechef' element={<Codechef />} />
-              <Route path='/leetcode' element={<Leetcode />} />
-              <Route path='/codeforces' element={<Codeforces />} />
-              <Route path='/about' element={<About />} />
-              <Route path='/add' element={<Add></Add>}></Route>
-              <Route path='/logout' element={<Logout></Logout>}></Route>
-              <Route path='/support' element={<Add></Add>}></Route>
-              <Route path='/team' element={<Add></Add>}></Route>
-              <Route path='/forgot' element={<ForgotPassword></ForgotPassword>}></Route>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/codechef" element={<Codechef />} />
+            <Route path="/leetcode" element={<Leetcode />} />
+            <Route path="/codeforces" element={<Codeforces />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/add" element={<Add />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/support" element={<Add />} />
+            <Route path="/team" element={<Add />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/forgot" element={<ForgotPassword />} />
             </Routes>
           </div>
         </ThemeContext>

@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const zod = require("zod");
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
+const { error } = require("console");
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
@@ -19,7 +20,6 @@ const loginBody = zod.object({
 exports.loginUser = async (req, res) => {
     try {
         const { success } = loginBody.safeParse(req.body);
-        console.log(success);
         if (!success) {
             return res.status(400).json({
                 msg: "Invalid input data",
@@ -123,6 +123,122 @@ const syncIndexes = async () => {
     }
 };
 syncIndexes();
+
+
+// getRank
+
+exports.userRank = async (req, res) => {
+    const { rank, platformUser, username } = req.body;
+    console.log('Logged in username:', username);
+    console.log('Received data:', { rank, platformUser, username });
+
+    if (!['leetUser', 'codechefUser', 'codeforcesUser'].includes(platformUser)) {
+        return res.status(400).json({
+            msg: "Invalid platform user",
+        });
+    }
+
+    const rankFieldMap = {
+        leetUser: "ranks.leetRank",
+        codechefUser: "ranks.codechefRank",
+        codeforcesUser: "ranks.codeforcesRank",
+    };
+
+    const rankField = rankFieldMap[platformUser];
+
+    try {
+        const user = await User.findOne({
+            [`usernames.${platformUser}`]: username,
+        });
+        if (!user) {
+            return res.status(404).json({
+                msg: "User or platform username not found",
+            });
+        }
+
+        console.log('Found user:', user);
+        const updatedUser = await User.findOneAndUpdate(
+            { [`usernames.${platformUser}`]: username },
+            { [rankField]: rank },
+            { new: true }
+        );
+        if (!updatedUser) {
+            return res.status(500).json({
+                msg: "Failed to update rank",
+            });
+        }
+        res.status(200).json({
+            msg: "Rank updated successfully",
+            updatedUser,
+        });
+
+    } catch (error) {
+        console.error('Error:', error.message);
+        res.status(500).json({
+            msg: "Server error",
+            error: error.message,
+        });
+    }
+};
+
+
+
+
+exports.getUserRank = async (req, res) => {
+    const { username, college } = req.params;
+    try {
+        const user = await User.findOne({
+            $or: [
+                { "usernames.codechefUser": username },
+                { "usernames.codeforcesUser": username },
+                { "usernames.leetUser": username }
+            ],
+            college: college
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                msg: "User not found",
+            });
+        }
+        const userInCollege = await User.find({ college: user.college }).select(
+            "name ranks usernames"
+        ).exec();
+
+        const sortedCodeforcesRanks = userInCollege
+            .map((u) => u.ranks.codeforcesRank)
+            .sort((a, b) => b - a);
+        const sortedCodechefRanks = userInCollege
+            .map((u) => u.ranks.codechefRank)
+            .sort((a, b) => b - a);
+        const sortedLeetRanks = userInCollege
+            .map((u) => u.ranks.leetRank)
+            .sort((a, b) => b - a);
+
+        const platformRank = {
+            codeforcesRank: sortedCodeforcesRanks.indexOf(user.ranks.codeforcesRank) + 1,
+            codechefRank: sortedCodechefRanks.indexOf(user.ranks.codechefRank) + 1,
+            leetRank: sortedLeetRanks.indexOf(user.ranks.leetRank) + 1,
+        };
+        const sortedData = {
+            codeforces: sortedCodeforcesRanks,
+            codechef: sortedCodechefRanks,
+            leetcode: sortedLeetRanks
+        };
+
+        res.status(200).json({
+            userRank: platformRank,
+            totalUsers: userInCollege.length,
+            sortedData: sortedData
+        });
+    } catch (error) {
+        res.status(500).json({
+            msg: "Server error",
+            error,
+        });
+    }
+};
+
 
 
 
@@ -267,49 +383,55 @@ exports.insertUsernames = async (req, res) => {
     }
 };
 
-
 exports.updateUsernames = async (req, res) => {
-    const user = await User.findById(req.user.id);
-    if (user) {
-        const { codechef, codeforces, leetcode } = req.body;
-        user.usernames = { codechef, codeforces, leetcode };
-        const updateUser = await user.save();
-        res.json(
-            updateUser.usernames
+    const { leetUser, codechefUser, codeforcesUser } = req.body;
+    try {
+        const user = await User.findByIdAndUpdate(
+            req.user.id,
+            {
+                $set: {
+                    'usernames.leetUser': leetUser,
+                    'usernames.codechefUser': codechefUser,
+                    'usernames.codeforcesUser': codeforcesUser,
+                },
+            },
+            { new: true }
         );
-    }
-    else {
-        res.status(404).json({
-            msg: "user not found"
-        })
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 }
 
 exports.getUserData = async (req, res) => {
     try {
-      if (!req.user || !req.user.id) {
-        return res.status(401).json({ msg: "Unauthorized" });
-      }
-      const user = await User.findById(req.user.id);
-      if (user) {
-        res.json({
-          name: user.name,
-          email: user.email,
-          college: user.college,
-          usernames: user.usernames,
-        });
-      } else {
-        res.status(404).json({
-          msg: "User not found",
-        });
-      }
+        if (!req.user || !req.user.id) {
+            return res.status(401).json({ msg: "Unauthorized" });
+        }
+        const user = await User.findById(req.user.id);
+        if (user) {
+            res.json({
+                name: user.name,
+                email: user.email,
+                college: user.college,
+                usernames: user.usernames,
+            });
+        } else {
+            res.status(404).json({
+                msg: "User not found",
+            });
+        }
     } catch (error) {
-      res.status(500).json({
-        msg: "Server error",
-        error,
-      });
+        res.status(500).json({
+            msg: "Server error",
+            error,
+        });
     }
-};  
+};
 
 exports.getCodechefUsername = async (req, res) => {
     const user = await User.findById(req.user.id);
@@ -337,7 +459,6 @@ exports.getCodeforcesUsername = async (req, res) => {
 
 exports.getLeetcodeUsername = async (req, res) => {
     const user = await User.findById(req.user.id);
-    console.log(user)
     if (user) {
         res.json({ leetUser: user.usernames.leetUser });
     }

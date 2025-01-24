@@ -26,18 +26,29 @@ const userSchema = new mongoose.Schema(
         usernames: {
             codechefUser: {
                 type: String,
-                unique: true,
                 sparse: true,
             },
             codeforcesUser: {
                 type: String,
-                unique: true,
                 sparse: true,
             },
             leetUser: {
                 type: String,
-                unique: true,
                 sparse: true,
+            },
+        },
+        ranks:{
+            codechefRank:{
+                type:String,
+                sparse:true
+            },
+            codeforcesRank:{
+                type:String,
+                sparse:true,
+            },
+            leetRank:{
+                type:String,
+                sparse:true
             },
         },
         otp: {

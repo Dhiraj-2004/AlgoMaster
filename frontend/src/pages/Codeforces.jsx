@@ -7,7 +7,7 @@ const Codeforces = () => {
     <div>
       <UserProfile
         platformUser="codeforcesUser"
-        apiEndpoint="https://codechef-api.vercel.app/handle"
+        apiEndpoint="https://codeforces.com/api/user.info?handles="
         usernameEndpoint="http://localhost:4000/api/user/forcesuser"
       ></UserProfile>
     </div>

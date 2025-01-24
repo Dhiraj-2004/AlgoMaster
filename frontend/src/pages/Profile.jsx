@@ -1,10 +1,11 @@
+
 import { useState } from "react";
 import InputField from "../component/InputField";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
-const Add = () => {
+const Profile = () => {
   const [leetUser, setLeetUser] = useState('');
   const [codeforcesUser, setCodeforcesUser] = useState('');
   const [codechefUser, setCodechefUser] = useState('');
@@ -18,8 +19,8 @@ const Add = () => {
       if (leetUser) payload.leetUser = leetUser;
       if (codeforcesUser) payload.codeforcesUser = codeforcesUser;
       if (codechefUser) payload.codechefUser = codechefUser;
-      const response = await axios.post(
-        "http://localhost:4000/api/user/insertuser",
+      const response = await axios.put(
+        "http://localhost:4000/api/user/updateUser",
         payload,
         {
           headers: {
@@ -85,4 +86,4 @@ const Add = () => {
   );
 }
 
-export default Add;
+export default Profile;

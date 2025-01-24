@@ -1,31 +1,33 @@
-
 import PropTypes from "prop-types";
-import ProgressContainer from "../component/ProgressContainer ";
 import { assets } from "../assets/assets";
 import useUserData from "../component/hook/useUserData";
 import useCollegeRank from "../component/hook/useCollegeRank";
 
-const LeetCodeDesign = ({ data }) => {
+const CodeChefDesign = ({ data }) => {
   const { userData, loading } = useUserData();
   const { rankData, totalUsers, error } = useCollegeRank({
-    username: userData?.usernames?.leetUser,
+    username: userData?.usernames?.codechefUser,
     college: userData?.college
-  });
-  
-
-  if (error) {
+   });
+   
+   if (error) {
     return <div>{error}</div>;
-  }
+   }
 
   return (
-    <div className="w-full h-full flex flex-col xl:flex-row gap-10 items-center justify-center">
+    <div className="w-full flex flex-col xl:flex-row gap-10 items-center justify-center">
       {/* Info */}
       <div id="Card" className="flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
         <div>
           <h1 className="font-bold mt-3 text-2xl">{userData ? userData.name : loading}</h1>
           <div className="flex flex-col items-center font font-semibold ml-3 mb-auto text-zinc-500 dark:text-gray-500 text-sm">
-            <span>#{userData ? userData.usernames.leetUser :loading}</span>
-            <span>Rank: {userData ? data.ranking : loading}</span>
+            <span>
+              #{userData ? userData.usernames.codechefUser : loading}
+            </span>
+            <span className="text-yellow-400 font-bold">{userData ? data.stars : loading}</span>
+            <span>
+                Rank : {userData ? data.currentRating : loading}
+            </span>
           </div>
         </div>
         <div className="flex flex-col space-y-6 mt-6">
@@ -35,7 +37,9 @@ const LeetCodeDesign = ({ data }) => {
             </div>
             <div className="flex flex-col items-start min-w-0">
               <span className="text-sm font-medium text-zinc-600">Email</span>
-              <span className="text-md font-semibold truncate block">{userData?.email}</span>
+              <span className="text-md font-semibold truncate block">
+                {userData ? userData.email : loading}
+              </span>
             </div>
           </div>
 
@@ -45,56 +49,49 @@ const LeetCodeDesign = ({ data }) => {
             </div>
             <div className="flex flex-col items-start min-w-0">
               <span className="text-sm font-medium text-zinc-600">College</span>
-              <span className="text-md font-semibold truncate block">{userData?.college}</span>
+              <span className="text-md font-semibold truncate block">
+                {userData ? userData.college : loading}
+              </span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Leetcode Data */}
-      <div id="Card" className="flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
-        <ProgressContainer data={data} />
-      </div>
+      {/* Codechef Data */}
+
 
       <div id="Card" className="flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72 gap-4">
+
         <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
-          <span className="font-bold text-md text-[#22C55E]">College Rank</span>
-          <div>
-            <span className="font-bold text-base">{rankData?.leetRank || "Not Available"}</span>
-            <span className="text-zinc-500 text-base">/{totalUsers}</span>
-          </div>
+            <span className="font-bold text-md text-[#22C55E]">College Rank</span>
+            <div>
+                <span className="font-bold text-base">{rankData?.codechefRank || "Not Available"}</span>
+                <span className="text-zinc-500 text-base">/{totalUsers}</span>
+            </div>
         </div> 
 
         <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
-          <span className="font-bold text-md text-[#22C55E]">Easy</span>
-          <div>
-            <span className="font-bold text-base">{data.easySolved}</span>
-            <span className="text-zinc-500 text-base">/{data.totalEasy}</span>
-          </div>
+          <span className="font-bold text-md text-[#22C55E]">Current Rating</span>
+          <span className="font-bold text-base">{data.currentRating}</span>
         </div>
 
         <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
-          <span className="font-bold text-md text-[#EAB308]">Medium</span>
-          <div>
-            <span className="font-bold text-base">{data.mediumSolved}</span>
-            <span className="text-zinc-500 text-base">/{data.totalMedium}</span>
-          </div>
+          <span className="font-bold text-md text-[#EAB308]">Highest Rating</span>
+          <span className="font-bold text-base">{data.highestRating}</span>
         </div>
 
         <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
-          <span className="font-bold text-md text-[#F43F5E]">Hard</span>
-          <div>
-            <span className="font-bold text-base">{data.hardSolved}</span>
-            <span className="text-zinc-500 text-base">/{data.totalHard}</span>
-          </div>
+          <span className="font-bold text-md text-[#F43F5E]">Global Rank</span>
+          <span className="font-bold text-base">{data.globalRank}</span>
         </div>
       </div>
+      {/* </div> */}
     </div>
   );
 };
 
-LeetCodeDesign.propTypes = {
-  data: PropTypes.object.isRequired,
-}
+CodeChefDesign.propTypes = {
+  data: PropTypes.string.isRequired,
+};
 
-export default LeetCodeDesign;
+export default CodeChefDesign;
