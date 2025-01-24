@@ -40,15 +40,27 @@ const userSchema = new mongoose.Schema(
         ranks:{
             codechefRank:{
                 type:String,
-                sparse:true
+                sparse:true,
+                rankLastUpdated:{ 
+                    type: Date, 
+                    default: Date.now 
+                }
             },
             codeforcesRank:{
                 type:String,
                 sparse:true,
+                rankLastUpdated:{ 
+                    type: Date, 
+                    default: Date.now 
+                }
             },
             leetRank:{
                 type:String,
-                sparse:true
+                sparse:true,
+                rankLastUpdated:{ 
+                    type: Date, 
+                    default: Date.now 
+                }
             },
         },
         otp: {

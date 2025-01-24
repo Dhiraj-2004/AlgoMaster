@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 const zod = require("zod");
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
-const { error } = require("console");
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
@@ -129,14 +128,6 @@ syncIndexes();
 
 exports.userRank = async (req, res) => {
     const { rank, platformUser, username } = req.body;
-    console.log('Logged in username:', username);
-    console.log('Received data:', { rank, platformUser, username });
-
-    if (!['leetUser', 'codechefUser', 'codeforcesUser'].includes(platformUser)) {
-        return res.status(400).json({
-            msg: "Invalid platform user",
-        });
-    }
 
     const rankFieldMap = {
         leetUser: "ranks.leetRank",
@@ -156,7 +147,16 @@ exports.userRank = async (req, res) => {
             });
         }
 
-        console.log('Found user:', user);
+        const lastUpdated = user.ranks.rankLastUpdated;
+        const now = new Date();
+        const diffInMilliseconds = now - lastUpdated;
+        const diffInDays = diffInMilliseconds / (1000 * 3600 * 24);
+        if(diffInDays < 2) {
+            return res.status(400).json({
+                msg: `Rank can only be updated once every 3 days. Please try again in ${Math.ceil(2 - diffInDays)} day(s).`
+            });
+        }
+
         const updatedUser = await User.findOneAndUpdate(
             { [`usernames.${platformUser}`]: username },
             { [rankField]: rank },

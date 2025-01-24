@@ -7,19 +7,16 @@ const useCollegeRank = ({ username, college }) => {
   const [totalUsers, setTotalUsers] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  console.log(username,college);
 
   useEffect(() => {
     const fetchCollegeRank = async () => {
       try {
         const token = localStorage.getItem("token");
-        console.log("Token: ", token);
         const response = await axios.get(`http://localhost:4000/api/user/college-rank/${username}/${college}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(response);
         setRankData(response.data.userRank);
         setTotalUsers(response.data.totalUsers);
       } catch (error) {

@@ -9,7 +9,6 @@ import { NavLink } from "react-router-dom";
 const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
   const [username, setUsername] = useState(null);
   const [userData, setUserData] = useState(null);
-  const [error, setError] = useState(null);
   const [loader, setLoader] = useState(true);
   const [showUpdateMessage, setShowUpdateMessage] = useState(false);
 
@@ -27,7 +26,6 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
         };
         setUsername(usernameMap[platformUser]);
       } catch (error) {
-        setError("Failed to fetch username");
         console.error(error);
       }
     };
@@ -55,7 +53,6 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } catch (error) {
-        setError("Failed to fetch user data");
         console.error(error);
         setLoader(false);
       } finally {
@@ -64,7 +61,6 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
     };
     fetchUserData();
   }, [username, apiEndpoint, platformUser]);
-  console.log(error);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
