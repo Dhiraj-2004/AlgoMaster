@@ -4,8 +4,8 @@ const Leetcode = () => {
   return (
     <div>
       <UserProfile
-        platformUser={"leetUser"}
-        apiEndpoint="https://leetcode-api-faisalshohag.vercel.app"
+        platformUser="leetUser"
+        apiEndpoint="http://localhost:4000/api/user/leetcode"
         usernameEndpoint="http://localhost:4000/api/user/leetuser"
       ></UserProfile>
     </div>

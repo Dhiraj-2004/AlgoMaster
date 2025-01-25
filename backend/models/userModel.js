@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        roll:{
+            type: String,
+            required: true,
+        },
         email: {
             type: String,
             required: true,
@@ -41,26 +45,14 @@ const userSchema = new mongoose.Schema(
             codechefRank:{
                 type:String,
                 sparse:true,
-                rankLastUpdated:{ 
-                    type: Date, 
-                    default: Date.now 
-                }
             },
             codeforcesRank:{
                 type:String,
                 sparse:true,
-                rankLastUpdated:{ 
-                    type: Date, 
-                    default: Date.now 
-                }
             },
             leetRank:{
                 type:String,
                 sparse:true,
-                rankLastUpdated:{ 
-                    type: Date, 
-                    default: Date.now 
-                }
             },
         },
         otp: {

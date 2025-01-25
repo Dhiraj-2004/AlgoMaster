@@ -18,7 +18,7 @@ const Add = () => {
       if (leetUser) payload.leetUser = leetUser;
       if (codeforcesUser) payload.codeforcesUser = codeforcesUser;
       if (codechefUser) payload.codechefUser = codechefUser;
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:4000/api/user/insertuser",
         payload,
         {
@@ -29,7 +29,6 @@ const Add = () => {
       );
       toast.success('Data Added successfully!');
       setTimeout(() => { navigate("/") }, 1000)
-      console.log('User added successfully:', response.data);
     } catch (error) {
       toast.error('Failed to Add!');
       console.error('Error inserting user:', error);

@@ -39,10 +39,9 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
         setLoader(true);
         const response = await axios.get(`${apiEndpoint}/${username}`);
         setUserData(response.data);
-
         const rank =
           platformUser === "leetUser"
-            ? response.data.ranking
+            ? Math.round(response?.data?.data?.userContestRanking?.rating)
             : platformUser === "codechefUser"
             ? response.data.currentRating
             : response.data.result?.[0].rating;

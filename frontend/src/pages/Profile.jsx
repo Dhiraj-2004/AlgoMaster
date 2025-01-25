@@ -9,6 +9,7 @@ const Profile = () => {
   const [leetUser, setLeetUser] = useState('');
   const [codeforcesUser, setCodeforcesUser] = useState('');
   const [codechefUser, setCodechefUser] = useState('');
+  const [roll, setRoll] = useState(null);
   const navigate = useNavigate();
 
 
@@ -19,6 +20,7 @@ const Profile = () => {
       if (leetUser) payload.leetUser = leetUser;
       if (codeforcesUser) payload.codeforcesUser = codeforcesUser;
       if (codechefUser) payload.codechefUser = codechefUser;
+      if (roll) payload.roll = roll;
       const response = await axios.put(
         "http://localhost:4000/api/user/updateUser",
         payload,
@@ -39,6 +41,15 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-16 gap-4 text-white">
+      
+      <InputField
+        type="text"
+        value={leetUser}
+        onChange={(e) => setRoll(e.target.value)}
+        placeholder="Roll Number"
+        label="Roll"
+      />
+
       <InputField
         type="text"
         value={leetUser}

@@ -10,11 +10,12 @@ import { ToastContainer, toast } from 'react-toastify';
 
 const LoginForm = () => {
   const [currentState, setCurrentState] = useState('Login');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  const [college, setCollege] = useState('');
-  const [year, setYear] = useState('');
+  const [name, setName] = useState(null);
+  const [roll, setRoll] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [college, setCollege] = useState(null);
+  const [year, setYear] = useState(null);
   const navigate = useNavigate();
 
   const colleges = [
@@ -42,6 +43,7 @@ const LoginForm = () => {
       try {
         const response = await axios.post('http://localhost:4000/api/user/signup', {
           name,
+          roll,
           email,
           password,
           college,
@@ -93,6 +95,13 @@ const LoginForm = () => {
             onChange={(e) => setName(e.target.value)}
             placeholder="Name"
             label="Name"
+          />
+          <InputField
+            type="text"
+            value={roll}
+            onChange={(e) => setRoll(e.target.value)}
+            placeholder="Roll Number"
+            label="Roll"
           />
           <Dropdown
             options={colleges}

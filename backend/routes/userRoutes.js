@@ -17,6 +17,8 @@ const {
     getLeetcodeUsername,
 } = require("../controllers/userController");
 
+const{leetCode}=require("../controllers/leetCodeQraphQl");
+
 const { protect } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
@@ -30,6 +32,7 @@ router.put("/resetPass", resetPassword);
 router.put("/rank",protect,userRank);
 router.put('/updateUser', protect, updateUsernames);
 
+router.get('/leetcode/:username',leetCode);
 router.get('/userdata',protect,getUserData);
 router.get('/chefuser', protect, getCodechefUsername);
 router.get('/forcesuser', protect, getCodeforcesUsername);

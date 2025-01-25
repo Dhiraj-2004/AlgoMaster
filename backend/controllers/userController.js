@@ -61,6 +61,7 @@ exports.loginUser = async (req, res) => {
 
 const singupBody = zod.object({
     name: zod.string(),
+    roll: zod.string(),
     college: zod.string(),
     email: zod.string().email(),
     password: zod.string().min(6),
@@ -85,17 +86,19 @@ exports.signUser = async (req, res) => {
             });
         }
 
-        const { name, email, password, college, year } = req.body;
+        const { name, roll, email, password, college, year } = req.body;
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const newUser = new User({
             name,
+            roll,
             email,
             college,
             year,
             password: hashedPassword,
         });
+        console.log("New User : ",newUser);
         await newUser.save();
         const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 
@@ -103,6 +106,7 @@ exports.signUser = async (req, res) => {
             msg: "Account created",
             _id: newUser.id,
             name: newUser.name,
+            roll: newUser.roll,
             email: newUser.email,
             year: newUser.year,
             token,
@@ -144,16 +148,6 @@ exports.userRank = async (req, res) => {
         if (!user) {
             return res.status(404).json({
                 msg: "User or platform username not found",
-            });
-        }
-
-        const lastUpdated = user.ranks.rankLastUpdated;
-        const now = new Date();
-        const diffInMilliseconds = now - lastUpdated;
-        const diffInDays = diffInMilliseconds / (1000 * 3600 * 24);
-        if(diffInDays < 2) {
-            return res.status(400).json({
-                msg: `Rank can only be updated once every 3 days. Please try again in ${Math.ceil(2 - diffInDays)} day(s).`
             });
         }
 
@@ -384,7 +378,7 @@ exports.insertUsernames = async (req, res) => {
 };
 
 exports.updateUsernames = async (req, res) => {
-    const { leetUser, codechefUser, codeforcesUser } = req.body;
+    const { leetUser, codechefUser, codeforcesUser, roll } = req.body;
     try {
         const user = await User.findByIdAndUpdate(
             req.user.id,
@@ -393,6 +387,7 @@ exports.updateUsernames = async (req, res) => {
                     'usernames.leetUser': leetUser,
                     'usernames.codechefUser': codechefUser,
                     'usernames.codeforcesUser': codeforcesUser,
+                    'roll':roll
                 },
             },
             { new: true }

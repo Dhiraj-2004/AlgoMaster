@@ -7,15 +7,27 @@ import useCollegeRank from "../component/hook/useCollegeRank";
 
 const LeetCodeDesign = ({ data }) => {
   const { userData, loading } = useUserData();
-  const { rankData, totalUsers, error } = useCollegeRank({
+  const { rankData, totalUsers } = useCollegeRank({
     username: userData?.usernames?.leetUser,
-    college: userData?.college
+    college: userData?.college,
   });
-  
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+  const User=data.data;
+
+  const easySolved = User?.matchedUser?.submitStats?.acSubmissionNum.find(
+    (submission) => submission.difficulty === "Easy"
+  )?.count;
+  const totaleasy=User?.allQuestionsCount?.find(q => q.difficulty === 'Easy')?.count
+
+  const mediumSolved = User?.matchedUser?.submitStats?.acSubmissionNum.find(
+    (submission) => submission.difficulty === "Medium"
+  )?.count;
+  const totalmedium=User?.allQuestionsCount?.find(q => q.difficulty === 'Easy')?.count
+
+  const hardSolved = User?.matchedUser?.submitStats?.acSubmissionNum.find(
+    (submission) => submission.difficulty === "Hard"
+  )?.count;
+  const totalhard=User?.allQuestionsCount?.find(q => q.difficulty === 'Easy')?.count
 
   return (
     <div className="w-full h-full flex flex-col xl:flex-row gap-10 items-center justify-center">
@@ -25,7 +37,7 @@ const LeetCodeDesign = ({ data }) => {
           <h1 className="font-bold mt-3 text-2xl">{userData ? userData.name : loading}</h1>
           <div className="flex flex-col items-center font font-semibold ml-3 mb-auto text-zinc-500 dark:text-gray-500 text-sm">
             <span>#{userData ? userData.usernames.leetUser :loading}</span>
-            <span>Rank: {userData ? data.ranking : loading}</span>
+            <span>Rank: {Math.round(User?.userContestRanking?.rating)}</span>
           </div>
         </div>
         <div className="flex flex-col space-y-6 mt-6">
@@ -53,7 +65,7 @@ const LeetCodeDesign = ({ data }) => {
 
       {/* Leetcode Data */}
       <div id="Card" className="flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
-        <ProgressContainer data={data} />
+        <ProgressContainer data={User} />
       </div>
 
       <div id="Card" className="flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72 gap-4">
@@ -68,24 +80,24 @@ const LeetCodeDesign = ({ data }) => {
         <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
           <span className="font-bold text-md text-[#22C55E]">Easy</span>
           <div>
-            <span className="font-bold text-base">{data.easySolved}</span>
-            <span className="text-zinc-500 text-base">/{data.totalEasy}</span>
+            <span className="font-bold text-base">{easySolved}</span>
+            <span className="text-zinc-500 text-base">/{totaleasy}</span>
           </div>
         </div>
 
         <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
           <span className="font-bold text-md text-[#EAB308]">Medium</span>
           <div>
-            <span className="font-bold text-base">{data.mediumSolved}</span>
-            <span className="text-zinc-500 text-base">/{data.totalMedium}</span>
+            <span className="font-bold text-base">{mediumSolved}</span>
+            <span className="text-zinc-500 text-base">/{totalmedium}</span>
           </div>
         </div>
 
         <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
           <span className="font-bold text-md text-[#F43F5E]">Hard</span>
           <div>
-            <span className="font-bold text-base">{data.hardSolved}</span>
-            <span className="text-zinc-500 text-base">/{data.totalHard}</span>
+            <span className="font-bold text-base">{hardSolved}</span>
+            <span className="text-zinc-500 text-base">/{totalhard}</span>
           </div>
         </div>
       </div>
