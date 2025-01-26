@@ -70,7 +70,7 @@ const Home = () => {
   
   return (
     <div className="w-full h-full">
-      <div className="flex flex-col xl:flex-row gap-10 items-center justify-center">
+      <div className="flex flex-col xl:flex-row gap-10 items-center justify-center mb-10">
         {/* Info */}
         <div className="box flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
           <div>
@@ -184,7 +184,7 @@ const Home = () => {
               </button>
             </div>
           ) : (
-            <p className="text-lg">"There are no upcoming Contest 2 at the moment."</p>
+            <p className="text-lg">"There are no upcoming another Contests at the moment."</p>
           )}
         </div>
       </div>
