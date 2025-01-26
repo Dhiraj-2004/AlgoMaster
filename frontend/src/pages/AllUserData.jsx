@@ -12,7 +12,7 @@ const AllUserData = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
-  const {theme}=useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   const entriesPerPage = 20;
 
@@ -23,9 +23,9 @@ const AllUserData = () => {
     "Codeforces",
   ];
 
-  const tableHead=(theme==='dark')
+  const tableHead = theme === 'dark'
     ? "px-4 py-2 border border-gray-800 h-16"
-    : "px-4 py-2 border h-14"
+    : "px-4 py-2 border h-14";
 
   const searchOptions = ["Roll No", "Name", "UserName"];
 
@@ -38,8 +38,8 @@ const AllUserData = () => {
           platform === "Codeforces"
             ? "codeforcesUser"
             : platform === "CodeChef"
-              ? "codechefUser"
-              : "leetcodeUser";
+            ? "codechefUser"
+            : "leetcodeUser";
 
         const response = await axios.get(
           `http://localhost:4000/api/user?platform=${site}`
@@ -138,7 +138,7 @@ const AllUserData = () => {
         users ? (
           <div className="mt-6">
             <table className="w-full border-collapse border border-gray-200">
-              <thead className={`${theme==='dark' ? "bg-zinc-900" : "bg-gray-300"}`}>
+              <thead className={`${theme === 'dark' ? "bg-zinc-900" : "bg-gray-300"}`}>
                 <tr>
                   <th
                     className={`${tableHead} cursor-pointer`}
@@ -150,7 +150,7 @@ const AllUserData = () => {
                   <th className={`${tableHead}`}>Year</th>
                   <th className={`${tableHead}`}>UserName</th>
                   <th
-                   className={`${tableHead} cursor-pointer`}
+                    className={`${tableHead} cursor-pointer`}
                     onClick={() => handleSort("Rank")}
                   >
                     Rank {sortColumn === "Rank" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
@@ -162,7 +162,7 @@ const AllUserData = () => {
                   currentEntries.map((user, index) => (
                     <tr
                       key={user._id}
-                      className={`text-center ${index % 2 === 0 ? "" : "bg-gray-100"} hover:cursor-pointer ${theme==='dark' && index%2!==0 ? "bg-zinc-900" : ""}`}
+                      className={`text-center ${index % 2 === 0 ? "" : "bg-gray-100"} hover:cursor-pointer ${theme === 'dark' && index % 2 !== 0 ? "bg-zinc-900" : ""}`}
                     >
                       <td className={`${tableHead}`}>{user.roll}</td>
                       <td className={`${tableHead}`}>{user.name}</td>
@@ -189,7 +189,7 @@ const AllUserData = () => {
               <button
                 onClick={handlePrev}
                 disabled={currentPage === 1}
-                className={`px-4 py-2 bg-gray-300 rounded-xl  disabled:bg-gray-200  ${theme==='dark' ? "bg-zinc-700 hover:bg-zinc-900 disabled:bg-gray-600" : "hover:bg-gray-400"}`}
+                className={`px-4 py-2 ml-[3%] bg-gray-300 rounded-xl  ${theme === 'dark' ? "bg-zinc-700 hover:bg-zinc-900 disabled:bg-gray-600" : "hover:bg-gray-400"}`}
               >
                 Prev
               </button>
@@ -199,7 +199,7 @@ const AllUserData = () => {
               <button
                 onClick={handleNext}
                 disabled={currentPage === totalPages}
-                className={`px-4 py-2 bg-gray-300   ${theme==='dark' ? "bg-zinc-700 hover:bg-zinc-900 disabled:bg-gray-600" : "hover:bg-gray-400"} rounded-xl`}
+                className={`px-4 py-2 bg-gray-300 mr-[3%] ${theme === 'dark' ? "bg-zinc-700 hover:bg-zinc-900 disabled:bg-gray-600" : "hover:bg-gray-400"} rounded-xl`}
               >
                 Next
               </button>
