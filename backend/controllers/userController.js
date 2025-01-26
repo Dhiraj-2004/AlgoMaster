@@ -220,7 +220,14 @@ exports.getUserRank = async (req, res) => {
             leetcode: sortedLeetRanks
         };
 
-        res.status(200).json({
+        return res.status(200).json({
+            msg: "Rank data fetched successfully",
+            userInfo: {
+                name: user.name,
+                roll: user.roll,
+                year: user.year,
+                usernames: user.usernames
+            },
             userRank: platformRank,
             totalUsers: userInCollege.length,
             sortedData: sortedData

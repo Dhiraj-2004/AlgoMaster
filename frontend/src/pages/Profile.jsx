@@ -44,7 +44,7 @@ const Profile = () => {
       
       <InputField
         type="text"
-        value={leetUser}
+        value={roll}
         onChange={(e) => setRoll(e.target.value)}
         placeholder="Roll Number"
         label="Roll"

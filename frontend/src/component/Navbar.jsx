@@ -17,7 +17,7 @@ export const Navbar = () => {
     <nav className="navbar bg-[#000004] fixed top-0 left-0 w-full z-50 border-b border-[#1c1c1e]">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <NavLink to="/">
-          <img src={assets.logo} alt="Logo" className="w-48 xl:w-48 lg:w-44 md:w-40 sm:w-40 object-contain" />
+          <img src={assets.Logo} alt="Logo" className="w-48 xl:w-48 lg:w-44 md:w-40 sm:w-40 object-contain" />
         </NavLink>
 
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
