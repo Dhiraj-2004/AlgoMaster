@@ -155,7 +155,7 @@ const Home = () => {
         <h2 className="text-[#ed4236]">Contests</h2>
       </div>
 
-      <div className="flex flex-col xl:flex-row gap-20 items-center justify-center m-7">
+      <div className="flex flex-col xl:flex-row gap-20 items-center justify-center m-10">
         <div className="w-full p-6 text-white rounded-2xl border border-transparent hover:border-blue-500 hover:shadow-lg hover:shadow-indigo-500/25 text-center transparent-bg">
           <h1 className="text-lg sm:text-2xl pb-2">Upcoming Contest 1</h1>
           {contest.length > 0 ? (
@@ -187,6 +187,9 @@ const Home = () => {
             <p className="text-lg">"There are no upcoming Contest 2 at the moment."</p>
           )}
         </div>
+      </div>
+      <div className="m-11 p-11 text-center sm:text-xl">
+        <p className="m-10 p-10 italic">"Empowering coders to track, grow, and challenge their problem-solving prowess across the world’s top platforms."</p>
       </div>
     </div>
   );
