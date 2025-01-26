@@ -26,7 +26,8 @@ const Home = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col xl:flex-row gap-10 items-center justify-center">
+
+    <div className="w-full h-full flex flex-col xl:flex-row gap-10 items-center justify-center shadow-lg">
       {/* Info */}
       <div id="Card" className="flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
         <div>
