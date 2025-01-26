@@ -11,6 +11,7 @@ import ThemeContext from "./context/ThemeContext"
 import Logout from './component/Logout'
 import ForgotPassword from './component/ForgotPassword'
 import Profile from './pages/Profile'
+import Footer from './component/Footer'
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
             <Route path="/forgot" element={<ForgotPassword />} />
             </Routes>
           </div>
+          <Footer />
         </ThemeContext>
       </BrowserRouter>
     </div>

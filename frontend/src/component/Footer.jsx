@@ -6,7 +6,7 @@ const Footer = () => {
         <div className="min-h-[280px] w-full bg-[#15171c] text-white">
             <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-8 py-8 items-center">
                 <div className="flex flex-col items-center gap-y-3 px-3 text-center xl:mt-16 lg:mt-16">
-                    <img className="ml-5 font-bold cursor-pointer xl:text-4xl lg:text-4xl md:text-4xl sm:text-4xl text-4xl" src={assets.logo} alt="Logo"></img>
+                    <img className="ml-5 font-bold cursor-pointer xl:text-4xl lg:text-4xl md:text-4xl sm:text-4xl text-4xl" src={assets.Logo} alt="Logo"></img>
                     <p className="text-sm max-w-[400px] font-normal sm:text-xl">The Ultimate Guide To Ace Successful</p>
                 </div>
 
