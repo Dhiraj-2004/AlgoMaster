@@ -3,7 +3,8 @@ import { assets } from "../assets/assets";
 import ProgressContainer from "../component/ProgressContainer ";
 
 const Home = () => {
-  const [quote, setQuote] = useState(""); // State for storing the quote
+  const [quote, setQuote] = useState("");
+  const [contest, setContest] = useState([]);
 
   const userData = {
     name: "John Doe",
@@ -29,16 +30,47 @@ const Home = () => {
     totalHard: 20,
   };
 
-  // Fetch the daily quote when the component mounts
+  // Fetching the daily quotes...
   useEffect(() => {
     fetch('https://api.quotable.io/quotes/random?tags=technology,famous-quotes')
       .then((response) => response.json())
       .then((data) => setQuote(data[0].content));
   }, []);
 
+  useEffect(() => {
+    async function fetchContests() {
+      const apiUrl = "https://codeforces.com/api/contest.list";
+  
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+  
+        if (data.status === "OK") {
+          const upcoming = data.result
+            .filter((contest) => contest.phase === "BEFORE")
+            .sort((a, b) => a.startTimeSeconds - b.startTimeSeconds)
+            .slice(0, 2);
+  
+            setContest(upcoming);
+        } else {
+          console.error("Error fetching contests:", data.comment);
+        }
+      } catch (error) {
+        console.error("Failed to fetch contest timings:", error);
+      }
+    }
+  
+    fetchContests();
+  }, []);
+
+  const handleNavigate = (contestId) => {
+    window.open(`https://codeforces.com/contest/${contestId}`, "_blank");
+  };
+  
+  
   return (
     <div className="w-full h-full">
-      <div className="flex flex-col xl:flex-row gap-10 items-center justify-center shadow-lg">
+      <div className="flex flex-col xl:flex-row gap-10 items-center justify-center">
         {/* Info */}
         <div className="box flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
           <div>
@@ -112,9 +144,48 @@ const Home = () => {
       </div>
 
       {/* Motivation... */}
-      <div className="flex flex-col items-center justify-center m-12">
-        <div className="box bg-[#000004] text-white text-center text-lg sm:text-xl m-10 p-7 rounded-2xl border border-zinc-300 dark:border-zinc-800 p-3 animate-fill">
+      <div className="flex flex-col items-center justify-center m-7">
+        <div className="box bg-[#000004] text-white text-center text-lg sm:text-xl m-10 p-5 rounded-2xl border border-zinc-300 dark:border-zinc-800 animate-fill">
           {quote ? `"${quote}"` : "Loading quote..."}
+        </div>
+      </div>
+
+      <div className="flex justify-center items-center gap-2 text-xl sm:text-4xl pt-5 pb-7">
+        <h2 className="text-[#4387f2]">CodeForces</h2>
+        <h2 className="text-[#ed4236]">Contests</h2>
+      </div>
+
+      <div className="flex flex-col xl:flex-row gap-20 items-center justify-center m-7">
+        <div className="w-full p-6 text-white rounded-2xl border border-transparent hover:border-blue-500 hover:shadow-lg hover:shadow-indigo-500/25 text-center transparent-bg">
+          <h1 className="text-lg sm:text-2xl pb-2">Upcoming Contest 1</h1>
+          {contest.length > 0 ? (
+            <div className="text-lg" key={contest[0].id}>
+              <h2>{`Contest 1: ${contest[0].name}`}</h2>
+              <p>{`Start Time: ${new Date(contest[0].startTimeSeconds * 1000).toLocaleString()}`}</p>
+              <p>{`Duration: ${contest[0].durationSeconds / 3600} hours`}</p>
+              <button onClick={() => handleNavigate(contest[0].id)} className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] transition-colors duration-500 ease-in-sine">
+                Enter Contest
+              </button>
+            </div>
+          ) : (
+            <p>Loading contests...</p>
+          )}
+        </div>
+
+        <div className="w-full p-6 text-white rounded-2xl border border-transparent hover:border-blue-500 hover:shadow-lg hover:shadow-indigo-500/25 text-center transparent-bg">
+          <h1 className="text-lg sm:text-2xl pb-2">Upcoming Contest 2</h1>
+          {contest.length > 1 ? (
+            <div className="text-lg" key={contest[1].id}>
+              <h2>{`Contest 1: ${contest[1].name}`}</h2>
+              <p>{`Start Time: ${new Date(contest[1].startTimeSeconds * 1000).toLocaleString()}`}</p>
+              <p>{`Duration: ${contest[1].durationSeconds / 3600} hours`}</p>
+              <button onClick={() => handleNavigate(contest[0].id)} className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] transition-colors duration-500 ease-in-sine">
+                Enter Contest
+              </button>
+            </div>
+          ) : (
+            <p className="text-lg">"There are no upcoming Contest 2 at the moment."</p>
+          )}
         </div>
       </div>
     </div>
