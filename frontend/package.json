@@ -12,8 +12,12 @@
   "dependencies": {
     "@coreui/icons": "^3.0.1",
     "@coreui/icons-react": "^2.3.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.4.1",
     "axios": "^1.7.9",
     "chart.js": "^4.4.7",
+    "jspdf": "^2.5.2",
     "jwt-decode": "^4.0.0",
     "leetcode-query": "^1.2.3",
     "react": "^18.3.1",
