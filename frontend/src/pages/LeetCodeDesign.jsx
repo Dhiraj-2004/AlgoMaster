@@ -5,6 +5,7 @@ import { assets } from "../assets/assets";
 import useUserData from "../component/hook/useUserData";
 import useCollegeRank from "../component/hook/useCollegeRank";
 
+
 const LeetCodeDesign = ({ data }) => {
   const { userData, loading } = useUserData();
   const { rankData, totalUsers } = useCollegeRank({
