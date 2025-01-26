@@ -1,7 +1,3 @@
-import logo from './Logo.png'
-import dropdown_icon from './dropdown_icon.png'
-import profile_icon from './profile_icon.png'
-import menu_icon from './menu_icon.png'
 import dropdown from "./dropdown.svg"
 import leetcode from "./leetcode.svg"
 import codechef from "./codechef.svg"
@@ -14,12 +10,9 @@ import about from "./about.svg"
 import profile from "./profile.svg"
 import college from "./college.svg";
 import Gmail from "./gamil.svg";
+import Logo from "./logo.png"
 
 export const assets = {
-    logo,
-    dropdown_icon,
-    profile_icon,
-    menu_icon,
     dropdown,
     leetcode,
     codechef,
@@ -32,5 +25,6 @@ export const assets = {
     profile,
     college,
     Gmail,
+    Logo
     
 }
