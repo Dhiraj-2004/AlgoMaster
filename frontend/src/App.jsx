@@ -16,7 +16,7 @@ import Footer from './component/Footer'
 
 const App = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen  transition-colors duration-700">
       <BrowserRouter>
         <ThemeContext>
           {/* Navbar */}

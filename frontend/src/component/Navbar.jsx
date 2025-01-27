@@ -13,7 +13,7 @@ export const Navbar = () => {
   }, [navigate]);
 
   return (
-    <nav className="bg-white dark:bg-[#15171c] text-black dark:text-white fixed top-0 left-0 w-full z-50 shadow-md transition-colors duration-300">
+    <nav className="bg-white dark:bg-[#15171c] text-black dark:text-white fixed top-0 left-0 w-full z-50 shadow-md">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <NavLink to="/home">
         <div className="w-48 xl:w-48 lg:w-44 md:w-40 sm:w-40 flex justify-center items-center">

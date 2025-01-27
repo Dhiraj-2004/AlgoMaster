@@ -183,7 +183,7 @@ const Home = () => {
           )}
         </div>
 
-        <div className="w-full text-gray-800 dark:text-gray-300 p-6 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 hover:shadow-[0_0_15px_5px_rgba(75,0,130,0.7)] text-center transparent-bg">
+        <div className="w-full text-gray-800 dark:text-gray-300 p-6 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 text-center transparent-bg">
           <h1 className="text-lg sm:text-2xl pb-2">Upcoming Contest 2</h1>
           {contest.length > 1 ? (
             <div className="text-lg" key={contest[1].id}>
