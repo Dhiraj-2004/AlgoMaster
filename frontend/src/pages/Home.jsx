@@ -195,12 +195,12 @@ const Home = () => {
               </button>
             </div>
           ) : (
-            <p className="text-lg">"There are no upcoming another Contests at the moment."</p>
+            <p className="text-lg">There are no upcoming another Contests at the moment.</p>
           )}
         </div>
       </div>
       <div className="m-11 p-11 text-center sm:text-xl">
-        <p className="m-10 p-10 italic">"Empowering coders to track, grow, and challenge their problem-solving prowess across the world’s top platforms."</p>
+        <p className="m-10 p-10 italic">Empowering coders to track, grow, and challenge their problem-solving prowess across the world’s top platforms.</p>
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import {  NavLink } from 'react-router-dom';
 
 const SubMenu = ({ item }) => {
   return (
     <div>
-      <Link
+      <NavLink
         to={item.path}
         className="flex items-center px-5 py-4 text-gray-700 dark:text-gray-200 text-lg hover:bg-gray-500 hover:text-white hover:border-l-4 hover:border-purple-500 transition-all duration-200"
       >
@@ -12,7 +12,7 @@ const SubMenu = ({ item }) => {
           {item.icon}
           <span className="ml-4">{item.title}</span>
         </div>
-      </Link>
+      </NavLink>
     </div>
   );
 };
