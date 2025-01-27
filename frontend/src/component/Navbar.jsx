@@ -24,7 +24,7 @@ export const Navbar = () => {
           {!isLoggedIn ?    
             <button
               type="button"
-              className="text-white bg-[#4387f2] hover:bg-red-600 focus:ring-4 font-medium text-lg px-4 py-2 text-center dark:hover:bg-red-700 dark:focus:ring-red-800 w-28 h-12 rounded-2xl"
+              className="text-white bg-[#4387f2] hover:bg-[#ed4236] focus:ring-4 font-medium text-lg px-4 py-2 text-center dark:hover:bg-[#ed4236] dark:focus:ring-red-800 w-28 h-12 rounded-2xl"
               onClick={() => { navigate("/login") }}
             >
               Login
