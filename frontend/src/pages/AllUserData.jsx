@@ -118,24 +118,24 @@ const AllUserData = () => {
             value={platform}
             onChange={(e) => setPlatform(e.target.value)}
             label="Select Platform"
-            className="w-full sm:w-auto mb-2 sm:mb-0"
           />
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+        <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-2">
           <InputField
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={`Search by ${item}`}
-            className="w-full sm:w-auto"
           />
+          <div className=" -translate-y-1 w-full">
           <Dropdown
             options={searchOptions}
             value={item}
             onChange={(e) => setItem(e.target.value)}
-            className="w-full sm:w-auto"
           />
+          </div>
+          
         </div>
       </div>
 
@@ -145,7 +145,7 @@ const AllUserData = () => {
         </div>
       ) : platform && platform !== "Select Platform" ? (
         users ? (
-          <div className="mt-6 overflow-x-auto">
+          <div className="mt-10 overflow-x-auto">
             <table className="w-full border-collapse border border-gray-200 text-sm">
               <thead
                 className={`${
@@ -194,7 +194,7 @@ const AllUserData = () => {
                           : ""
                       }`}
                     >
-                      <td className={`${tableHead}`}>{index}</td>
+                      <td className={`${tableHead}`}>{index+1}</td>
                       <td className={`${tableHead}`}>{user.roll}</td>
                       <td className={`${tableHead}`}>{user.name}</td>
                       <td className={`${tableHead}`}>{user.year}</td>
