@@ -86,7 +86,7 @@ const Home = () => {
       >
         {/* Left Section */}
         <div className="flex items-center justify-center h-72 w-full xl:w-1/2">
-          <img className="h-full object-contain rounded-2xl sm:rounded-3xl md:rounded-4xl" src={assets.AlgoMaster} alt="AlgoMasters" />
+          <img className="h-full object-contain rounded-5xl sm:rounded-3xl md:rounded-4xl" src={assets.AlgoMaster} alt="AlgoMasters" />
         </div>
 
         {/* Right Section */}

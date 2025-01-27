@@ -12,6 +12,7 @@ import college from "./college.svg";
 import Gmail from "./gamil.svg";
 import User from "./users.svg"
 import Student from "./student.png"
+import Student2 from "./student2.png"
 import AlgoMaster from "./AlgoMaster.png"
 
 export const assets = {
@@ -29,5 +30,6 @@ export const assets = {
     Gmail,
     User,
     Student,
-    AlgoMaster
+    AlgoMaster,
+    Student2
 }
