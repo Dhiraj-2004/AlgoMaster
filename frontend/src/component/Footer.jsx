@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const Footer = () => {
     return (
-        <div className="h-[200px] w-full bg-white dark:bg-[#15171c] text-black dark:text-white shadow-md transition-colors duration-300">
+        <div className="min-h-48 w-full mt-32 bg-white dark:bg-[#15171c] text-black dark:text-white shadow-md transition-colors duration-300">
             <div className="grid sm:grid-cols-1 lg:grid-cols-3 gap-8 py-8 items-center">
                 {/* Logo Section */}
                 <div className="flex flex-col items-center gap-y-3 px-3 text-center">

@@ -114,6 +114,7 @@ const AllUserData = () => {
             value={platform}
             onChange={(e) => setPlatform(e.target.value)}
             label="Select Platform"
+            Style={"bg-zinc-900"}
           />
         </div>
 
@@ -123,12 +124,14 @@ const AllUserData = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={`Search by ${item}`}
+            Style={"bg-zinc-900"}
           />
           <div className="w-full mb-2">
             <Dropdown
               options={searchOptions}
               value={item}
               onChange={(e) => setItem(e.target.value)}
+              Style={"bg-zinc-900"}
             />
           </div>
         </div>
@@ -138,7 +141,7 @@ const AllUserData = () => {
         users ? (
           <div className="mt-6">
             <table className="w-full border-collapse border border-gray-200">
-              <thead className={`${theme === 'dark' ? "bg-zinc-900" : "bg-gray-300"}`}>
+              <thead className={`${theme === 'dark' ? "bg-zinc-800" : "bg-gray-300"}`}>
                 <tr>
                   <th
                     className={`${tableHead} cursor-pointer`}

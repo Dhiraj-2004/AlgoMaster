@@ -17,7 +17,7 @@ export const Navbar = () => {
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <NavLink to="/home">
         <div className="w-48 xl:w-48 lg:w-44 md:w-40 sm:w-40 flex justify-center items-center">
-          <h1 className="text-4xl lexend-bold">
+          <h1 className="text-3xl xl:text-4xl lg:text-4xl md:text-2xl sm:text-2xl lexend-bold ml-2">
             <span className="text-orange-500">{`{`}</span>
             <span className="text-indigo-500">Algo</span>
             <span className="text-orange-500">Masters</span>
