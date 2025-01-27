@@ -14,7 +14,7 @@ export const Navbar = () => {
   }, [navigate]);
 
   return (
-    <nav className="navbar bg-[#000004] fixed top-0 left-0 w-full z-50 border-b border-[#1c1c1e]">
+    <nav className="bg-[#15171c] fixed top-0 left-0 w-full z-50">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <NavLink to="/">
           <img src={assets.Logo} alt="Logo" className="w-48 xl:w-48 lg:w-44 md:w-40 sm:w-40 object-contain" />
@@ -24,7 +24,7 @@ export const Navbar = () => {
           {!isLoggedIn ?    
             <button
               type="button"
-              className="text-white bg-[#4387f2] hover:bg-[#ed4236] focus:ring-4 font-medium text-lg px-4 py-2 text-center dark:hover:bg-[#ed4236] dark:focus:ring-red-800 w-28 h-12 rounded-2xl"
+              className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 font-medium text-lg px-4 py-2 text-center dark:hover:bg-red-700 dark:focus:ring-red-800 w-28 h-12 rounded-2xl"
               onClick={() => { navigate("/login") }}
             >
               Login
@@ -46,7 +46,7 @@ export const Navbar = () => {
                     className={({ isActive }) =>
                       isActive
                         ? 'block py-2 px-3 md:p-0 bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500'
-                        : 'block py-2 px-3 md:p-0 rounded md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500'
+                        : 'block py-2 px-3 md:p-0  rounded  md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500'
                     }
                     aria-current="page"
                   >
@@ -59,8 +59,8 @@ export const Navbar = () => {
                     to="/leetcode"
                     className={({ isActive }) =>
                       isActive
-                        ? 'block py-2 px-3 md:p-0 bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500'
-                        : 'block py-2 px-3 md:p-0 rounded md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500'
+                        ? 'block py-2 px-3 md:p-0  bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500'
+                        : 'block py-2 px-3 md:p-0  rounded  md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500'
                     }
                   >
                     LeetCode
@@ -72,8 +72,8 @@ export const Navbar = () => {
                     to="/codechef"
                     className={({ isActive }) =>
                       isActive
-                        ? 'block py-2 px-3 md:p-0 bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500'
-                        : 'block py-2 px-3 md:p-0 rounded md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500'
+                        ? 'block py-2 px-3 md:p-0 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500'
+                        : 'block py-2 px-3 md:p-0  rounded  md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500'
                     }
                   >
                     CodeChef
@@ -86,7 +86,7 @@ export const Navbar = () => {
                     className={({ isActive }) =>
                       isActive
                         ? 'block py-2 px-3 md:p-0 bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500'
-                        : 'block py-2 px-3 md:p-0 rounded md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500'
+                        : 'block py-2 px-3 md:p-0  rounded  md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500'
                     }
                   >
                     CodeForces
@@ -99,7 +99,6 @@ export const Navbar = () => {
         }
       </div>
     </nav>
-
   );
 };
 

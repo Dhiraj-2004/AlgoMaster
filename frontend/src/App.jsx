@@ -11,7 +11,7 @@ import ThemeContext from "./context/ThemeContext"
 import Logout from './component/Logout'
 import ForgotPassword from './component/ForgotPassword'
 import Profile from './pages/Profile'
-import Footer from './component/Footer'
+import AllUserData from './pages/AllUserData'
 
 const App = () => {
   return (
@@ -29,8 +29,8 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/add" element={<Add />} />
             <Route path="/logout" element={<Logout />} />
-            <Route path="/support" element={<Add />} />
-            <Route path="/team" element={<Add />} />
+            <Route path="/users" element={<AllUserData></AllUserData>} />
+            <Route path="/team" element={<Home></Home>} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/forgot" element={<ForgotPassword />} />
             </Routes>

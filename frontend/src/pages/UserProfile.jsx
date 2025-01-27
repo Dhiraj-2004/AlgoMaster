@@ -12,6 +12,7 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
   const [loader, setLoader] = useState(true);
   const [showUpdateMessage, setShowUpdateMessage] = useState(false);
 
+  // get username
   useEffect(() => {
     const fetchUsername = async () => {
       try {
@@ -19,19 +20,23 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
         const response = await axios.get(usernameEndpoint, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const usernameMap = {
-          leetUser: response.data.leetUser,
-          codechefUser: response.data.codechefUser,
-          codeforcesUser: response.data.codeforcesUser,
-        };
-        setUsername(usernameMap[platformUser]);
+
+        if (platformUser === "leetcodeUser") {
+          setUsername(response.data.leetcodeUser);
+        } else if (platformUser === "codechefUser") {
+          setUsername(response.data.codechefUser);
+        } else if (platformUser === "codeforcesUser") {
+          setUsername(response.data.codeforcesUser);
+        }
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching username:", error);
+        setLoader(false);
       }
     };
     fetchUsername();
   }, [platformUser, usernameEndpoint]);
 
+  // get userdata and rankset in data
   useEffect(() => {
     if (!username) return;
     const fetchUserData = async () => {
@@ -39,21 +44,20 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
         setLoader(true);
         const response = await axios.get(`${apiEndpoint}/${username}`);
         setUserData(response.data);
+
         const rank =
-          platformUser === "leetUser"
+          platformUser === "leetcodeUser"
             ? Math.round(response?.data?.data?.userContestRanking?.rating)
             : platformUser === "codechefUser"
-            ? response.data.currentRating
-            : response.data.result?.[0].rating;
-
+              ? response.data.currentRating
+              : response.data.result?.[0].rating;
         const token = localStorage.getItem("token");
         await axios.put("http://localhost:4000/api/user/rank",
-          { rank, platformUser ,username},
+          { rank, platformUser, username },
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } catch (error) {
-        console.error(error);
-        setLoader(false);
+        console.error("Error fetching user data:", error);
       } finally {
         setLoader(false);
       }
@@ -85,7 +89,7 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
         </div>
       ) : (
         <div>
-          {platformUser === "leetUser" && <LeetCodeDesign data={userData} />}
+          {platformUser === "leetcodeUser" && <LeetCodeDesign data={userData} />}
           {platformUser === "codechefUser" && <CodeChefDesign data={userData} />}
           {platformUser === "codeforcesUser" && <CodeForcesDesign data={userData} />}
         </div>

@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const [leetUser, setLeetUser] = useState('');
+  const [leetCodeUser, setLeetUser] = useState('');
   const [codeforcesUser, setCodeforcesUser] = useState('');
   const [codechefUser, setCodechefUser] = useState('');
   const [roll, setRoll] = useState(null);
@@ -17,7 +17,7 @@ const Profile = () => {
     try {
       const token = localStorage.getItem('token');
       const payload = {};
-      if (leetUser) payload.leetUser = leetUser;
+      if (leetCodeUser) payload.leetCodeUser = leetCodeUser;
       if (codeforcesUser) payload.codeforcesUser = codeforcesUser;
       if (codechefUser) payload.codechefUser = codechefUser;
       if (roll) payload.roll = roll;
@@ -52,7 +52,7 @@ const Profile = () => {
 
       <InputField
         type="text"
-        value={leetUser}
+        value={leetCodeUser}
         onChange={(e) => setLeetUser(e.target.value)}
         placeholder="LeetCode Username"
         label="LeetCode"

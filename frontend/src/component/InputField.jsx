@@ -11,10 +11,10 @@ const InputField = ({ type, value, onChange, placeholder, label }) => {
 
   const inputStyles = themes === 'dark'
     ? 'border-gray-600 bg-gray-800 text-white'
-    : 'border-gray-400 bg-white text-black';
+    : 'border-gray-300 bg-white text-black';
 
   const labelStyles = themes === 'dark'
-    ? ' text-white'
+    ? 'text-white'
     : 'text-gray-900';
   return (
     <div className="flex flex-col space-y-2 w-full">

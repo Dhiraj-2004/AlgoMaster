@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const zod = require("zod");
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
+const { AsyncLocalStorage } = require("async_hooks");
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
@@ -29,7 +30,7 @@ exports.loginUser = async (req, res) => {
 
         if (!user) {
             return res.status(401).json({
-                msg: "User Exit already",
+                msg: "User not Exit",
                 email: email
             })
         }
@@ -98,7 +99,6 @@ exports.signUser = async (req, res) => {
             year,
             password: hashedPassword,
         });
-        console.log("New User : ",newUser);
         await newUser.save();
         const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 
@@ -127,6 +127,22 @@ const syncIndexes = async () => {
 };
 syncIndexes();
 
+// all Users
+
+exports.getAllUsers = async (req, res) => {
+    try {
+        const platform = req.query.platform;
+        const query = { [`usernames.${platform}`]: { $exists: true, $ne: null } };
+        const users = await User.find(query, 'name roll year usernames ranks');
+        res.status(200).json({
+            msg: "Data retrieved successfully",
+            users
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to fetch user data' });
+    }
+};
 
 // getRank
 
@@ -134,7 +150,7 @@ exports.userRank = async (req, res) => {
     const { rank, platformUser, username } = req.body;
 
     const rankFieldMap = {
-        leetUser: "ranks.leetRank",
+        leetcodeUser: "ranks.leetcodeRank",
         codechefUser: "ranks.codechefRank",
         codeforcesUser: "ranks.codeforcesRank",
     };
@@ -145,22 +161,24 @@ exports.userRank = async (req, res) => {
         const user = await User.findOne({
             [`usernames.${platformUser}`]: username,
         });
+
         if (!user) {
             return res.status(404).json({
                 msg: "User or platform username not found",
             });
         }
-
         const updatedUser = await User.findOneAndUpdate(
             { [`usernames.${platformUser}`]: username },
             { [rankField]: rank },
             { new: true }
         );
+
         if (!updatedUser) {
             return res.status(500).json({
                 msg: "Failed to update rank",
             });
         }
+
         res.status(200).json({
             msg: "Rank updated successfully",
             updatedUser,
@@ -178,6 +196,7 @@ exports.userRank = async (req, res) => {
 
 
 
+
 exports.getUserRank = async (req, res) => {
     const { username, college } = req.params;
     try {
@@ -185,7 +204,7 @@ exports.getUserRank = async (req, res) => {
             $or: [
                 { "usernames.codechefUser": username },
                 { "usernames.codeforcesUser": username },
-                { "usernames.leetUser": username }
+                { "usernames.leetcodeUser": username }
             ],
             college: college
         });
@@ -205,19 +224,19 @@ exports.getUserRank = async (req, res) => {
         const sortedCodechefRanks = userInCollege
             .map((u) => u.ranks.codechefRank)
             .sort((a, b) => b - a);
-        const sortedLeetRanks = userInCollege
-            .map((u) => u.ranks.leetRank)
+        const sortedleetcodeRanks = userInCollege
+            .map((u) => u.ranks.leetcodeRank)
             .sort((a, b) => b - a);
 
         const platformRank = {
             codeforcesRank: sortedCodeforcesRanks.indexOf(user.ranks.codeforcesRank) + 1,
             codechefRank: sortedCodechefRanks.indexOf(user.ranks.codechefRank) + 1,
-            leetRank: sortedLeetRanks.indexOf(user.ranks.leetRank) + 1,
+            leetcodeRank: sortedleetcodeRanks.indexOf(user.ranks.leetcodeRank) + 1,
         };
         const sortedData = {
             codeforces: sortedCodeforcesRanks,
             codechef: sortedCodechefRanks,
-            leetcode: sortedLeetRanks
+            leetcode: sortedleetcodeRanks
         };
 
         return res.status(200).json({
@@ -361,13 +380,13 @@ exports.resetPassword = async (req, res) => {
 // profiles
 
 exports.insertUsernames = async (req, res) => {
-    const { leetUser, codechefUser, codeforcesUser } = req.body;
+    const { leetcodeUser, codechefUser, codeforcesUser } = req.body;
     try {
         const user = await User.findByIdAndUpdate(
             req.user.id,
             {
                 $set: {
-                    'usernames.leetUser': leetUser,
+                    'usernames.leetcodeUser': leetcodeUser,
                     'usernames.codechefUser': codechefUser,
                     'usernames.codeforcesUser': codeforcesUser,
                 },
@@ -385,16 +404,16 @@ exports.insertUsernames = async (req, res) => {
 };
 
 exports.updateUsernames = async (req, res) => {
-    const { leetUser, codechefUser, codeforcesUser, roll } = req.body;
+    const { leetcodeUser, codechefUser, codeforcesUser, roll } = req.body;
     try {
         const user = await User.findByIdAndUpdate(
             req.user.id,
             {
                 $set: {
-                    'usernames.leetUser': leetUser,
+                    'usernames.leetcodeUser': leetcodeUser,
                     'usernames.codechefUser': codechefUser,
                     'usernames.codeforcesUser': codeforcesUser,
-                    'roll':roll
+                    'roll': roll
                 },
             },
             { new: true }
@@ -462,7 +481,7 @@ exports.getCodeforcesUsername = async (req, res) => {
 exports.getLeetcodeUsername = async (req, res) => {
     const user = await User.findById(req.user.id);
     if (user) {
-        res.json({ leetUser: user.usernames.leetUser });
+        res.json({ leetcodeUser: user.usernames.leetcodeUser });
     }
     else {
         res.status(404).json({ message: 'User not found' });

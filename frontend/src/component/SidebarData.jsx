@@ -30,6 +30,11 @@ export const SidebarData = [
 
   },
   {
+    title: 'Users',
+    path: '/users',
+    icon: <img src={assets.User} alt="users" className="w-6 h-6" />,
+  },
+  {
     title: 'Team',
     path: '/team',
     icon: <img src={assets.team} alt="Team" className="w-6 h-6" />,

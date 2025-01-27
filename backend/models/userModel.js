@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema(
                 type: String,
                 sparse: true,
             },
-            leetUser: {
+            leetcodeUser: {
                 type: String,
                 sparse: true,
             },
@@ -50,7 +50,7 @@ const userSchema = new mongoose.Schema(
                 type:String,
                 sparse:true,
             },
-            leetRank:{
+            leetcodeRank:{
                 type:String,
                 sparse:true,
             },

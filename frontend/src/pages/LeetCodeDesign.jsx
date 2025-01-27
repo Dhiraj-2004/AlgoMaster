@@ -5,12 +5,14 @@ import { assets } from "../assets/assets";
 import useUserData from "../component/hook/useUserData";
 import useCollegeRank from "../component/hook/useCollegeRank";
 
+
 const LeetCodeDesign = ({ data }) => {
   const { userData, loading } = useUserData();
   const { rankData, totalUsers } = useCollegeRank({
-    username: userData?.usernames?.leetUser,
+    username: userData?.usernames?.leetcodeUser,
     college: userData?.college,
   });
+
 
   const User=data.data;
 
@@ -36,7 +38,7 @@ const LeetCodeDesign = ({ data }) => {
         <div>
           <h1 className="font-bold mt-3 text-2xl">{userData ? userData.name : loading}</h1>
           <div className="flex flex-col items-center font font-semibold ml-3 mb-auto text-zinc-500 dark:text-gray-500 text-sm">
-            <span>#{userData ? userData.usernames.leetUser :loading}</span>
+            <span>#{userData ? userData.usernames.leetcodeUser :loading}</span>
             <span>Rank: {Math.round(User?.userContestRanking?.rating)}</span>
           </div>
         </div>
@@ -72,7 +74,7 @@ const LeetCodeDesign = ({ data }) => {
         <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
           <span className="font-bold text-md text-[#22C55E]">College Rank</span>
           <div>
-            <span className="font-bold text-base">{rankData?.leetRank || "Not Available"}</span>
+            <span className="font-bold text-base">{rankData?.leetcodeRank || "Not Available"}</span>
             <span className="text-zinc-500 text-base">/{totalUsers}</span>
           </div>
         </div> 

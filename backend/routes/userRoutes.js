@@ -10,6 +10,7 @@ const {
     resetPassword,
     insertUsernames,
     updateUsernames,
+    getAllUsers,
     getUserRank,
     getUserData,
     getCodechefUsername,
@@ -32,6 +33,7 @@ router.put("/resetPass", resetPassword);
 router.put("/rank",protect,userRank);
 router.put('/updateUser', protect, updateUsernames);
 
+router.get('/',getAllUsers);
 router.get('/leetcode/:username',leetCode);
 router.get('/userdata',protect,getUserData);
 router.get('/chefuser', protect, getCodechefUsername);
