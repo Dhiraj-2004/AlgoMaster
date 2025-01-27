@@ -12,7 +12,7 @@ const Footer = () => {
                     <span className="text-orange-500">{`{`}</span>
                     <span className="text-indigo-500">Algo</span>
                     <span className="text-orange-500">Masters</span>
-                    <span className="text-orange-500">{`}`}</span>
+                    <span className="text-indigo-500">{`}`}</span>
                     </h1>
                 </div>
                 </NavLink>

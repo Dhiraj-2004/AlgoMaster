@@ -11,6 +11,8 @@ import profile from "./profile.svg"
 import college from "./college.svg";
 import Gmail from "./gamil.svg";
 import User from "./users.svg"
+import Student from "./student.png"
+import AlgoMaster from "./AlgoMaster.png"
 
 export const assets = {
     dropdown,
@@ -25,5 +27,7 @@ export const assets = {
     profile,
     college,
     Gmail,
-    User
+    User,
+    Student,
+    AlgoMaster
 }

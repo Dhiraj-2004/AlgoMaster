@@ -22,7 +22,7 @@ export const Navbar = () => {
             <span className="text-orange-500">{`{`}</span>
             <span className="text-indigo-500">Algo</span>
             <span className="text-orange-500">Masters</span>
-            <span className="text-orange-500">{`}`}</span>
+            <span className="text-indigo-500">{`}`}</span>
           </h1>
         </div>
       </NavLink>
@@ -48,7 +48,23 @@ export const Navbar = () => {
         {isLoggedIn && (
           <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
             <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 text-xl">
-              {["Home", "LeetCode", "CodeChef", "CodeForces"].map((item) => (
+              {/* Home NavLink */}
+              <li key="Home">
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "block py-2 px-3 md:p-0 bg-blue-700 text-white dark:bg-blue-500 dark:text-black rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-400"
+                      : "block py-2 px-3 md:p-0 text-black dark:text-white rounded md:hover:text-blue-700 md:dark:hover:text-blue-400 transition-colors duration-300"
+                  }
+                  aria-current="page"
+                >
+                  Home
+                </NavLink>
+              </li>
+          
+              {/* Other NavLinks */}
+              {["LeetCode", "CodeChef", "CodeForces"].map((item) => (
                 <li key={item}>
                   <NavLink
                     to={`/${item.toLowerCase()}`}

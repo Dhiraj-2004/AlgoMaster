@@ -80,88 +80,56 @@ const Home = () => {
   };
 
   return (
-      <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colo">
-        <div className="flex flex-col xl:flex-row gap-10 items-center justify-center mb-10">
-        {/* Info */}
-        <div id="Card" className="flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
-          <div>
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors">
+      <div
+        className="flex flex-col xl:flex-row items-center justify-center gap-10 xl:gap-0 border border-zinc-300 dark:border-zinc-800 rounded-3xl p-10 w-full sm:w-4/5 xl:w-[70%] mx-auto"
+      >
+        {/* Left Section */}
+        <div className="flex items-center justify-center h-72 w-full xl:w-1/2">
+          <img className="h-full object-contain rounded-2xl sm:rounded-3xl md:rounded-4xl" src={assets.AlgoMaster} alt="AlgoMasters" />
+        </div>
+
+        {/* Right Section */}
+        <div
+          className="flex flex-col items-center justify-between h-72 w-full xl:w-1/2 p-5 ml-2"
+        >
+          <div className="text-center">
             <h1 className="font-bold mt-3 text-2xl">{userData.name}</h1>
-            <div className="flex flex-col items-center font font-semibold ml-3 mb-auto text-zinc-500 dark:text-gray-500 text-sm">
+            <div className="flex flex-col items-center font-semibold mt-1 text-zinc-500 dark:text-gray-500 text-sm">
               <span>#{userData.usernames.leetUser}</span>
               <span>Rank: {data.ranking}</span>
             </div>
           </div>
-          <div className="flex flex-col space-y-6 mt-6">
-            <div className="flex gap-x-2 items-center">
+          <div className="flex flex-col space-y-6 w-full pl-10">
+            <div className="flex gap-x-3 items-center">
               <div className="dark:bg-dark bg-[#c1c1c1] p-2 rounded-lg">
                 <img src={assets.Gmail} alt="Email" className="h-5 w-5" />
               </div>
-              <div className="flex flex-col items-start min-w-0">
+              <div className="flex flex-col items-start">
                 <span className="text-sm font-medium text-zinc-600">Email</span>
-                <span className="text-md font-semibold truncate block">{userData.email}</span>
+                <span className="text-md font-semibold truncate">{userData.email}</span>
               </div>
             </div>
-
-            <div className="flex gap-x-2 items-center">
+            <div className="flex gap-x-3 items-center">
               <div className="dark:bg-dark bg-[#c1c1c1] p-2 rounded-lg">
                 <img src={assets.college} alt="College" className="h-5 w-5" />
               </div>
-              <div className="flex flex-col items-start min-w-0">
+              <div className="flex flex-col items-start">
                 <span className="text-sm font-medium text-zinc-600">College</span>
-                <span className="text-md font-semibold truncate block">{userData.college}</span>
+                <span className="text-md font-semibold truncate">{userData.college}</span>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Leetcode Data */}
-        <div id="Card" className="flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
-          <ProgressContainer data={data} />
-        </div>
-
-        <div id="Card" className="flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72 gap-4">
-          <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
-            <span className="font-bold text-md text-[#22C55E]">College Rank</span>
-            <div>
-              <span className="font-bold text-base">{rankData.leetRank || "Not Available"}</span>
-              <span className="text-zinc-500 text-base">/{totalUsers}</span>
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
-            <span className="font-bold text-md text-[#22C55E]">Easy</span>
-            <div>
-              <span className="font-bold text-base">{data.easySolved}</span>
-              <span className="text-zinc-500 text-base">/{data.totalEasy}</span>
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
-            <span className="font-bold text-md text-[#EAB308]">Medium</span>
-            <div>
-              <span className="font-bold text-base">{data.mediumSolved}</span>
-              <span className="text-zinc-500 text-base">/{data.totalMedium}</span>
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
-            <span className="font-bold text-md text-[#F43F5E]">Hard</span>
-            <div>
-              <span className="font-bold text-base">{data.hardSolved}</span>
-              <span className="text-zinc-500 text-base">/{data.totalHard}</span>
             </div>
           </div>
         </div>
       </div>
-
       {/* Motivation... */}
-      <div className="flex flex-col items-center justify-center m-7">
-        <div className="box text-white bg-white dark:bg-[#15171c] text-center text-lg sm:text-xl m-6 p-6 rounded-2xl border border-orange-200 hover:border-orange-400 hover:shadow-md hover:shadow-orange-200/30 transition-colors duration-300 ease-in-out">
+      <div className="flex flex-col items-center justify-center m-10">
+        <div className="box text-white bg-white dark:bg-[#15171c] text-center text-lg sm:text-xl m-10 p-6 rounded-2xl border border-orange-200 hover:border-orange-400 hover:shadow-md hover:shadow-orange-200/30 transition-colors duration-300 ease-in-out">
           <p className="text-gray-800  dark:text-gray-300">{quote ? `"${quote}"` : "Loading quote..."}</p>
         </div>
       </div>
 
-      <div className="flex justify-center items-center gap-2 text-xl sm:text-4xl pt-5 pb-7">
+      <div className="flex font-semibold justify-center items-center gap-2 text-xl sm:text-4xl pt-5 pb-7">
         <h2 className="text-[#4387f2]">CodeForces</h2>
         <h2 className="text-[#ed4236]">Contests</h2>
       </div>
@@ -202,6 +170,7 @@ const Home = () => {
       <div className="m-11 p-11 text-center sm:text-xl">
         <p className="m-10 p-10 italic">"Empowering coders to track, grow, and challenge their problem-solving prowess across the world’s top platforms."</p>
       </div>
+
     </div>
   );
 };

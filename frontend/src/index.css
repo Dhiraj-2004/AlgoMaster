@@ -62,7 +62,7 @@
   font-style: normal;
 }
 
-/* .navbar {
+.navbar {
   box-shadow:
     rgba(0, 0, 0, 0.17) 0px -2px 5px inset,  
     rgba(0, 0, 0, 0.15) 0px -4px 7px inset,  
@@ -76,7 +76,7 @@
     rgba(50, 50, 93, 0.25) 0px 25px 50px -10px,     
     rgba(0, 0, 0, 0.3) 0px 20px 40px -20px,        
     rgba(20, 76, 131, 0.4) 0px 30px 60px -8px;      
-} */
+}
 
 
 body {
