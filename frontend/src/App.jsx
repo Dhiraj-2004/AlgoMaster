@@ -16,30 +16,36 @@ import Footer from './component/Footer'
 
 const App = () => {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen  transition-colors duration-700">
       <BrowserRouter>
         <ThemeContext>
+          {/* Navbar */}
           <Navbar />
-          <div className='mt-40'>
+
+          {/* Main Content */}
+          <div className="flex-grow mt-40 w-full">
             <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/codechef" element={<Codechef />} />
-            <Route path="/leetcode" element={<Leetcode />} />
-            <Route path="/codeforces" element={<Codeforces />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/add" element={<Add />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/users" element={<AllUserData></AllUserData>} />
-            <Route path="/team" element={<Home></Home>} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/forgot" element={<ForgotPassword />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/codechef" element={<Codechef />} />
+              <Route path="/leetcode" element={<Leetcode />} />
+              <Route path="/codeforces" element={<Codeforces />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/add" element={<Add />} />
+              <Route path="/logout" element={<Logout />} />
+              <Route path="/users" element={<AllUserData />} />
+              <Route path="/team" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/forgot" element={<ForgotPassword />} />
             </Routes>
           </div>
+
+          {/* Footer */}
           <Footer />
         </ThemeContext>
       </BrowserRouter>
     </div>
-  )
-}
+  );
+};
+
 export default App

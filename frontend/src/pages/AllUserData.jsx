@@ -13,6 +13,7 @@ const AllUserData = () => {
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const { theme } = useContext(ThemeContext);
+  const [loader, setLoader] = useState(true);
 
   const entriesPerPage = 20;
 
@@ -23,14 +24,15 @@ const AllUserData = () => {
     "Codeforces",
   ];
 
-  const tableHead = theme === 'dark'
-    ? "px-4 py-2 border border-gray-800 h-16"
-    : "px-4 py-2 border h-14";
+  const tableHead = theme === "dark"
+    ? "px-2 py-2 border border-gray-800 h-12 text-sm"
+    : "px-2 py-2 border h-12 text-sm";
 
   const searchOptions = ["Roll No", "Name", "UserName"];
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoader(true);
       if (!platform || platform === "Select Platform") return;
 
       try {
@@ -45,6 +47,7 @@ const AllUserData = () => {
           `http://localhost:4000/api/user?platform=${site}`
         );
         setUsers(response.data.users);
+        setLoader(false);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -54,25 +57,26 @@ const AllUserData = () => {
   }, [platform]);
 
   const handleSort = (column) => {
-    const newSortOrder = sortColumn === column && sortOrder === "asc" ? "desc" : "asc";
+    const newSortOrder =
+      sortColumn === column && sortOrder === "asc" ? "desc" : "asc";
     setSortColumn(column);
     setSortOrder(newSortOrder);
   };
 
   const sortedUsers = users
     ? [...users].sort((a, b) => {
-      if (sortColumn === "Roll No") {
-        return sortOrder === "asc"
-          ? a.roll.localeCompare(b.roll)
-          : b.roll.localeCompare(a.roll);
-      }
-      if (sortColumn === "Rank") {
-        const rankA = a.ranks?.[`${platform?.toLowerCase()}Rank`] || Infinity;
-        const rankB = b.ranks?.[`${platform?.toLowerCase()}Rank`] || Infinity;
-        return sortOrder === "asc" ? rankA - rankB : rankB - rankA;
-      }
-      return 0;
-    })
+        if (sortColumn === "Roll No") {
+          return sortOrder === "asc"
+            ? a.roll.localeCompare(b.roll)
+            : b.roll.localeCompare(a.roll);
+        }
+        if (sortColumn === "Rank") {
+          const rankA = a.ranks?.[`${platform?.toLowerCase()}Rank`] || Infinity;
+          const rankB = b.ranks?.[`${platform?.toLowerCase()}Rank`] || Infinity;
+          return sortOrder === "asc" ? rankA - rankB : rankB - rankA;
+        }
+        return 0;
+      })
     : [];
 
   const filteredUsers = sortedUsers.filter((user) => {
@@ -106,9 +110,9 @@ const AllUserData = () => {
   };
 
   return (
-    <div className="p-4">
-      <div className="">
-        <div className="mb-4 flex items-start mt-auto">
+    <div className="p-4 w-full xl:w-[90%] lg:w-[90%] m-auto">
+      <div>
+        <div className="mb-4 flex flex-col sm:flex-row items-start sm:items-center">
           <Dropdown
             options={platformOptions}
             value={platform}
@@ -117,34 +121,49 @@ const AllUserData = () => {
           />
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-2">
           <InputField
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={`Search by ${item}`}
           />
-          <div className="w-full mb-2">
-            <Dropdown
-              options={searchOptions}
-              value={item}
-              onChange={(e) => setItem(e.target.value)}
-            />
+          <div className=" -translate-y-1 w-full">
+          <Dropdown
+            options={searchOptions}
+            value={item}
+            onChange={(e) => setItem(e.target.value)}
+          />
           </div>
+          
         </div>
       </div>
 
-      {platform && platform !== "Select Platform" ? (
+      {loader ? (
+        <div className="flex justify-center mt-20">
+          <div className="loader"></div>
+        </div>
+      ) : platform && platform !== "Select Platform" ? (
         users ? (
-          <div className="mt-6">
-            <table className="w-full border-collapse border border-gray-200">
-              <thead className={`${theme === 'dark' ? "bg-zinc-900" : "bg-gray-300"}`}>
+          <div className="mt-10 overflow-x-auto">
+            <table className="w-full border-collapse border border-gray-200 text-sm">
+              <thead
+                className={`${
+                  theme === "dark" ? "bg-zinc-800" : "bg-gray-300"
+                }`}
+              >
                 <tr>
+                  <th className={`${tableHead}`}>Sr</th>
                   <th
                     className={`${tableHead} cursor-pointer`}
                     onClick={() => handleSort("Roll No")}
                   >
-                    Roll No {sortColumn === "Roll No" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
+                    Roll No{" "}
+                    {sortColumn === "Roll No"
+                      ? sortOrder === "asc"
+                        ? "↑"
+                        : "↓"
+                      : ""}
                   </th>
                   <th className={`${tableHead}`}>Name</th>
                   <th className={`${tableHead}`}>Year</th>
@@ -153,17 +172,29 @@ const AllUserData = () => {
                     className={`${tableHead} cursor-pointer`}
                     onClick={() => handleSort("Rank")}
                   >
-                    Rank {sortColumn === "Rank" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
+                    Rank{" "}
+                    {sortColumn === "Rank"
+                      ? sortOrder === "asc"
+                        ? "↑"
+                        : "↓"
+                      : ""}
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {currentEntries && currentEntries.length > 0 ? (
+                {currentEntries.length > 0 ? (
                   currentEntries.map((user, index) => (
                     <tr
                       key={user._id}
-                      className={`text-center ${index % 2 === 0 ? "" : "bg-gray-100"} hover:cursor-pointer ${theme === 'dark' && index % 2 !== 0 ? "bg-zinc-900" : ""}`}
+                      className={`text-center ${
+                        index % 2 === 0 ? "" : "bg-gray-100"
+                      } ${
+                        theme === "dark" && index % 2 !== 0
+                          ? "bg-zinc-900"
+                          : ""
+                      }`}
                     >
+                      <td className={`${tableHead}`}>{index+1}</td>
                       <td className={`${tableHead}`}>{user.roll}</td>
                       <td className={`${tableHead}`}>{user.name}</td>
                       <td className={`${tableHead}`}>{user.year}</td>
@@ -189,7 +220,11 @@ const AllUserData = () => {
               <button
                 onClick={handlePrev}
                 disabled={currentPage === 1}
-                className={`px-4 py-2 ml-[3%] bg-gray-300 rounded-xl  ${theme === 'dark' ? "bg-zinc-700 hover:bg-zinc-900 disabled:bg-gray-600" : "hover:bg-gray-400"}`}
+                className={`px-4 py-2 bg-gray-300 rounded-xl hover:text-blue-500 ${
+                  theme === "dark"
+                    ? "bg-zinc-700 hover:bg-zinc-900 disabled:bg-gray-600"
+                    : "hover:bg-gray-400"
+                } transition-colors duration-500`}
               >
                 Prev
               </button>
@@ -199,7 +234,11 @@ const AllUserData = () => {
               <button
                 onClick={handleNext}
                 disabled={currentPage === totalPages}
-                className={`px-4 py-2 bg-gray-300 mr-[3%] ${theme === 'dark' ? "bg-zinc-700 hover:bg-zinc-900 disabled:bg-gray-600" : "hover:bg-gray-400"} rounded-xl`}
+                className={`px-4 py-2 bg-gray-300 rounded-xl hover:text-blue-500 ${
+                  theme === "dark"
+                    ? "bg-zinc-700 hover:bg-zinc-900 disabled:bg-gray-600"
+                    : "hover:bg-gray-400"
+                } transition-colors duration-500`}
               >
                 Next
               </button>

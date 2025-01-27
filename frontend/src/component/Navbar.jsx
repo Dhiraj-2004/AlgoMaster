@@ -1,5 +1,4 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { assets } from "../assets/assets";
 import Sidebar from "../component/Sidebar";
 import ThemeToggle from "../component/ThemeToggle";
 import { useState, useEffect } from "react";
@@ -14,11 +13,11 @@ export const Navbar = () => {
   }, [navigate]);
 
   return (
-    <nav className="bg-white dark:bg-[#15171c] text-black dark:text-white fixed top-0 left-0 w-full z-50 shadow-md transition-colors duration-300">
+    <nav className="bg-white dark:bg-[#15171c] text-black dark:text-white fixed top-0 left-0 w-full z-50 shadow-md">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-      <NavLink to="/">
+      <NavLink to="/home">
         <div className="w-48 xl:w-48 lg:w-44 md:w-40 sm:w-40 flex justify-center items-center">
-          <h1 className="text-4xl lexend-bold">
+          <h1 className="text-3xl xl:text-4xl lg:text-4xl md:text-2xl sm:text-2xl lexend-bold ml-2">
             <span className="text-orange-500">{`{`}</span>
             <span className="text-indigo-500">Algo</span>
             <span className="text-orange-500">Masters</span>
@@ -70,7 +69,7 @@ export const Navbar = () => {
                     to={`/${item.toLowerCase()}`}
                     className={({ isActive }) =>
                       isActive
-                        ? "block py-2 px-3 md:p-0 bg-blue-700 text-white dark:bg-blue-500 dark:text-black rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-400"
+                        ? "block py-2 px-3 md:p-0 bg-blue-700 text-white  dark:text-black rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-400"
                         : "block py-2 px-3 md:p-0 text-black dark:text-white rounded md:hover:text-blue-700 md:dark:hover:text-blue-400 transition-colors duration-300"
                     }
                     aria-current={item === "Home" ? "page" : undefined}

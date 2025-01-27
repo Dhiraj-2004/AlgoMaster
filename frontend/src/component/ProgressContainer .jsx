@@ -24,7 +24,7 @@ const ProgressContainer = ({ data }) => {
   const hardPercentage = ((hardSolved/ totalhard) * 100).toFixed(2);
 
   return (
-    <div className="">
+    <div>
       <div className="flex space-x-2">
         <CircularProgress percentage={easyPercentage} color="#4caf50" />
         <CircularProgress percentage={mediumPercentage} color="#ffeb3b" />

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
-const InputField = ({ type, value, onChange, placeholder, label }) => {
+const InputField = ({ type, value, onChange, placeholder, label}) => {
   const { theme } = useContext(ThemeContext);
   const [themes, setThemes] = useState(theme);
   useEffect(() => {
@@ -10,7 +10,7 @@ const InputField = ({ type, value, onChange, placeholder, label }) => {
   }, [theme]);
 
   const inputStyles = themes === 'dark'
-    ? 'border-gray-600 bg-gray-800 text-white'
+    ? 'border-gray-600 bg-zinc-800 text-white'
     : 'border-gray-300 bg-white text-black';
 
   const labelStyles = themes === 'dark'

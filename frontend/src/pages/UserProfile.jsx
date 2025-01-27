@@ -1,6 +1,6 @@
 import axios from "axios";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import LeetCodeDesign from "./LeetCodeDesign";
 import CodeChefDesign from "./CodeChefDesign";
 import CodeForcesDesign from "./CodeForcesDesign";
@@ -41,7 +41,7 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
     if (!username) return;
     const fetchUserData = async () => {
       try {
-        setLoader(true);
+        setLoader(true)
         const response = await axios.get(`${apiEndpoint}/${username}`);
         setUserData(response.data);
 
@@ -76,7 +76,7 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
   return (
     <div>
       {loader ? (
-        <div className="flex flex-col gap-6 items-center justify-center mt-60">
+        <div className="flex flex-col gap-6 items-center justify-center mt-40">
           <div className="loader"></div>
           {showUpdateMessage && (
             <NavLink

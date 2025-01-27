@@ -17,7 +17,7 @@ const Dropdown = ({ options, value, onChange, label }) => {
   };
 
   const inputStyles = (themes === 'dark')
-    ? 'border-gray-600 bg-gray-800'
+    ? 'border-gray-600 bg-zinc-800'
     : 'border-gray-300 bg-white text-black';
 
   const labelStyles = themes === 'dark'
