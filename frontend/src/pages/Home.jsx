@@ -13,13 +13,11 @@ const Home = () => {
     college: "XYZ University",
   };
 
-  // Hardcoded values for rank data
   const rankData = {
     leetRank: 1,
   };
   const totalUsers = 9;
 
-  // Hardcoded values for Leetcode data
   const data = {
     ranking: 5,
     easySolved: 45,
@@ -30,11 +28,25 @@ const Home = () => {
     totalHard: 20,
   };
 
-  // Fetching the daily quotes...
   useEffect(() => {
-    fetch('https://api.quotable.io/quotes/random?tags=technology,famous-quotes')
-      .then((response) => response.json())
-      .then((data) => setQuote(data[0].content));
+    fetch('https://programming-quotesapi.vercel.app/api/random')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data && data.author && data.quote) {
+          setQuote(`${data.quote} — ${data.author}`);
+        } else {
+          setQuote("No quote available at the moment.");
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch the quote:", error);
+        setQuote("Perhaps the central problem we face in all of computer science is how we are to get to the situation where we build on top of the work of others rather than redoing so much of it in a trivially different way. — Richard Hamming");
+      });
   }, []);
 
   useEffect(() => {
@@ -51,7 +63,7 @@ const Home = () => {
             .sort((a, b) => a.startTimeSeconds - b.startTimeSeconds)
             .slice(0, 2);
   
-            setContest(upcoming);
+          setContest(upcoming);
         } else {
           console.error("Error fetching contests:", data.comment);
         }
@@ -66,13 +78,12 @@ const Home = () => {
   const handleNavigate = (contestId) => {
     window.open(`https://codeforces.com/contest/${contestId}`, "_blank");
   };
-  
-  
+
   return (
-    <div className="w-full h-full">
-      <div className="flex flex-col xl:flex-row gap-10 items-center justify-center mb-10">
+      <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colo">
+        <div className="flex flex-col xl:flex-row gap-10 items-center justify-center mb-10">
         {/* Info */}
-        <div className="box flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
+        <div id="Card" className="flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
           <div>
             <h1 className="font-bold mt-3 text-2xl">{userData.name}</h1>
             <div className="flex flex-col items-center font font-semibold ml-3 mb-auto text-zinc-500 dark:text-gray-500 text-sm">
@@ -104,11 +115,11 @@ const Home = () => {
         </div>
 
         {/* Leetcode Data */}
-        <div className="box flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
+        <div id="Card" className="flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
           <ProgressContainer data={data} />
         </div>
 
-        <div className="box flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72 gap-4">
+        <div id="Card" className="flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72 gap-4">
           <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
             <span className="font-bold text-md text-[#22C55E]">College Rank</span>
             <div>
@@ -145,8 +156,8 @@ const Home = () => {
 
       {/* Motivation... */}
       <div className="flex flex-col items-center justify-center m-7">
-        <div className="box bg-[#000004] text-white text-center text-lg sm:text-xl m-10 p-5 rounded-2xl border border-zinc-300 dark:border-zinc-800 animate-fill">
-          {quote ? `"${quote}"` : "Loading quote..."}
+        <div className="box text-white bg-white dark:bg-[#15171c] text-center text-lg sm:text-xl m-6 p-6 rounded-2xl border border-orange-200 hover:border-orange-400 hover:shadow-md hover:shadow-orange-200/30 transition-colors duration-300 ease-in-out">
+          <p className="text-gray-800  dark:text-gray-300">{quote ? `"${quote}"` : "Loading quote..."}</p>
         </div>
       </div>
 
@@ -156,14 +167,14 @@ const Home = () => {
       </div>
 
       <div className="flex flex-col xl:flex-row gap-20 items-center justify-center m-10">
-        <div className="w-full p-6 text-white rounded-2xl border border-transparent hover:border-blue-500 hover:shadow-lg hover:shadow-indigo-500/25 text-center transparent-bg">
+        <div className="w-full text-gray-800 dark:text-gray-300 p-6 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 hover:shadow-[0_0_15px_5px_rgba(75,0,130,0.7)] text-center transparent-bg">
           <h1 className="text-lg sm:text-2xl pb-2">Upcoming Contest 1</h1>
           {contest.length > 0 ? (
             <div className="text-lg" key={contest[0].id}>
               <h2>{`Contest 1: ${contest[0].name}`}</h2>
               <p>{`Start Time: ${new Date(contest[0].startTimeSeconds * 1000).toLocaleString()}`}</p>
               <p>{`Duration: ${contest[0].durationSeconds / 3600} hours`}</p>
-              <button onClick={() => handleNavigate(contest[0].id)} className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] transition-colors duration-500 ease-in-sine">
+              <button onClick={() => handleNavigate(contest[0].id)} className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] hover:text-white transition-colors duration-500 ease-in-sine">
                 Enter Contest
               </button>
             </div>
@@ -172,14 +183,14 @@ const Home = () => {
           )}
         </div>
 
-        <div className="w-full p-6 text-white rounded-2xl border border-transparent hover:border-blue-500 hover:shadow-lg hover:shadow-indigo-500/25 text-center transparent-bg">
+        <div className="w-full text-gray-800 dark:text-gray-300 p-6 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 hover:shadow-[0_0_15px_5px_rgba(75,0,130,0.7)] text-center transparent-bg">
           <h1 className="text-lg sm:text-2xl pb-2">Upcoming Contest 2</h1>
           {contest.length > 1 ? (
             <div className="text-lg" key={contest[1].id}>
               <h2>{`Contest 1: ${contest[1].name}`}</h2>
               <p>{`Start Time: ${new Date(contest[1].startTimeSeconds * 1000).toLocaleString()}`}</p>
               <p>{`Duration: ${contest[1].durationSeconds / 3600} hours`}</p>
-              <button onClick={() => handleNavigate(contest[0].id)} className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] transition-colors duration-500 ease-in-sine">
+              <button onClick={() => handleNavigate(contest[0].id)} className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] hover:text-white transition-colors duration-500 ease-in-sine">
                 Enter Contest
               </button>
             </div>
@@ -196,3 +207,4 @@ const Home = () => {
 };
 
 export default Home;
+

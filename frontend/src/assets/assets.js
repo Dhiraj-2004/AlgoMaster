@@ -10,7 +10,6 @@ import about from "./about.svg"
 import profile from "./profile.svg"
 import college from "./college.svg";
 import Gmail from "./gamil.svg";
-import Logo from "./logo.png"
 import User from "./users.svg"
 
 export const assets = {
@@ -26,7 +25,5 @@ export const assets = {
     profile,
     college,
     Gmail,
-    Logo,
     User
-    
 }

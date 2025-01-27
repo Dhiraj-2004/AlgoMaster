@@ -12,6 +12,7 @@ import Logout from './component/Logout'
 import ForgotPassword from './component/ForgotPassword'
 import Profile from './pages/Profile'
 import AllUserData from './pages/AllUserData'
+import Footer from './component/Footer'
 
 const App = () => {
   return (

@@ -1,12 +1,22 @@
 import { IoMail } from "react-icons/io5";
-import { assets } from "../assets/assets.js"
+import { NavLink } from "react-router-dom";
 
 const Footer = () => {
     return (
         <div className="min-h-[200px] w-full bg-[#15171c] text-white">
             <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-8 py-8 items-center">
                 <div className="flex flex-col items-center gap-y-3 px-3 text-center xl:mt-7 lg:mt-7">
-                    <img className="ml-5 font-bold cursor-pointer xl:text-3xl lg:text-3xl md:text-3xl sm:text-3xl text-3xl" src={assets.Logo} alt="Logo"></img>
+                <NavLink to="/">
+                <div className="w-48 xl:w-48 lg:w-44 md:w-40 sm:w-40 flex justify-center items-center">
+                    <h1 className="text-4xl lexend-bold">
+                    <span className="text-orange-500">{`{`}</span>
+                    <span className="text-indigo-500">Algo</span>
+                    <span className="text-orange-500">Masters</span>
+                    <span className="text-orange-500">{`}`}</span>
+                    </h1>
+                </div>
+                </NavLink>
+
                     <p className="text-sm max-w-[400px] font-normal sm:text-lg">The Ultimate Guide to Ace Success</p>
                 </div>
 

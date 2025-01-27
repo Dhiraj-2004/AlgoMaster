@@ -55,6 +55,13 @@
     rgba(20, 76, 131, 0.4) 0px 40px 80px -10px;
 }
 
+.lexend-bold {
+  font-family: "Lexend", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
 /* .navbar {
   box-shadow:
     rgba(0, 0, 0, 0.17) 0px -2px 5px inset,  
@@ -70,3 +77,12 @@
     rgba(0, 0, 0, 0.3) 0px 20px 40px -20px,        
     rgba(20, 76, 131, 0.4) 0px 30px 60px -8px;      
 } */
+
+
+body {
+  @apply bg-white text-black; /* Default light mode styles */
+}
+
+.dark body {
+  @apply bg-black text-white; /* Dark mode styles */
+}
