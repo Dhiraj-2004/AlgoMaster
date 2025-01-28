@@ -25,6 +25,7 @@ const App = () => {
           {/* Main Content */}
           <div className="flex-grow mt-40 w-full">
             <Routes>
+              <Route path='/' element={<Home></Home>}></Route>
               <Route path="/home" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/codechef" element={<Codechef />} />
