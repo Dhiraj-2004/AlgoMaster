@@ -26,9 +26,19 @@ const ProgressContainer = ({ data }) => {
   return (
     <div>
       <div className="flex space-x-2">
-        <CircularProgress percentage={easyPercentage} color="#4caf50" />
-        <CircularProgress percentage={mediumPercentage} color="#ffeb3b" />
-        <CircularProgress percentage={hardPercentage} color="#f44336" />
+        <div className="flex flex-col items-center gap-3">
+          <CircularProgress percentage={easyPercentage} color="#4caf50" />
+          <p className="text-[#4caf50] text-lg">Easy</p>
+        </div>
+        <div className="flex flex-col items-center gap-3">
+          <CircularProgress percentage={mediumPercentage} color="#ffeb3b" />
+          <p className="text-[#ffeb3b] text-lg">Medium</p>
+        </div>
+        <div className="flex flex-col items-center gap-3">
+          <CircularProgress percentage={hardPercentage} color="#f44336" />
+          <p className="text-[#f44336] text-lg">Hard</p>
+        </div>
+        
       </div>
     </div>
   );

@@ -12,17 +12,6 @@ const Home = () => {
     college: "XYZ University",
   };
 
-
-  const data = {
-    ranking: 5,
-    easySolved: 45,
-    totalEasy: 50,
-    mediumSolved: 30,
-    totalMedium: 40,
-    hardSolved: 15,
-    totalHard: 20,
-  };
-
   useEffect(() => {
     fetch('https://programming-quotesapi.vercel.app/api/random')
       .then((response) => {
