@@ -73,10 +73,10 @@ const Home = () => {
           />
         </div>
       </div>
-      {/* Motivation... */}
+      {/* Motivation */}
       <div className="flex flex-col items-center justify-center m-10">
         <div className="box text-white bg-white dark:bg-[#15171c] text-center text-lg sm:text-xl m-10 p-6 rounded-2xl border border-orange-200 hover:border-orange-400 hover:shadow-md hover:shadow-orange-200/30 transition-colors duration-300 ease-in-out">
-          <p className="text-gray-800  dark:text-gray-300">{quote ? `"${quote}"` : "Loading quote..."}</p>
+          <p className="text-gray-800 dark:text-gray-300">{quote ? `"${quote}"` : "Loading quote..."}</p>
         </div>
       </div>
 
@@ -85,15 +85,19 @@ const Home = () => {
         <h2 className="text-[#ed4236]">Contests</h2>
       </div>
 
-      <div className="flex flex-col xl:flex-row gap-20 items-center justify-center m-10">
-        <div className="w-full text-gray-800 dark:text-gray-300 p-6 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 hover:shadow-[0_0_15px_5px_rgba(75,0,130,0.7)] text-center transparent-bg">
+      <div className="flex flex-col xl:flex-row gap-6 sm:gap-10 items-center justify-center m-10">
+        {/* Contest 1 */}
+        <div className="w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-6 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 hover:shadow-[0_0_15px_5px_rgba(75,0,130,0.7)] text-center transparent-bg">
           <h1 className="text-lg sm:text-2xl pb-2">Upcoming Contest 1</h1>
           {contest.length > 0 ? (
             <div className="text-lg" key={contest[0].id}>
               <h2>{`Contest 1: ${contest[0].name}`}</h2>
               <p>{`Start Time: ${new Date(contest[0].startTimeSeconds * 1000).toLocaleString()}`}</p>
               <p>{`Duration: ${contest[0].durationSeconds / 3600} hours`}</p>
-              <button onClick={() => handleNavigate(contest[0].id)} className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] hover:text-white transition-colors duration-500 ease-in-sine">
+              <button
+                onClick={() => handleNavigate(contest[0].id)}
+                className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] hover:text-white transition-colors duration-500 ease-in-sine"
+              >
                 Enter Contest
               </button>
             </div>
@@ -102,19 +106,23 @@ const Home = () => {
           )}
         </div>
 
-        <div className="w-full text-gray-800 dark:text-gray-300 p-6 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 text-center transparent-bg">
+        {/* Contest 2 */}
+        <div className="w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-6 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 text-center transparent-bg">
           <h1 className="text-lg sm:text-2xl pb-2">Upcoming Contest 2</h1>
           {contest.length > 1 ? (
             <div className="text-lg" key={contest[1].id}>
-              <h2>{`Contest 1: ${contest[1].name}`}</h2>
+              <h2>{`Contest 2: ${contest[1].name}`}</h2>
               <p>{`Start Time: ${new Date(contest[1].startTimeSeconds * 1000).toLocaleString()}`}</p>
               <p>{`Duration: ${contest[1].durationSeconds / 3600} hours`}</p>
-              <button onClick={() => handleNavigate(contest[0].id)} className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] hover:text-white transition-colors duration-500 ease-in-sine">
+              <button
+                onClick={() => handleNavigate(contest[1].id)}
+                className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] hover:text-white transition-colors duration-500 ease-in-sine"
+              >
                 Enter Contest
               </button>
             </div>
           ) : (
-            <p className="text-lg">There are no upcoming another Contests at the moment.</p>
+            <p className="text-lg">There are no upcoming Contests at the moment.</p>
           )}
         </div>
       </div>
@@ -123,11 +131,8 @@ const Home = () => {
           Empowering coders to track, grow, and challenge their problem-solving prowess across the world’s top platforms.
         </p>
       </div>
-
-
     </div>
   );
 };
 
 export default Home;
-
