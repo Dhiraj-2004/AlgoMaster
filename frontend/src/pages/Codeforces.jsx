@@ -1,7 +1,6 @@
 import UserProfile from "./UserProfile";
 
 
-
 const Codeforces = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   return (

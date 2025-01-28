@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
 const Dropdown = ({ options, value, onChange, label }) => {
-  const [selet, setSelet] = useState(false);
+  const [select, setSelect] = useState(false);
   const { theme } = useContext(ThemeContext);
   const [themes, setThemes] = useState(theme);
 
@@ -12,7 +12,7 @@ const Dropdown = ({ options, value, onChange, label }) => {
   }, [theme]);
 
   const handleSelectChange = (event) => {
-    setSelet(true);
+    setSelect(true);
     onChange(event);
   };
 
@@ -30,7 +30,7 @@ const Dropdown = ({ options, value, onChange, label }) => {
         id="dropdown"
         value={value}
         onChange={handleSelectChange}
-        className={`w-full h-14 p-4 border ${inputStyles} rounded-xl focus:ring-2 focus:ring-[#ff5757] focus:outline-none ${(selet && themes==='dark') ? 'text-white' : (selet && themes==='light') ? '' : 'text-gray-400'}`}
+        className={`w-full h-14 p-4 border ${inputStyles} rounded-xl focus:ring-2 focus:ring-[#ff5757] focus:outline-none ${(select && themes==='dark') ? 'text-white' : (select && themes==='light') ? '' : 'text-gray-400'}`}
       >
         {options.map((option, index) => (
           <option key={index} value={option}>
