@@ -1,19 +1,20 @@
 import { useState, useEffect } from "react";
 import { assets } from "../assets/assets";
+import useUserData from "../component/hook/useUserData";
+import useCollegeRank from "../component/hook/useCollegeRank";
 
 const Home = () => {
+  const { userData, loading } = useUserData();
+  const { rankData } = useCollegeRank({
+    username: userData?.usernames?.leetcodeUser,
+    college: userData?.college,
+  });
+
   const [quote, setQuote] = useState("");
   const [contest, setContest] = useState([]);
 
-  const userData = {
-    name: "John Doe",
-    usernames: { leetUser: "john123" },
-    email: "john.doe@example.com",
-    college: "XYZ University",
-  };
-
   useEffect(() => {
-    fetch('https://programming-quotesapi.vercel.app/api/random')
+    fetch("https://programming-quotesapi.vercel.app/api/random")
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -29,24 +30,26 @@ const Home = () => {
       })
       .catch((error) => {
         console.error("Failed to fetch the quote:", error);
-        setQuote("Perhaps the central problem we face in all of computer science is how we are to get to the situation where we build on top of the work of others rather than redoing so much of it in a trivially different way. — Richard Hamming");
+        setQuote(
+          "Perhaps the central problem we face in all of computer science is how we are to get to the situation where we build on top of the work of others rather than redoing so much of it in a trivially different way. — Richard Hamming"
+        );
       });
   }, []);
 
   useEffect(() => {
     async function fetchContests() {
       const apiUrl = "https://codeforces.com/api/contest.list";
-  
+
       try {
         const response = await fetch(apiUrl);
         const data = await response.json();
-  
+
         if (data.status === "OK") {
           const upcoming = data.result
             .filter((contest) => contest.phase === "BEFORE")
             .sort((a, b) => a.startTimeSeconds - b.startTimeSeconds)
             .slice(0, 2);
-  
+
           setContest(upcoming);
         } else {
           console.error("Error fetching contests:", data.comment);
@@ -55,7 +58,7 @@ const Home = () => {
         console.error("Failed to fetch contest timings:", error);
       }
     }
-  
+
     fetchContests();
   }, []);
 
@@ -70,20 +73,24 @@ const Home = () => {
       >
         {/* Left Section */}
         <div className="flex items-center justify-center h-72 w-full xl:w-1/2">
-          <img className="h-full object-contain rounded-5xl sm:rounded-3xl md:rounded-4xl" src={assets.AlgoMaster} alt="AlgoMasters" />
+          <img
+            className="h-full object-contain rounded-5xl sm:rounded-3xl md:rounded-4xl"
+            src={assets.AlgoMaster}
+            alt="AlgoMasters"
+          />
         </div>
 
         {/* Right Section */}
-        <div
-          className="flex flex-col items-center justify-between h-72 w-full xl:w-1/2 p-5 ml-2"
-        >
+        <div className="flex flex-col items-center justify-between h-72 w-full xl:w-1/2 p-5 ml-2">
           <div className="text-center">
-            <h1 className="font-bold mt-3 text-2xl">{userData.name}</h1>
+            <h1 className="font-bold mt-3 text-2xl">
+              {userData ? userData.name : loading}
+            </h1>
             <div className="flex flex-col items-center font-semibold mt-1 text-zinc-500 dark:text-gray-500 text-sm">
-              <span>#{userData.usernames.leetUser}</span>
-              <span>Rank: {data.ranking}</span>
+              <span>#{userData ? userData.usernames.leetcodeUser : loading}</span>
             </div>
           </div>
+
           <div className="flex flex-col space-y-6 w-full pl-10">
             <div className="flex gap-x-3 items-center">
               <div className="dark:bg-dark bg-[#c1c1c1] p-2 rounded-lg">
@@ -91,20 +98,25 @@ const Home = () => {
               </div>
               <div className="flex flex-col items-start">
                 <span className="text-sm font-medium text-zinc-600">Email</span>
-                <span className="text-md font-semibold truncate">{userData.email}</span>
+                <span className="text-md font-semibold truncate">
+                  {userData?.email}
+                </span>
               </div>
             </div>
+
             <div className="flex gap-x-3 items-center">
               <div className="dark:bg-dark bg-[#c1c1c1] p-2 rounded-lg">
                 <img src={assets.college} alt="College" className="h-5 w-5" />
               </div>
               <div className="flex flex-col items-start">
                 <span className="text-sm font-medium text-zinc-600">College</span>
-                <span className="text-md font-semibold truncate">{userData.college}</span>
+                <span className="text-md font-semibold truncate">
+                  {userData?.college}
+                </span>
               </div>
             </div>
           </div>
-        </div>
+        </div>  
       </div>
       {/* Motivation... */}
       <div className="flex flex-col items-center justify-center m-10">
