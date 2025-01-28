@@ -118,9 +118,12 @@ const Home = () => {
           )}
         </div>
       </div>
-      <div className="m-11 p-11 text-center sm:text-xl">
-        <p className="m-10 p-10 italic">Empowering coders to track, grow, and challenge their problem-solving prowess across the world’s top platforms.</p>
+      <div className="m-4 sm:m-6 lg:m-11 p-4 sm:p-6 lg:p-11 text-center sm:text-xl">
+        <p className="m-4 sm:m-6 lg:m-10 p-4 sm:p-6 lg:p-10 italic">
+          Empowering coders to track, grow, and challenge their problem-solving prowess across the world’s top platforms.
+        </p>
       </div>
+
 
     </div>
   );
