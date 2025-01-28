@@ -80,9 +80,9 @@
 
 
 body {
-  @apply bg-white text-black; /* Default light mode styles */
+  @apply bg-white text-black; 
 }
 
 .dark body {
-  @apply bg-black text-white; /* Dark mode styles */
+  @apply bg-black text-white; 
 }

@@ -1,14 +1,9 @@
 import { useState, useEffect } from "react";
 import { assets } from "../assets/assets";
 import useUserData from "../component/hook/useUserData";
-import useCollegeRank from "../component/hook/useCollegeRank";
 
 const Home = () => {
   const { userData, loading } = useUserData();
-  const { rankData } = useCollegeRank({
-    username: userData?.usernames?.leetcodeUser,
-    college: userData?.college,
-  });
 
   const [quote, setQuote] = useState("");
   const [contest, setContest] = useState([]);
