@@ -10,11 +10,13 @@ const ForgotPassword = () => {
   const [password, setPassword] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const navigate = useNavigate();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 
 
   const handleForgotPassword = async () => {
     try {
-      await axios.post('http://localhost:4000/api/user/forgotPass', { email });
+      await axios.post(`${backendUrl}/api/user/forgotPass`, { email });
       setOtpSent(true);
       toast.success('OTP sent to your email!');
     } catch (error) {
@@ -25,7 +27,7 @@ const ForgotPassword = () => {
 
   const handleChangeForgotPassword = async () => {
     try {
-      await axios.post('http://localhost:4000/api/user/changePassword', {
+      await axios.post(`${backendUrl}/api/user/changePassword`, {
         email,
         otp,
         newPassword: password

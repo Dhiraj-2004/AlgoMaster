@@ -8,11 +8,12 @@ const useUserData = () => {
 
   useEffect(() => {
     if (!userData) {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
       const fetchUserData = async () => {
         try {
           setLoading(true);
           const token = localStorage.getItem("token");
-          const response = await axios.get("http://localhost:4000/api/user/userdata", {
+          const response = await axios.get(`${backendUrl}/api/user/userdata`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

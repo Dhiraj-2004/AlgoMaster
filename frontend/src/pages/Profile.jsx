@@ -11,6 +11,8 @@ const Profile = () => {
   const [codechefUser, setCodechefUser] = useState('');
   const [roll, setRoll] = useState(null);
   const navigate = useNavigate();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  console.log(backendUrl)
 
 
   const handleSubmit = async () => {
@@ -21,8 +23,7 @@ const Profile = () => {
       if (codeforcesUser) payload.codeforcesUser = codeforcesUser;
       if (codechefUser) payload.codechefUser = codechefUser;
       if (roll) payload.roll = roll;
-      const response = await axios.put(
-        "http://localhost:4000/api/user/updateUser",
+      const response = await axios.put(`${backendUrl}/api/user/updateUser`,
         payload,
         {
           headers: {
