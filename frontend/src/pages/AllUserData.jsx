@@ -14,7 +14,7 @@ const AllUserData = () => {
   const [sortOrder, setSortOrder] = useState("asc");
   const { theme } = useContext(ThemeContext);
   const [loader, setLoader] = useState(true);
-
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const entriesPerPage = 20;
 
   const platformOptions = [
@@ -44,7 +44,7 @@ const AllUserData = () => {
             : "leetcodeUser";
 
         const response = await axios.get(
-          `http://localhost:4000/api/user?platform=${site}`
+          `${backendUrl}/api/user?platform=${site}`
         );
         setUsers(response.data.users);
         setLoader(false);
@@ -54,7 +54,7 @@ const AllUserData = () => {
     };
 
     fetchData();
-  }, [platform]);
+  }, [platform,backendUrl]);
 
   const handleSort = (column) => {
     const newSortOrder =

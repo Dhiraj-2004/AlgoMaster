@@ -6,7 +6,7 @@ import Dropdown from '../component/Dropdown';
 import AuthSwitch from '../component/AuthSwitch';
 import SubmitButton from '../component/SubmitButton';
 import { ToastContainer, toast } from 'react-toastify';
-
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const LoginForm = () => {
   const [currentState, setCurrentState] = useState('Login');
@@ -41,7 +41,7 @@ const LoginForm = () => {
     event.preventDefault();
     if (currentState === 'Sign Up') {
       try {
-        const response = await axios.post('http://localhost:4000/api/user/signup', {
+        const response = await axios.post(`${backendUrl}/api/user/signup`, {
           name,
           roll,
           email,
@@ -61,7 +61,7 @@ const LoginForm = () => {
     } else {
       try {
 
-        const response = await axios.post('http://localhost:4000/api/user/login', {
+        const response = await axios.post(`${backendUrl}/api/user/login`, {
           email,
           password,
         });

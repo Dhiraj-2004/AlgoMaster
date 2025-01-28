@@ -1,12 +1,13 @@
 import UserProfile from "./UserProfile"
 
 const Leetcode = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   return (
     <div>
       <UserProfile
         platformUser="leetcodeUser"
-        apiEndpoint="http://localhost:4000/api/user/leetcode"
-        usernameEndpoint="http://localhost:4000/api/user/leetuser"
+        apiEndpoint={`${backendUrl}/api/user/leetcode`}
+        usernameEndpoint={`${backendUrl}/api/user/leetuser`}
       ></UserProfile>
     </div>
   )

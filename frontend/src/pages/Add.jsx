@@ -12,14 +12,14 @@ const Add = () => {
 
 
   const handleSubmit = async () => {
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
     try {
       const token = localStorage.getItem('token');
       const payload = {};
       if (leetcodeUser) payload.leetcodeUser = leetcodeUser;
       if (codeforcesUser) payload.codeforcesUser = codeforcesUser;
       if (codechefUser) payload.codechefUser = codechefUser;
-      await axios.post(
-        "http://localhost:4000/api/user/insertuser",
+      await axios.post(`${backendUrl}/api/user/insertuser`,
         payload,
         {
           headers: {

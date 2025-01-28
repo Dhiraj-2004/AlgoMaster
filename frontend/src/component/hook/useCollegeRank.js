@@ -9,10 +9,11 @@ const useCollegeRank = ({ username, college }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const fetchCollegeRank = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(`http://localhost:4000/api/user/college-rank/${username}/${college}`, {
+        const response = await axios.get(`${backendUrl}/api/user/college-rank/${username}/${college}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

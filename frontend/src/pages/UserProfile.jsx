@@ -11,7 +11,7 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
   const [userData, setUserData] = useState(null);
   const [loader, setLoader] = useState(true);
   const [showUpdateMessage, setShowUpdateMessage] = useState(false);
-
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   // get username
   useEffect(() => {
     const fetchUsername = async () => {
@@ -52,7 +52,7 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
               ? response.data.currentRating
               : response.data.result?.[0].rating;
         const token = localStorage.getItem("token");
-        await axios.put("http://localhost:4000/api/user/rank",
+        await axios.put(`${backendUrl}/api/user/rank`,
           { rank, platformUser, username },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -63,7 +63,7 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
       }
     };
     fetchUserData();
-  }, [username, apiEndpoint, platformUser]);
+  }, [username, apiEndpoint, platformUser,backendUrl]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
