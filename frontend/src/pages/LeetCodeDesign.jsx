@@ -40,7 +40,7 @@ const LeetCodeDesign = ({ data }) => {
       </div>
       <div className="w-full h-full flex flex-col xl:flex-row gap-10 items-center justify-center">
         {/* Info */}
-        <div id="Card" className="flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
+        <div className="card flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
           <div>
             <h1 className="font-bold mt-3 text-2xl">{userData ? userData.name : loading}</h1>
             <div className="flex flex-col items-center font font-semibold ml-3 mb-auto text-zinc-500 dark:text-gray-500 text-sm">
