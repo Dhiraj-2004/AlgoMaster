@@ -24,7 +24,7 @@ const CodeForcesDesign = ({ data }) => {
       </div>
       <div className="w-full flex flex-col xl:flex-row gap-10 items-center justify-center">
         {/* Info */}
-        <div className="card flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
+        <div id="Card" className=" flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
           <div>
             <h1 className="font-bold mt-3 text-2xl">{userData ? userData.name : loading}</h1>
             <div className="flex flex-col items-center font font-semibold ml-3 mb-auto text-zinc-500 dark:text-gray-500 text-sm">
@@ -66,7 +66,7 @@ const CodeForcesDesign = ({ data }) => {
         {/* codeforce Data */}
 
 
-        <div className="card flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72 gap-6">
+        <div id="Card" className="flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72 gap-6">
           <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
               <span className="font-bold text-md text-[#22C55E]">College Rank</span>
               <div>

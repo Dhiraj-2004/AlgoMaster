@@ -40,7 +40,7 @@
   }
 }
 
-.card {
+#Card {
   box-shadow:
     rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
     rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
@@ -80,9 +80,9 @@
 
 
 body {
-  @apply bg-white text-black; /* Default light mode styles */
+  @apply bg-white text-black; 
 }
 
 .dark body {
-  @apply bg-black text-white; /* Dark mode styles */
+  @apply bg-black text-white; 
 }
