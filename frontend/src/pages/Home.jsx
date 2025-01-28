@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { assets } from "../assets/assets";
-import useUserData from "../component/hook/useUserData";
 
 const Home = () => {
-  const { userData, loading } = useUserData();
 
   const [quote, setQuote] = useState("");
   const [contest, setContest] = useState([]);
@@ -74,44 +72,6 @@ const Home = () => {
             alt="AlgoMasters"
           />
         </div>
-
-        {/* Right Section */}
-        <div className="flex flex-col items-center justify-between h-72 w-full xl:w-1/2 p-5 ml-2">
-          <div className="text-center">
-            <h1 className="font-bold mt-3 text-2xl">
-              {userData ? userData.name : loading}
-            </h1>
-            <div className="flex flex-col items-center font-semibold mt-1 text-zinc-500 dark:text-gray-500 text-sm">
-              <span>#{userData ? userData.usernames.leetcodeUser : loading}</span>
-            </div>
-          </div>
-
-          <div className="flex flex-col space-y-6 w-full pl-10">
-            <div className="flex gap-x-3 items-center">
-              <div className="dark:bg-dark bg-[#c1c1c1] p-2 rounded-lg">
-                <img src={assets.Gmail} alt="Email" className="h-5 w-5" />
-              </div>
-              <div className="flex flex-col items-start">
-                <span className="text-sm font-medium text-zinc-600">Email</span>
-                <span className="text-md font-semibold truncate">
-                  {userData?.email}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex gap-x-3 items-center">
-              <div className="dark:bg-dark bg-[#c1c1c1] p-2 rounded-lg">
-                <img src={assets.college} alt="College" className="h-5 w-5" />
-              </div>
-              <div className="flex flex-col items-start">
-                <span className="text-sm font-medium text-zinc-600">College</span>
-                <span className="text-md font-semibold truncate">
-                  {userData?.college}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>  
       </div>
       {/* Motivation... */}
       <div className="flex flex-col items-center justify-center m-10">
