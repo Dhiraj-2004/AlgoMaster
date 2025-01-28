@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { assets } from "../assets/assets";
-import ProgressContainer from "../component/ProgressContainer ";
 
 const Home = () => {
   const [quote, setQuote] = useState("");
@@ -13,10 +12,6 @@ const Home = () => {
     college: "XYZ University",
   };
 
-  const rankData = {
-    leetRank: 1,
-  };
-  const totalUsers = 9;
 
   const data = {
     ranking: 5,
