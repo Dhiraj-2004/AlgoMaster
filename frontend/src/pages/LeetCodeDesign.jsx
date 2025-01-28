@@ -4,6 +4,7 @@ import ProgressContainer from "../component/ProgressContainer ";
 import { assets } from "../assets/assets";
 import useUserData from "../component/hook/useUserData";
 import useCollegeRank from "../component/hook/useCollegeRank";
+import { useState } from "react";
 
 
 const LeetCodeDesign = ({ data }) => {
@@ -13,6 +14,7 @@ const LeetCodeDesign = ({ data }) => {
     college: userData?.college,
   });
 
+  const [problem, setProblem] = useState(null);
 
   const User=data.data;
 
@@ -30,6 +32,58 @@ const LeetCodeDesign = ({ data }) => {
     (submission) => submission.difficulty === "Hard"
   )?.count;
   const totalhard=User?.allQuestionsCount?.find(q => q.difficulty === 'Easy')?.count
+
+  // For Daily problem...
+  useEffect(() => {
+    const fetchDailyProblem = async () => {
+      const url = "https://leetcode.com/graphql";
+      const query = `
+        query questionOfToday {
+          activeDailyCodingChallengeQuestion {
+            date
+            link
+            question {
+              title
+              titleSlug
+              difficulty
+            }
+          }
+        }
+      `;
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ query }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const dailyProblem = data?.data?.activeDailyCodingChallengeQuestion;
+
+        if (dailyProblem) {
+          setProblem({
+            title: dailyProblem.question.title,
+            difficulty: dailyProblem.question.difficulty,
+            link: `https://leetcode.com${dailyProblem.link}`,
+          });
+        } else {
+          console.error("No daily problem found.");
+        }
+      } catch (err) {
+        console.log("Getting error for accessing problem");
+      }
+    };
+
+    fetchDailyProblem();
+  }, []);
+
 
   return (
     <div className="w-full h-full flex flex-col xl:flex-row gap-10 items-center justify-center">
@@ -102,6 +156,24 @@ const LeetCodeDesign = ({ data }) => {
             <span className="text-zinc-500 text-base">/{totalhard}</span>
           </div>
         </div>
+      </div>
+
+      <div className="p-4 border rounded-lg shadow-lg bg-white">
+        <h2 className="text-xl font-bold">LeetCode Daily Problem</h2>
+        <p className="mt-2">
+          <strong>Title:</strong> {problem.title}
+        </p>
+        <p>
+          <strong>Difficulty:</strong> <span className="capitalize">{problem.difficulty}</span>
+        </p>
+        <a
+          href={problem.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >
+          Solve Problem
+        </a>
       </div>
     </div>
   );
