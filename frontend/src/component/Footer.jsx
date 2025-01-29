@@ -36,7 +36,9 @@ const Footer = () => {
                     <h1 className="font-medium">GET IN TOUCH</h1>
                     <div className="flex items-center gap-x-3 justify-center text-[#ABAFB8] cursor-pointer">
                         <IoMail className="w-5 h-5" />
-                        <span>algomaster@gmail.com</span>
+                        <span>
+                            <a href="mailto:algomasters25@gmail.com" className="text-orange-600 dark:text-orange-400 underline">algomasters25@gmail.com</a>
+                        </span>
                     </div>
                 </div>
             </div>
