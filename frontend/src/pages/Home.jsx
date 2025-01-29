@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { assets } from "../assets/assets";
-import useUserData from "../component/hook/useUserData";
 
 const Home = () => {
-  const { userData, loading } = useUserData();
 
   const [quote, setQuote] = useState("");
   const [contest, setContest] = useState([]);
@@ -74,49 +72,11 @@ const Home = () => {
             alt="AlgoMasters"
           />
         </div>
-
-        {/* Right Section */}
-        <div className="flex flex-col items-center justify-between h-72 w-full xl:w-1/2 p-5 ml-2">
-          <div className="text-center">
-            <h1 className="font-bold mt-3 text-2xl">
-              {userData ? userData.name : loading}
-            </h1>
-            <div className="flex flex-col items-center font-semibold mt-1 text-zinc-500 dark:text-gray-500 text-sm">
-              <span>#{userData ? userData.usernames.leetcodeUser : loading}</span>
-            </div>
-          </div>
-
-          <div className="flex flex-col space-y-6 w-full pl-10">
-            <div className="flex gap-x-3 items-center">
-              <div className="dark:bg-dark bg-[#c1c1c1] p-2 rounded-lg">
-                <img src={assets.Gmail} alt="Email" className="h-5 w-5" />
-              </div>
-              <div className="flex flex-col items-start">
-                <span className="text-sm font-medium text-zinc-600">Email</span>
-                <span className="text-md font-semibold truncate">
-                  {userData?.email}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex gap-x-3 items-center">
-              <div className="dark:bg-dark bg-[#c1c1c1] p-2 rounded-lg">
-                <img src={assets.college} alt="College" className="h-5 w-5" />
-              </div>
-              <div className="flex flex-col items-start">
-                <span className="text-sm font-medium text-zinc-600">College</span>
-                <span className="text-md font-semibold truncate">
-                  {userData?.college}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>  
       </div>
-      {/* Motivation... */}
+      {/* Motivation */}
       <div className="flex flex-col items-center justify-center m-10">
         <div className="box text-white bg-white dark:bg-[#15171c] text-center text-lg sm:text-xl m-10 p-6 rounded-2xl border border-orange-200 hover:border-orange-400 hover:shadow-md hover:shadow-orange-200/30 transition-colors duration-300 ease-in-out">
-          <p className="text-gray-800  dark:text-gray-300">{quote ? `"${quote}"` : "Loading quote..."}</p>
+          <p className="text-gray-800 dark:text-gray-300">{quote ? `"${quote}"` : "Loading quote..."}</p>
         </div>
       </div>
 
@@ -125,15 +85,19 @@ const Home = () => {
         <h2 className="text-[#ed4236]">Contests</h2>
       </div>
 
-      <div className="flex flex-col xl:flex-row gap-20 items-center justify-center m-10">
-        <div className="w-full text-gray-800 dark:text-gray-300 p-6 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 hover:shadow-[0_0_15px_5px_rgba(75,0,130,0.7)] text-center transparent-bg">
+      <div className="flex flex-col xl:flex-row gap-6 sm:gap-10 items-center justify-center m-10">
+        {/* Contest 1 */}
+        <div className="w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-6 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 hover:shadow-[0_0_15px_5px_rgba(75,0,130,0.7)] text-center transparent-bg">
           <h1 className="text-lg sm:text-2xl pb-2">Upcoming Contest 1</h1>
           {contest.length > 0 ? (
             <div className="text-lg" key={contest[0].id}>
               <h2>{`Contest 1: ${contest[0].name}`}</h2>
               <p>{`Start Time: ${new Date(contest[0].startTimeSeconds * 1000).toLocaleString()}`}</p>
               <p>{`Duration: ${contest[0].durationSeconds / 3600} hours`}</p>
-              <button onClick={() => handleNavigate(contest[0].id)} className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] hover:text-white transition-colors duration-500 ease-in-sine">
+              <button
+                onClick={() => handleNavigate(contest[0].id)}
+                className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] hover:text-white transition-colors duration-500 ease-in-sine"
+              >
                 Enter Contest
               </button>
             </div>
@@ -142,29 +106,33 @@ const Home = () => {
           )}
         </div>
 
-        <div className="w-full text-gray-800 dark:text-gray-300 p-6 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 text-center transparent-bg">
+        {/* Contest 2 */}
+        <div className="w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-6 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 text-center transparent-bg">
           <h1 className="text-lg sm:text-2xl pb-2">Upcoming Contest 2</h1>
           {contest.length > 1 ? (
             <div className="text-lg" key={contest[1].id}>
-              <h2>{`Contest 1: ${contest[1].name}`}</h2>
+              <h2>{`Contest 2: ${contest[1].name}`}</h2>
               <p>{`Start Time: ${new Date(contest[1].startTimeSeconds * 1000).toLocaleString()}`}</p>
               <p>{`Duration: ${contest[1].durationSeconds / 3600} hours`}</p>
-              <button onClick={() => handleNavigate(contest[0].id)} className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] hover:text-white transition-colors duration-500 ease-in-sine">
+              <button
+                onClick={() => handleNavigate(contest[1].id)}
+                className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] hover:text-white transition-colors duration-500 ease-in-sine"
+              >
                 Enter Contest
               </button>
             </div>
           ) : (
-            <p className="text-lg">There are no upcoming another Contests at the moment.</p>
+            <p className="text-lg">There are no upcoming Contests at the moment.</p>
           )}
         </div>
       </div>
-      <div className="m-11 p-11 text-center sm:text-xl">
-        <p className="m-10 p-10 italic">Empowering coders to track, grow, and challenge their problem-solving prowess across the world’s top platforms.</p>
+      <div className="m-4 sm:m-6 lg:m-11 p-4 sm:p-6 lg:p-11 text-center sm:text-xl">
+        <p className="m-4 sm:m-6 lg:m-10 p-4 sm:p-6 lg:p-10 italic">
+          Empowering coders to track, grow, and challenge their problem-solving prowess across the world’s top platforms.
+        </p>
       </div>
-
     </div>
   );
 };
 
 export default Home;
-

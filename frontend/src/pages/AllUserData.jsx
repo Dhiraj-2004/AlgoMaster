@@ -5,7 +5,7 @@ import InputField from "../component/InputField";
 import { ThemeContext } from "../context/ThemeContext";
 
 const AllUserData = () => {
-  const [platform, setPlatform] = useState(null);
+  const [platform, setPlatform] = useState("LeetCode");
   const [users, setUsers] = useState(null);
   const [search, setSearch] = useState("");
   const [item, setItem] = useState("Roll No");
