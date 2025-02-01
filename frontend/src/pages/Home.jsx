@@ -85,9 +85,9 @@ const Home = () => {
         <h2 className="text-[#ed4236]">Contests</h2>
       </div>
 
-      <div className="flex flex-col xl:flex-row gap-6 sm:gap-10 items-center justify-center m-10">
+      <div className="flex flex-col xl:flex-row gap-8 sm:gap-10 items-center justify-center m-10">
         {/* Contest 1 */}
-        <div className="w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-6 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 hover:shadow-[0_0_15px_5px_rgba(75,0,130,0.7)] text-center transparent-bg">
+        <div className="w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-5 m-4 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 hover:shadow-[0_0_15px_5px_rgba(75,0,130,0.7)] text-center transparent-bg">
           <h1 className="text-lg sm:text-2xl pb-2">Upcoming Contest 1</h1>
           {contest.length > 0 ? (
             <div className="text-lg" key={contest[0].id}>
@@ -107,7 +107,7 @@ const Home = () => {
         </div>
 
         {/* Contest 2 */}
-        <div className="w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-6 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 text-center transparent-bg">
+        <div className="w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-5 m-4 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 text-center transparent-bg">
           <h1 className="text-lg sm:text-2xl pb-2">Upcoming Contest 2</h1>
           {contest.length > 1 ? (
             <div className="text-lg" key={contest[1].id}>
