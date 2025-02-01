@@ -107,7 +107,7 @@ const LoginForm = () => {
             options={colleges}
             value={college}
             onChange={(e) => setCollege(e.target.value)}
-            label="Select Collage"
+            label="Select College"
           />
           <Dropdown
             options={years}
