@@ -27,7 +27,7 @@ const Footer = () => {
                     <h1 className="font-medium cursor-pointer">Quick Links</h1>
                     <div className="text-[#ABAFB8] flex flex-col cursor-pointer">
                         <NavLink to={"/home"}>Home</NavLink>
-                        <NavLink to={"/contact"}>Contact</NavLink>
+                        <NavLink to={"/about"}>About Us</NavLink>
                     </div>
                 </div>
 
