@@ -51,7 +51,7 @@ export const Navbar = () => {
               {["Home", "LeetCode", "CodeChef", "CodeForces"].map((item) => (
                 <li key={item}>
                   <NavLink
-                    to={`/${item.toLowerCase()}`}
+                  to={`/${item.toLowerCase()}`}
                     className={({ isActive }) =>
                       isActive
                         ? "block py-2 px-3 md:p-0 border-b-2 border-orange-500 text-white dark:text-orange-400"
@@ -69,6 +69,5 @@ export const Navbar = () => {
       </div>
     </nav>
   );
-};
-
+}
 export default Navbar;

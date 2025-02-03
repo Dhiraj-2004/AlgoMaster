@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
@@ -10,23 +10,12 @@ const Sidebar = () => {
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
-  const closeSidebar = (e) => {
-    if (!e.target.closest('.sidebar') && !e.target.closest('.sidebar-toggle')) {
-      setSidebar(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', closeSidebar);
-    return () => document.removeEventListener('mousedown', closeSidebar);
-  }, []);
 
   return (
-    <>
-      <IconContext.Provider value={{ color: '' }}>
-      <div className="h-20 flex items-center justify-start bg-white dark:bg-[#15171c]">
+    <IconContext.Provider value={{ color: '' }}>
+      <div className="h-20 flex items-center justify-start">
         <Link to="#" className="ml-8 text-3xl flex items-center sidebar-toggle">
-          <FaIcons.FaBars onClick={showSidebar}  className='text-zinc-700 dark:text-white'/>
+          <FaIcons.FaBars onClick={showSidebar} className="text-white" />
         </Link>
       </div>
 
@@ -41,12 +30,11 @@ const Sidebar = () => {
           </Link>
 
           {SidebarData.map((item, index) => (
-            <SubMenu item={item} key={index} />
+            <SubMenu item={item} key={index} onClick={showSidebar} />
           ))}
         </div>
       </nav>
-      </IconContext.Provider>
-    </>
+    </IconContext.Provider>
   );
 };
 
