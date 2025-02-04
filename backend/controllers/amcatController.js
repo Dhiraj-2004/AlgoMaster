@@ -27,7 +27,7 @@ exports.getUserRankByScores = async (req, res) => {
     const { amcatID } = req.params;
 
     try {
-        
+        // Find the user by amcatID
         const user = await Amcat.findOne({ amcatID });
 
         if (!user) {

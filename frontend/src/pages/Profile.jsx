@@ -25,7 +25,11 @@ const Profile = () => {
       if (codeforcesUser) payload.codeforcesUser = codeforcesUser;
       if (codechefUser) payload.codechefUser = codechefUser;
       if (roll) payload.roll = roll;
-      if (amcatID) payload.amcatID = amcatID;
+      if (amcatID) 
+        {
+          localStorage.setItem("amcatID", amcatID);
+          payload.amcatID = amcatID;
+        }
       const response = await axios.put(`${backendUrl}/api/user/updateUser`,
         payload,
         {
