@@ -10,12 +10,14 @@ const Profile = () => {
   const [codeforcesUser, setCodeforcesUser] = useState('');
   const [codechefUser, setCodechefUser] = useState('');
   const [roll, setRoll] = useState(null);
+  const [amcatID, setAmcatID] = useState("");
   const navigate = useNavigate();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   console.log(backendUrl)
 
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+      event.preventDefault();
     try {
       const token = localStorage.getItem('token');
       const payload = {};
@@ -23,6 +25,7 @@ const Profile = () => {
       if (codeforcesUser) payload.codeforcesUser = codeforcesUser;
       if (codechefUser) payload.codechefUser = codechefUser;
       if (roll) payload.roll = roll;
+      if (amcatID) payload.amcatID = amcatID;
       const response = await axios.put(`${backendUrl}/api/user/updateUser`,
         payload,
         {
@@ -31,6 +34,7 @@ const Profile = () => {
           },
         }
       );
+      console.log(payload);
       toast.success('Data Added successfully!');
       setTimeout(() => { navigate("/") }, 1000)
       console.log('User added successfully:', response.data);
@@ -73,6 +77,14 @@ const Profile = () => {
         onChange={(e) => setCodechefUser(e.target.value)}
         placeholder="CodeChef Username"
         label="CodeChef"
+      />
+
+      <InputField
+        type="text"
+        value={amcatID}
+        onChange={(e) => setAmcatID(e.target.value)}
+        placeholder="AMCAT ID"
+        label="AMCAT ID"
       />
 
       <button

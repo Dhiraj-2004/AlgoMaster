@@ -13,6 +13,7 @@ import ForgotPassword from './component/ForgotPassword'
 import Profile from './pages/Profile'
 import AllUserData from './pages/AllUserData'
 import Footer from './component/Footer'
+import Amcat from './pages/Amcat'
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const App = () => {
               <Route path="/team" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/forgot" element={<ForgotPassword />} />
+              <Route path="/amcat" element={<Amcat />} />
             </Routes>
           </div>
 
