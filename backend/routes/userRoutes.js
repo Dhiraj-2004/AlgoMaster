@@ -3,10 +3,7 @@ const express = require("express");
 const {
     loginUser,
     signUser,
-    forgotPassword,
     userRank,
-    verifyOTPAndChangePassword,
-    resetPassword,
     insertUsernames,
     updateUsernames,
     getAllUsers,
@@ -14,8 +11,13 @@ const {
     getUserData,
 } = require("../controllers/userController");
 
-const{leetCode}=require("../controllers/leetCodeQraphQl");
+const {
+    verifyOTPAndChangePassword,
+    resetPassword,
+    forgotPassword,
+}=require("../controllers/userPassword");
 
+const{leetCode}=require("../controllers/leetCodeQraphQl");
 const { protect } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
