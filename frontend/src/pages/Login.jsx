@@ -49,6 +49,7 @@ const LoginForm = () => {
           college,
           year,
         });
+        
         localStorage.setItem('token', response.data.token);
         toast.success('Sign Up successful!');
         setTimeout(() => {
