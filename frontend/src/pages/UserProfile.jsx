@@ -5,36 +5,31 @@ import LeetCodeDesign from "./LeetCodeDesign";
 import CodeChefDesign from "./CodeChefDesign";
 import CodeForcesDesign from "./CodeForcesDesign";
 import { NavLink } from "react-router-dom";
+import useUserData from "../component/hook/useUserData";
 
-const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
+const UserProfile = ({ platformUser, apiEndpoint }) => {
+  const {userData}=useUserData();
   const [username, setUsername] = useState(null);
-  const [userData, setUserData] = useState(null);
+  const [data, setUserData] = useState(null);
   const [loader, setLoader] = useState(true);
   const [showUpdateMessage, setShowUpdateMessage] = useState(false);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   // get username
-  useEffect(() => {
-    const fetchUsername = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(usernameEndpoint, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
 
-        if (platformUser === "leetcodeUser") {
-          setUsername(response.data.leetcodeUser);
-        } else if (platformUser === "codechefUser") {
-          setUsername(response.data.codechefUser);
-        } else if (platformUser === "codeforcesUser") {
-          setUsername(response.data.codeforcesUser);
-        }
-      } catch (error) {
-        console.error("Error fetching username:", error);
-        setLoader(false);
-      }
-    };
-    fetchUsername();
-  }, [platformUser, usernameEndpoint]);
+  useEffect(() => {
+    if (!userData || !userData.usernames) return;
+    const user = userData.usernames;
+
+    setUsername(
+      platformUser === "leetcodeUser"
+        ? user.leetcodeUser
+        : platformUser === "codechefUser"
+        ? user.codechefUser
+        : platformUser === "codeforcesUser"
+        ? user.codeforcesUser
+        : null
+    );
+  }, [userData, platformUser]);
 
   // get userdata and rankset in data
   useEffect(() => {
@@ -89,9 +84,9 @@ const UserProfile = ({ platformUser, apiEndpoint, usernameEndpoint }) => {
         </div>
       ) : (
         <div>
-          {platformUser === "leetcodeUser" && <LeetCodeDesign data={userData} />}
-          {platformUser === "codechefUser" && <CodeChefDesign data={userData} />}
-          {platformUser === "codeforcesUser" && <CodeForcesDesign data={userData} />}
+          {platformUser === "leetcodeUser" && <LeetCodeDesign data={data} />}
+          {platformUser === "codechefUser" && <CodeChefDesign data={data} />}
+          {platformUser === "codeforcesUser" && <CodeForcesDesign data={data} />}
         </div>
       )}
     </div>

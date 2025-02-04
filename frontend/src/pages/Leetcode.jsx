@@ -7,7 +7,6 @@ const Leetcode = () => {
       <UserProfile
         platformUser="leetcodeUser"
         apiEndpoint={`${backendUrl}/api/user/leetcode`}
-        usernameEndpoint={`${backendUrl}/api/user/leetuser`}
       ></UserProfile>
     </div>
   )

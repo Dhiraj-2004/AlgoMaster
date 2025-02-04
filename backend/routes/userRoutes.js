@@ -12,9 +12,6 @@ const {
     getAllUsers,
     getUserRank,
     getUserData,
-    getCodechefUsername,
-    getCodeforcesUsername,
-    getLeetcodeUsername,
 } = require("../controllers/userController");
 
 const{leetCode}=require("../controllers/leetCodeQraphQl");
@@ -35,9 +32,6 @@ router.put('/updateUser', protect, updateUsernames);
 router.get('/',getAllUsers);
 router.get('/leetcode/:username',leetCode);
 router.get('/userdata',protect,getUserData);
-router.get('/chefuser', protect, getCodechefUsername);
-router.get('/forcesuser', protect, getCodeforcesUsername);
-router.get('/leetuser', protect, getLeetcodeUsername);
 router.get("/college-rank/:username/:college",protect,getUserRank);
 
 module.exports = router;

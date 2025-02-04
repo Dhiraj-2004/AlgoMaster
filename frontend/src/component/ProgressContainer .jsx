@@ -11,12 +11,12 @@ const ProgressContainer = ({ data }) => {
   const mediumSolved = data?.matchedUser?.submitStats?.acSubmissionNum.find(
     (submission) => submission.difficulty === "Medium"
   )?.count;
-  const totalmedium=data?.allQuestionsCount?.find(q => q.difficulty === 'Easy')?.count
+  const totalmedium=data?.allQuestionsCount?.find(q => q.difficulty === 'Medium')?.count
 
   const hardSolved = data?.matchedUser?.submitStats?.acSubmissionNum.find(
     (submission) => submission.difficulty === "Hard"
   )?.count;
-  const totalhard=data?.allQuestionsCount?.find(q => q.difficulty === 'Easy')?.count
+  const totalhard=data?.allQuestionsCount?.find(q => q.difficulty === 'Hard')?.count
 
 
   const easyPercentage = ((easySolved / totaleasy) * 100).toFixed(2);

@@ -41,6 +41,10 @@ const userSchema = new mongoose.Schema(
                 sparse: true,
             },
         },
+        amcatkey:{
+            type: String,
+            required: true,
+        },
         ranks:{
             codechefRank:{
                 type:String,
@@ -61,6 +65,11 @@ const userSchema = new mongoose.Schema(
         otpExpiration: {
             type: Date,
         },
+        amcat: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Amcat",
+        }
+        
     },
     { timestamps: true }
 );

@@ -10,7 +10,7 @@ const Profile = () => {
   const [codeforcesUser, setCodeforcesUser] = useState('');
   const [codechefUser, setCodechefUser] = useState('');
   const [roll, setRoll] = useState(null);
-  const [amcatID, setAmcatID] = useState("");
+  const [amcatkey, setAmcatID] = useState("");
   const navigate = useNavigate();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   console.log(backendUrl)
@@ -25,11 +25,7 @@ const Profile = () => {
       if (codeforcesUser) payload.codeforcesUser = codeforcesUser;
       if (codechefUser) payload.codechefUser = codechefUser;
       if (roll) payload.roll = roll;
-      if (amcatID) 
-        {
-          localStorage.setItem("amcatID", amcatID);
-          payload.amcatID = amcatID;
-        }
+      if (amcatkey) payload.amcatkey = amcatkey;
       const response = await axios.put(`${backendUrl}/api/user/updateUser`,
         payload,
         {
@@ -85,7 +81,7 @@ const Profile = () => {
 
       <InputField
         type="text"
-        value={amcatID}
+        value={amcatkey}
         onChange={(e) => setAmcatID(e.target.value)}
         placeholder="AMCAT ID"
         label="AMCAT ID"

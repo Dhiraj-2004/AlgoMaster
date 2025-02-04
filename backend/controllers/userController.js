@@ -1,10 +1,10 @@
 const User = require("../models/userModel");
+const Amcat=require("../models/amcatModel")
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 const zod = require("zod");
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
-const { AsyncLocalStorage } = require("async_hooks");
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
@@ -380,7 +380,7 @@ exports.resetPassword = async (req, res) => {
 // profiles
 
 exports.insertUsernames = async (req, res) => {
-    const { leetcodeUser, codechefUser, codeforcesUser } = req.body;
+    const { leetcodeUser, codechefUser, codeforcesUser,roll,amcatkey } = req.body;
     try {
         const user = await User.findByIdAndUpdate(
             req.user.id,
@@ -389,6 +389,8 @@ exports.insertUsernames = async (req, res) => {
                     'usernames.leetcodeUser': leetcodeUser,
                     'usernames.codechefUser': codechefUser,
                     'usernames.codeforcesUser': codeforcesUser,
+                    'roll': roll,
+                    'amcatkey': amcatkey,
                 },
             },
             { new: true }
@@ -404,7 +406,8 @@ exports.insertUsernames = async (req, res) => {
 };
 
 exports.updateUsernames = async (req, res) => {
-    const { leetcodeUser, codechefUser, codeforcesUser, roll } = req.body;
+    const { leetcodeUser, codechefUser, codeforcesUser, roll, amcatkey } = req.body;
+    console.log(amcatkey);
     try {
         const user = await User.findByIdAndUpdate(
             req.user.id,
@@ -413,7 +416,8 @@ exports.updateUsernames = async (req, res) => {
                     'usernames.leetcodeUser': leetcodeUser,
                     'usernames.codechefUser': codechefUser,
                     'usernames.codeforcesUser': codeforcesUser,
-                    'roll': roll
+                    'roll': roll,
+                    'amcatkey': amcatkey,
                 },
             },
             { new: true }
@@ -434,12 +438,16 @@ exports.getUserData = async (req, res) => {
             return res.status(401).json({ msg: "Unauthorized" });
         }
         const user = await User.findById(req.user.id);
+        if(!user) return res.status(400).json({msg:"User not found"});
+        
+        const amcatData=await Amcat.findOne({rollNo:user.roll});
         if (user) {
             res.json({
                 name: user.name,
                 email: user.email,
                 college: user.college,
                 usernames: user.usernames,
+                amcat: amcatData || "No Amcat data found",
             });
         } else {
             res.status(404).json({
@@ -454,36 +462,3 @@ exports.getUserData = async (req, res) => {
     }
 };
 
-exports.getCodechefUsername = async (req, res) => {
-    const user = await User.findById(req.user.id);
-    if (user) {
-        res.json({
-            codechefUser: user.usernames.codechefUser
-        });
-    }
-    else {
-        res.status(404).json({ message: 'User not found' });
-    }
-}
-
-exports.getCodeforcesUsername = async (req, res) => {
-    const user = await User.findById(req.user.id);
-    if (user) {
-        res.json({
-            codeforcesUser: user.usernames.codeforcesUser
-        });
-    }
-    else {
-        res.status(404).json({ message: 'User not found' });
-    }
-};
-
-exports.getLeetcodeUsername = async (req, res) => {
-    const user = await User.findById(req.user.id);
-    if (user) {
-        res.json({ leetcodeUser: user.usernames.leetcodeUser });
-    }
-    else {
-        res.status(404).json({ message: 'User not found' });
-    }
-};
