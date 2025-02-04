@@ -43,7 +43,6 @@ const userSchema = new mongoose.Schema(
         },
         amcatkey:{
             type: String,
-            required: true,
         },
         ranks:{
             codechefRank:{

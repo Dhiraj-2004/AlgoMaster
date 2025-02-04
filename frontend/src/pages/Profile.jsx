@@ -26,7 +26,7 @@ const Profile = () => {
       if (codechefUser) payload.codechefUser = codechefUser;
       if (roll) payload.roll = roll;
       if (amcatkey) payload.amcatkey = amcatkey;
-      const response = await axios.put(`${backendUrl}/api/user/updateUser`,
+      await axios.put(`${backendUrl}/api/user/updateUser`,
         payload,
         {
           headers: {
@@ -34,10 +34,8 @@ const Profile = () => {
           },
         }
       );
-      console.log(payload);
       toast.success('Data Added successfully!');
       setTimeout(() => { navigate("/") }, 1000)
-      console.log('User added successfully:', response.data);
     } catch (error) {
       toast.error('Failed to Add!');
       console.error('Error inserting user:', error);

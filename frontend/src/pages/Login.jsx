@@ -16,7 +16,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [college, setCollege] = useState("Select your college");
   const [year, setYear] = useState("Select studying year");
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const colleges = [
     'Select your college',

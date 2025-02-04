@@ -8,6 +8,7 @@ const Add = () => {
   const [leetcodeUser, setLeetUser] = useState('');
   const [codeforcesUser, setCodeforcesUser] = useState('');
   const [codechefUser, setCodechefUser] = useState('');
+  const [amcatkey, setAmcatID] = useState("");
   const navigate = useNavigate();
 
 
@@ -19,6 +20,7 @@ const Add = () => {
       if (leetcodeUser) payload.leetcodeUser = leetcodeUser;
       if (codeforcesUser) payload.codeforcesUser = codeforcesUser;
       if (codechefUser) payload.codechefUser = codechefUser;
+      if (amcatkey) payload.amcatkey = amcatkey;
       await axios.post(`${backendUrl}/api/user/insertuser`,
         payload,
         {
@@ -59,6 +61,14 @@ const Add = () => {
         onChange={(e) => setCodechefUser(e.target.value)}
         placeholder="CodeChef Username"
         label="CodeChef"
+      />
+
+      <InputField
+        type="text"
+        value={amcatkey}
+        onChange={(e) => setAmcatID(e.target.value)}
+        placeholder="AMCAT ID"
+        label="AMCAT ID"
       />
 
       <button

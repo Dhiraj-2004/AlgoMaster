@@ -285,7 +285,7 @@ exports.updateUsernames = async (req, res) => {
 
 // profiles
 exports.insertUsernames = async (req, res) => {
-    const { leetcodeUser, codechefUser, codeforcesUser,roll,amcatkey } = req.body;
+    const { leetcodeUser, codechefUser, codeforcesUser,amcatkey } = req.body;
     try {
         const user = await User.findByIdAndUpdate(
             req.user.id,
@@ -294,7 +294,6 @@ exports.insertUsernames = async (req, res) => {
                     'usernames.leetcodeUser': leetcodeUser,
                     'usernames.codechefUser': codechefUser,
                     'usernames.codeforcesUser': codeforcesUser,
-                    'roll': roll,
                     'amcatkey': amcatkey,
                 },
             },

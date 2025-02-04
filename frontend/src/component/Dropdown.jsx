@@ -27,7 +27,6 @@ const Dropdown = ({ options, value, onChange, label }) => {
     <div className='flex flex-col space-y-2 w-full'>
       <label className={`text-sm font-medium ${labelStyles} text-sm font-medium`}>{label}</label>
       <select
-        id="dropdown"
         value={value}
         onChange={handleSelectChange}
         className={`w-full h-14 p-4 border ${inputStyles} rounded-xl focus:ring-2 focus:ring-[#ff5757] focus:outline-none ${(select && themes==='dark') ? 'text-white' : (select && themes==='light') ? '' : 'text-gray-400'}`}
