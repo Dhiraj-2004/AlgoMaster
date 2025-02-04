@@ -10,13 +10,13 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const LoginForm = () => {
   const [currentState, setCurrentState] = useState('Login');
-  const [name, setName] = useState(null);
-  const [roll, setRoll] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [college, setCollege] = useState(null);
-  const [year, setYear] = useState(null);
-  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [roll, setRoll] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [college, setCollege] = useState("Select your college");
+  const [year, setYear] = useState("Select studying year");
+    const navigate = useNavigate();
 
   const colleges = [
     'Select your college',

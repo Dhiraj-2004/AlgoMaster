@@ -30,7 +30,7 @@ exports.loginUser = async (req, res) => {
 
         if (!user) {
             return res.status(401).json({
-                msg: "User not Exit",
+                msg: "User not Exist",
                 email: email
             })
         }
