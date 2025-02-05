@@ -10,9 +10,12 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="text-3xl transition-transform duration-1000 focus:outline-none bg-zinc-500 dark:bg-zinc-600 rounded-full h-10 w-10"
+      className="flex justify-center items-center text-2xl transition-transform duration-500 transform 
+      bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600 
+      rounded-full h-12 w-12 shadow-md dark:shadow-lg border border-gray-400 dark:border-none
+      focus:outline-none active:scale-90"    
     >
-      {theme === "light" ? <FaRegMoon className="ml-1 font-bold transition-colors duration-500 " /> : <GoSun className="ml-1 text-yellow-400 font-bold transition-colors duration-500"/>}
+      {theme === "light" ? <FaRegMoon className="text-center font-bold transition-colors duration-500 " /> : <GoSun className="text-center text-yellow-400 font-bold transition-colors duration-500"/>}
     </button>
   );
 };

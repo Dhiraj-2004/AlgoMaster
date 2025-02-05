@@ -32,7 +32,7 @@ const LeetCodeDesign = ({ data }) => {
 
 
   return (
-    <div>
+    <div className="rajdhani-regular">
       {/* Title */}
       <div className="flex font-semibold justify-center items-center text-xl sm:text-4xl pt-5 pb-7 mb-10">
         <h2 className="text-indigo-500">Leet</h2>

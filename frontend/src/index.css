@@ -62,6 +62,36 @@
   font-style: normal;
 }
 
+.rajdhani-regular {
+  font-family: "Rajdhani", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.rajdhani-bold {
+  font-family: "Rajdhani", serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.manrope-regular {
+  font-family: "Manrope", serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.manrope-bold {
+  font-family: "Manrope", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+
+
+
+
 .navbar {
   box-shadow:
     rgba(0, 0, 0, 0.17) 0px -2px 5px inset,  

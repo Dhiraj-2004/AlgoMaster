@@ -14,6 +14,7 @@ import Profile from './pages/Profile'
 import AllUserData from './pages/AllUserData'
 import Footer from './component/Footer'
 import Amcat from './pages/Amcat'
+import UpdateProfile from './pages/UpdateProfile'
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
               <Route path="/profile" element={<Profile />} />
               <Route path="/forgot" element={<ForgotPassword />} />
               <Route path="/amcat" element={<Amcat />} />
+              <Route path='/update' element={<UpdateProfile />} />
             </Routes>
           </div>
 

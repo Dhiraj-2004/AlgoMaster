@@ -60,7 +60,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors">
+    <div className="manrope-regular min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors">
       <div
         className="flex flex-col xl:flex-row items-center justify-center gap-10 xl:gap-0 border border-zinc-300 dark:border-zinc-800 rounded-3xl p-10 w-full sm:w-4/5 xl:w-[70%] mx-auto"
       >
@@ -75,12 +75,12 @@ const Home = () => {
       </div>
       {/* Motivation */}
       <div className="flex flex-col items-center justify-center m-10">
-        <div className="box text-white bg-white dark:bg-[#15171c] text-center text-lg sm:text-xl m-10 p-6 rounded-2xl border border-orange-200 hover:border-orange-400 hover:shadow-md hover:shadow-orange-200/30 transition-colors duration-300 ease-in-out">
+        <div className="box text-white bg-white dark:bg-[#15171c] text-center text-lg sm:text-xl m-10 p-6 rounded-2xl border border-indigo-100 hover:border-indigo-200 hover:shadow-md hover:shadow-indigo-200/30 transition-colors duration-300 ease-in-out">
           <p className="text-gray-800 dark:text-gray-300">{quote ? `"${quote}"` : "Loading quote..."}</p>
         </div>
       </div>
 
-      <div className="flex font-semibold justify-center items-center gap-2 text-xl sm:text-4xl pt-5 pb-7">
+      <div className="manrope-bold flex font-semibold justify-center items-center gap-2 text-xl sm:text-4xl pt-5 pb-7">
         <h2 className="text-[#4387f2]">CodeForces</h2>
         <h2 className="text-[#ed4236]">Contests</h2>
       </div>

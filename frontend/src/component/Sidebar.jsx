@@ -15,14 +15,14 @@ const Sidebar = () => {
     <IconContext.Provider value={{ color: '' }}>
       <div className="h-20 flex items-center justify-start">
         <Link to="#" className="ml-8 text-3xl flex items-center sidebar-toggle">
-          <FaIcons.FaBars onClick={showSidebar} className="text-white" />
+          <FaIcons.FaBars onClick={showSidebar} className="text-gray-600 dark:text-white" />
         </Link>
       </div>
 
       <nav
-        className={`bg-white dark:bg-[#15171c] w-72 h-screen fixed top-0 right-0 transition-transform duration-300 z-50 sidebar ${
-          sidebar ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed top-0 right-0 h-screen w-72 transition-transform duration-300 z-50 
+          bg-white shadow-lg border-l border-gray-300 dark:bg-[#15171c] dark:shadow-md dark:border-none 
+          ${sidebar ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className="w-full">
           <Link to="#" className="flex justify-start items-center h-20 text-3xl ml-8">

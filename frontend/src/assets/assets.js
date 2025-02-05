@@ -8,12 +8,16 @@ import team from "./team.svg"
 import support from "./support.svg"
 import about from "./about.svg"
 import profile from "./profile.svg"
-import college from "./college.svg";
+import college from "./college.png";
 import Gmail from "./gamil.svg";
 import User from "./users.svg"
 import Student from "./student.png"
 import Student2 from "./student2.png"
 import AlgoMaster from "./AlgoMaster.png"
+import Profile_icon from "./profile_icon.svg"
+import Year from "./year.png"
+import Amcat from "./amcat.png"
+import Roll from "./roll.png"
 
 export const assets = {
     dropdown,
@@ -31,5 +35,9 @@ export const assets = {
     User,
     Student,
     AlgoMaster,
-    Student2
+    Student2,
+    Profile_icon,
+    Year,
+    Amcat,
+    Roll
 }

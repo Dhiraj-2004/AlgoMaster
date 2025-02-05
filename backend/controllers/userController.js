@@ -257,7 +257,7 @@ exports.getUserRank = async (req, res) => {
 
 
 exports.updateUsernames = async (req, res) => {
-    const { leetcodeUser, codechefUser, codeforcesUser, roll, amcatkey } = req.body;
+    const { leetcodeUser, codechefUser, codeforcesUser, year, amcatkey } = req.body;
     console.log(amcatkey);
     try {
         const user = await User.findByIdAndUpdate(
@@ -267,7 +267,7 @@ exports.updateUsernames = async (req, res) => {
                     'usernames.leetcodeUser': leetcodeUser,
                     'usernames.codechefUser': codechefUser,
                     'usernames.codeforcesUser': codeforcesUser,
-                    'roll': roll,
+                    'year': year,
                     'amcatkey': amcatkey,
                 },
             },
