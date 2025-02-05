@@ -19,16 +19,16 @@ export const Navbar = () => {
       
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
         
-      <NavLink to="/home" className="hover:opacity-85 transition-opacity duration-200">
-        <div className="flex justify-center items-center px-2 md:px-3">
-          <h1 className="text-2xl md:text-[28px] lg:text-3xl xl:text-4xl lexend-bold whitespace-nowrap">
-            <span className="text-orange-500">{`{`}</span>
-            <span className="text-indigo-500">Algo</span>
-            <span className="text-orange-500">Masters</span>
-            <span className="text-indigo-500">{`}`}</span>
-          </h1>
-        </div>
-      </NavLink>
+        <NavLink to="/home" className="hover:opacity-85 transition-opacity duration-200">
+          <div className="flex justify-center items-center px-2 md:px-3">
+            <h1 className="text-3xl md:text-[28px] lg:text-3xl xl:text-xl lexend-bold whitespace-nowrap">
+              <span className="text-orange-500">{`{`}</span>
+              <span className="text-indigo-500">Algo</span>
+              <span className="text-orange-500">Masters</span>
+              <span className="text-indigo-500">{`}`}</span>
+            </h1>
+          </div>
+        </NavLink>
 
         <div className="flex md:order-2 space-x-2 md:space-x-0 rtl:space-x-reverse">
           {!isLoggedIn ? (
@@ -43,8 +43,8 @@ export const Navbar = () => {
               Login
             </button>
           ) : (
-            <div className="flex items-center space-x-2 md:space-x-4">
-              <ThemeToggle className="w-6 h-6 md:w-8 md:h-8" />
+            <div className="flex items-center">
+              <ThemeToggle/>
               <Sidebar />
             </div>
           )}
@@ -61,8 +61,8 @@ export const Navbar = () => {
                     to={`/${item.toLowerCase()}`}
                     className={({ isActive }) =>
                       isActive
-                        ? "block py-2 px-3 md:p-0 border-b-2 border-orange-500 text-black dark:text-orange-400"
-                        : "block py-2 px-3 md:p-0 text-gray-700 dark:text-gray-400 hover:text-orange-500 transition-colors duration-300"
+                        ? "block py-2 px-3 md:p-0 border-b-2 border-orange-500 text-black dark:text-orange-400 "
+                        : "block py-2 px-3 md:p-0 text-gray-700 dark:text-gray-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors duration-300"
                     }
                     aria-current={item === "Home" ? "page" : undefined}
                   >

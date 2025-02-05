@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
@@ -10,12 +10,25 @@ const Sidebar = () => {
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
+  const closeSidebar = (e) => {
+    if (!e.target.closest('.sidebar') && !e.target.closest('.sidebar-toggle')) {
+      setSidebar(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', closeSidebar);
+    return () => document.removeEventListener('mousedown', closeSidebar);
+  }, []);
 
   return (
     <IconContext.Provider value={{ color: '' }}>
       <div className="h-20 flex items-center justify-start">
         <Link to="#" className="ml-8 text-3xl flex items-center sidebar-toggle">
-          <FaIcons.FaBars onClick={showSidebar} className="text-gray-600 dark:text-white" />
+          <FaIcons.FaBars
+            onClick={showSidebar}
+            className="text-gray-600 dark:text-white cursor-pointer"
+          />
         </Link>
       </div>
 
@@ -26,7 +39,10 @@ const Sidebar = () => {
       >
         <div className="w-full">
           <Link to="#" className="flex justify-start items-center h-20 text-3xl ml-8">
-            <AiIcons.AiOutlineClose onClick={showSidebar} />
+            <AiIcons.AiOutlineClose
+              onClick={showSidebar}
+              className="cursor-pointer"
+            />
           </Link>
 
           {SidebarData.map((item, index) => (

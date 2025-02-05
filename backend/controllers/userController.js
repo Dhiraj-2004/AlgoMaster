@@ -3,6 +3,7 @@ const Amcat=require("../models/amcatModel")
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 const zod = require("zod");
+const { use } = require("../routes/userRoutes");
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
@@ -326,6 +327,8 @@ exports.getUserData = async (req, res) => {
                 email: user.email,
                 college: user.college,
                 usernames: user.usernames,
+                year : user.year,
+                roll: user.roll,
                 amcat: amcatData || "No Amcat data found",
             });
         } else {

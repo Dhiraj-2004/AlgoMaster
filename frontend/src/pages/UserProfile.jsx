@@ -71,7 +71,7 @@ const UserProfile = ({ platformUser, apiEndpoint }) => {
   return (
     <div>
       {loader ? (
-        <div className="flex flex-col gap-6 items-center justify-center mt-40">
+        <div className="flex flex-col gap-6 items-center justify-center mt-40 m-auto">
           <div className="loader"></div>
           {showUpdateMessage && (
             <NavLink
