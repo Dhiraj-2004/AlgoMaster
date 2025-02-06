@@ -61,12 +61,10 @@ const Profile = () => {
         <div className="w-full flex justify-center my-10">
           <button
             type="button"
-            className="text-white bg-orange-500 hover:bg-orange-600 dark:bg-orange-600 dark:hover:bg-orange-700 
-              font-medium text-sm md:text-lg px-3 md:px-5 py-1.5 md:py-3 text-center w-20 md:w-28 h-10 md:h-12 
-              rounded-2xl transition-all duration-300 ease-in-out"
+            className="gradient-button gradient-button--large"
             onClick={() => navigate("/update")}
           >
-            Update
+            <span className='gradient-button-text'>Update</span>
           </button>
         </div>
       </div>

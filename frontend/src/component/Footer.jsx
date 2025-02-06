@@ -9,12 +9,12 @@ const Footer = () => {
                 <div className="flex flex-col items-center gap-y-3 px-3 text-center">
                     <NavLink to="/">
                         <div className="w-48 flex justify-center items-center">
-                            <h1 className="text-3xl lexend-bold">
-                                <span className="text-orange-500">{`{`}</span>
-                                <span className="text-indigo-500">Algo</span>
-                                <span className="text-orange-500">Masters</span>
-                                <span className="text-orange-500">{`}`}</span>
-                            </h1>
+                        <h1 className="text-3xl md:text-[28px] lg:text-3xl xl:text-3xl lexend-bold whitespace-nowrap">
+                            <span className="text-orange-500">{`{`}</span>
+                            <span className="logo1">Algo</span>
+                            <span className="logo2">Masters</span>
+                            <span className="text-indigo-500">{`}`}</span>
+                        </h1>
                         </div>
                     </NavLink>
                     <p className="manrope-regular max-w-[400px] font-normal text-base">

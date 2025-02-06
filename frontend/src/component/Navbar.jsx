@@ -14,17 +14,17 @@ export const Navbar = () => {
 
   return (
     <nav className="manrope-regular fixed top-0 left-0 w-full z-50 shadow-md transition-all duration-300 
-      bg-white text-black dark:bg-[#1E1E1E] dark:text-white 
+      bg-white text-black dark:bg-black dark:text-white 
       border-b border-gray-300 dark:border-none">
       
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
         
         <NavLink to="/home" className="hover:opacity-85 transition-opacity duration-200">
           <div className="flex justify-center items-center px-2 md:px-3">
-            <h1 className="text-3xl md:text-[28px] lg:text-3xl xl:text-4xl lexend-bold whitespace-nowrap">
+            <h1 className="text-3xl md:text-[28px] lg:text-3xl xl:text-3xl lexend-bold whitespace-nowrap">
               <span className="text-orange-500">{`{`}</span>
-              <span className="text-indigo-500">Algo</span>
-              <span className="text-orange-500">Masters</span>
+              <span className="logo1">Algo</span>
+              <span className="logo2">Masters</span>
               <span className="text-indigo-500">{`}`}</span>
             </h1>
           </div>

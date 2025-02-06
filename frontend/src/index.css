@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/* ==================== LOADER ==================== */
+
 .loader {
   width: 50px;
   aspect-ratio: 1;
@@ -37,6 +40,9 @@
     transform: rotate(1turn)
   }
 }
+
+
+/* ==================== CARD ==================== */
 
 .card {
   --border-color: rgba(99, 102, 241, 0.2);
@@ -76,6 +82,8 @@
 }
 
 
+/* ==================== FONTS ==================== */
+
 .lexend-bold {
   font-family: "Lexend", serif;
   font-optical-sizing: auto;
@@ -110,6 +118,8 @@
 }
 
 
+/* ==================== NAVBAR ==================== */
+
 .navbar {
   box-shadow:
     rgba(0, 0, 0, 0.17) 0px -2px 5px inset,  
@@ -125,6 +135,9 @@
     rgba(0, 0, 0, 0.3) 0px 20px 40px -20px,        
     rgba(20, 76, 131, 0.4) 0px 30px 60px -8px;      
 }
+
+
+/* ==================== GLOW CARDS ==================== */
 
 .glowCardbig {
   --glow-color1-light: #4f46e5;  /* indigo-600 */
@@ -187,7 +200,7 @@
 
 .glowCard {
   --glow-color-light: #4f46e5;  /* indigo-600 */
-  --glow-color-dark: #4338ca;   /* indigo-700 */
+  --glow-color-dark: #722cce;   /* indigo-700 */
   isolation: isolate;
   position: relative;
   border-radius: 1rem;
@@ -243,12 +256,103 @@
 }
 
 
-@keyframes spin {
+/* ==================== LOGO ==================== */
+
+.logo1 {
+  font-family: "Poppins", sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  background: linear-gradient(
+    to right, 
+    #3808c8, #4b2fff, #1644d9, #4f30d7, #2424ce
+  );
+  background-size: 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: animate-gradient 2.5s linear infinite;
+}
+
+.logo2 {
+  font-family: "Poppins", sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  background: linear-gradient(
+    to right, 
+    #ff5e5e, #eb4d09e9, #ff5e00, #ff7700, #ff5e5e
+  );
+  background-size: 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: animate-gradient 2.5s linear infinite;
+}
+
+@keyframes animate-gradient {
   to {
-    --angle: 360deg;
+    background-position: 200%;
   }
 }
 
+
+/* ==================== BUTTON ==================== */
+
+/* Base button styles */
+.gradient-button {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border: 2px solid #3a6aca;
+  border-radius: 0.75rem;
+  background-color: transparent;
+  color: #1f2937;
+  position: relative;
+  overflow: hidden;
+  transition: all 500ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  cursor: pointer;
+}
+
+/* Dark mode text color */
+.dark .gradient-button {
+  color: #e5e7eb;
+}
+
+/* Hover effects */
+.gradient-button:hover {
+  border-color: transparent;
+  color: white;
+}
+
+/* Gradient overlay */
+.gradient-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, #4387f2, #a34bf7);
+  opacity: 0;
+  transition: opacity 500ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+.gradient-button:hover::before {
+  opacity: 1;
+}
+
+/* Text positioning */
+.gradient-button-text {
+  position: relative;
+  z-index: 10;
+}
+
+.gradient-button--large {
+  padding-left: 2.1rem;
+  padding-right: 2.1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 1.3rem;
+}
+
+
+
+/* ==================== BODY ==================== */
 
 body {
   @apply bg-white text-black; 

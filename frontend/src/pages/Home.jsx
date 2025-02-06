@@ -87,18 +87,15 @@ const Home = () => {
 
       <div className="flex flex-col xl:flex-row gap-8 sm:gap-10 items-center justify-center m-10">
         {/* Contest 1 */}
-        <div className="glowCard relative w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-5 m-4 rounded-2xl text-center border border-indigo-50 hover:border-indigo-100 dark:border-purple-800 hover:shadow-sm hover:shadow-purple-200/30 transition-colors duration-300 ease-in-out">
+        <div className="glowCard relative w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-5 m-4 rounded-2xl text-center border border-indigo-50 hover:border-indigo-100 dark:border-indigo-800 hover:shadow-sm hover:shadow-purple-200/30 transition-colors duration-300 ease-in-out">
           <h1 className="manrope-bold text-lg sm:text-2xl pb-3">Upcoming Contest 1</h1>
           {contest.length > 0 ? (
             <div className="text-lg" key={contest[0].id}>
               <h2>{`Contest 1: ${contest[0].name}`}</h2>
               <p>{`Start Time: ${new Date(contest[0].startTimeSeconds * 1000).toLocaleString()}`}</p>
               <p>{`Duration: ${contest[0].durationSeconds / 3600} hours`}</p>
-              <button
-                onClick={() => handleNavigate(contest[0].id)}
-                className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] hover:text-white transition-colors duration-500 ease-in-sine"
-              >
-                Enter Contest
+              <button onClick={() => handleNavigate(contest[0].id)} className="gradient-button">
+                <span className="gradient-button-text">Enter Contest</span>
               </button>
             </div>
           ) : (
@@ -107,18 +104,15 @@ const Home = () => {
         </div>
 
         {/* Contest 2 */}
-        <div className="glowCard relative w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-5 m-4 rounded-2xl text-center border border-indigo-50 hover:border-indigo-100 dark:border-purple-800 hover:shadow-sm hover:shadow-purple-200/30 transition-colors duration-300 ease-in-out">
+        <div className="glowCard relative w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-5 m-4 rounded-2xl text-center border border-indigo-50 hover:border-indigo-100 dark:border-indigo-800 hover:shadow-sm hover:shadow-purple-200/30 transition-colors duration-300 ease-in-out">
           <h1 className="manrope-bold text-lg sm:text-2xl pb-3">Upcoming Contest 2</h1>
           {contest.length > 1 ? (
             <div className="text-lg" key={contest[1].id}>
               <h2>{`Contest 2: ${contest[1].name}`}</h2>
               <p>{`Start Time: ${new Date(contest[1].startTimeSeconds * 1000).toLocaleString()}`}</p>
               <p>{`Duration: ${contest[1].durationSeconds / 3600} hours`}</p>
-              <button
-                onClick={() => handleNavigate(contest[1].id)}
-                className="mt-4 p-2 border border-gray-500 rounded-xl hover:bg-[#4387f2] hover:text-white transition-colors duration-500 ease-in-sine"
-              >
-                Enter Contest
+              <button onClick={() => handleNavigate(contest[0].id)} className="gradient-button">
+                <span className="gradient-button-text">Enter Contest</span>
               </button>
             </div>
           ) : (
