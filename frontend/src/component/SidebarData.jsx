@@ -3,7 +3,7 @@ import { assets } from "../assets/assets"
 export const SidebarData = [
   {
     title: 'HOME',
-    path: '/',
+    path: '/home',
     icon: <img src={assets.home} alt="Home" className="w-6 h-6" />,
   },
   {

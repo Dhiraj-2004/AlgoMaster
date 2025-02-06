@@ -3,6 +3,7 @@ const userRoutes = require("./routes/userRoutes");
 const amcatRoutes = require("./routes/amcatRoutes");
 const { notFound, errorHandle } = require("./middlewares/errorMiddleware");
 const connectDB = require("./utils/db");
+const cronJob = require("./utils/cronJob");
 const cors = require('cors');
 
 require('dotenv').config();
