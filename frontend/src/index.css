@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 .loader {
   width: 50px;
   aspect-ratio: 1;
@@ -41,19 +39,42 @@
 }
 
 .card {
-  box-shadow:
-    rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
-    rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
-    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset,
-    rgba(0, 0, 0, 0.06) 0px 2px 1px,
-    rgba(0, 0, 0, 0.09) 0px 4px 2px,
-    rgba(0, 0, 0, 0.09) 0px 8px 4px,
-    rgba(0, 0, 0, 0.09) 0px 16px 8px,
-    rgba(0, 0, 0, 0.09) 0px 32px 16px,
-    rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-    rgba(20, 76, 131, 0.4) 0px 40px 80px -10px;
+  --border-color: rgba(99, 102, 241, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --hover-border-color: rgba(99, 102, 241, 0.4);
+  --hover-shadow-color-light: rgba(73, 67, 197, 0.4); /* #4f46e5 with 20% opacity */
+  --hover-shadow-color-dark: rgba(71, 84, 219, 0.5); /* indigo-300 with 15% opacity */
+  
+  position: relative;
+  background: inherit;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 4px var(--shadow-color);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  outline: 1px solid transparent;
+  outline-offset: 0.5px;
 }
+
+.card:hover {
+  border-color: var(--hover-border-color);
+  box-shadow: 0 4px 8px var(--hover-shadow-color-light);
+  outline-color: rgba(99, 102, 241, 0.1);
+  transform: translateY(-2px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card {
+    --border-color: rgba(165, 180, 252, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --hover-border-color: rgba(165, 180, 252, 0.3);
+  }
+  
+  .card:hover {
+    box-shadow: 0 4px 8px var(--hover-shadow-color-dark);
+  }
+}
+
 
 .lexend-bold {
   font-family: "Lexend", serif;
@@ -70,7 +91,7 @@
 
 .rajdhani-bold {
   font-family: "Rajdhani", serif;
-  font-weight: 600;
+  font-weight: 700;
   font-style: normal;
 }
 
@@ -89,9 +110,6 @@
 }
 
 
-
-
-
 .navbar {
   box-shadow:
     rgba(0, 0, 0, 0.17) 0px -2px 5px inset,  
@@ -106,6 +124,129 @@
     rgba(50, 50, 93, 0.25) 0px 25px 50px -10px,     
     rgba(0, 0, 0, 0.3) 0px 20px 40px -20px,        
     rgba(20, 76, 131, 0.4) 0px 30px 60px -8px;      
+}
+
+.glowCardbig {
+  --glow-color1-light: #4f46e5;  /* indigo-600 */
+  --glow-color2-light: #ff9800;  /* amber-500 */
+  --glow-color1-dark: #4338ca;   /* indigo-700 */
+  --glow-color2-dark: #ffb74d;   /* amber-400 */
+  isolation: isolate;
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.glowCardbig::before,
+.glowCardbig::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 1rem;
+  background: conic-gradient(
+    from var(--angle),
+    var(--glow-color1-light),
+    var(--glow-color2-light),
+    var(--glow-color1-light)
+  );
+  animation: spin 3s linear infinite;
+  z-index: -1;
+  mask: 
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  padding: 2px;
+}
+
+.glowCardbig::before {
+  filter: blur(12px);
+  opacity: 0.6;
+  background: conic-gradient(
+    from var(--angle),
+    var(--glow-color1-light),
+    var(--glow-color2-light),
+    var(--glow-color1-light)
+  );
+}
+
+.dark .glowCardbig::before,
+.dark .glowCardbig::after {
+  background: conic-gradient(
+    from var(--angle),
+    var(--glow-color1-dark),
+    var(--glow-color2-dark),
+    var(--glow-color1-dark)
+  );
+}
+
+.glowCard {
+  --glow-color-light: #4f46e5;  /* indigo-600 */
+  --glow-color-dark: #4338ca;   /* indigo-700 */
+  isolation: isolate;
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.glowCard::before,
+.glowCard::after {
+  content: '';
+  position: absolute;
+  inset: -0.75px;
+  border-radius: 1rem;
+  background: conic-gradient(
+    from var(--angle),
+    transparent 25%,
+    var(--glow-color-light) 50%,
+    transparent 75%
+  );
+  animation: spin 3s linear infinite;
+  z-index: -1;
+  mask: 
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  padding: 2px;
+}
+
+.glowCard::before {
+  filter: blur(10px);
+  opacity: 0.7;
+}
+
+.dark .glowCard::before,
+.dark .glowCard::after {
+  background: conic-gradient(
+    from var(--angle),
+    transparent 25%,
+    var(--glow-color-dark) 50%,
+    transparent 75%
+  );
+}
+
+@keyframes spin {
+  to {
+    --angle: 360deg;
+  }
+}
+
+
+@keyframes spin {
+  to {
+    --angle: 360deg;
+  }
 }
 
 

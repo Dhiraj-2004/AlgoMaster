@@ -24,6 +24,12 @@ export const SidebarData = [
 
   },
   {
+    title: 'Amcat',
+    path: '/amcat',
+    icon: <img src={assets.Amcat} alt="Amcat" className="w-6 h-6" />,
+
+  },
+  {
     title: 'CodeForces',
     path: '/codeforces',
     icon: <img src={assets.codeforce} alt="CodeForces" className="w-6 h-6" />,

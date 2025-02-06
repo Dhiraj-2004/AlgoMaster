@@ -3,9 +3,9 @@ import { assets } from '../assets/assets';
 
 const About = () => {
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="manrope-regular flex flex-col justify-center items-center">
       {/* Title */}
-      <div className="flex font-semibold justify-center items-center gap-2 text-xl sm:text-4xl pt-5 pb-7">
+      <div className="rajdhani-bold flex justify-center items-center gap-2 text-xl sm:text-4xl pt-5 pb-7">
         <h2 className="text-indigo-500">About</h2>
         <h2 className="text-orange-500">Us</h2>
       </div>
@@ -27,7 +27,7 @@ const About = () => {
           <div className="mt-5 lg:mt-0 w-full lg:w-1/2 space-y-6">
             {/* Who We Are Section */}
             <div>
-              <h2 className="text-lg sm:text-2xl font-semibold text-indigo-600 dark:text-indigo-400">
+              <h2 className="manrope-bold text-lg sm:text-2xl text-indigo-600 dark:text-indigo-400">
                 Who We Are
               </h2>
               <p className="mt-2 text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -37,7 +37,7 @@ const About = () => {
 
             {/* What We Do Section */}
             <div>
-              <h2 className="text-lg sm:text-2xl font-semibold text-orange-600 dark:text-orange-400">
+              <h2 className="manrope-bold text-lg sm:text-2xl text-orange-600 dark:text-orange-400">
                 What We Do
               </h2>
               <ul className="mt-4 space-y-3">
@@ -73,7 +73,7 @@ const About = () => {
           <div className="mt-5 lg:mt-0 w-full lg:w-1/2 space-y-6">
             {/* Why We Built This Section */}
             <div>
-              <h2 className="text-lg sm:text-2xl font-semibold text-indigo-600 dark:text-indigo-400">
+              <h2 className="manrope-bold text-lg sm:text-2xl font-semibold text-indigo-600 dark:text-indigo-400">
                 Why We Built This
               </h2>
               <p className="mt-2 text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -83,7 +83,7 @@ const About = () => {
 
             {/* Our Vision Section */}
             <div>
-              <h2 className="text-lg sm:text-2xl font-semibold text-orange-600 dark:text-orange-400">
+              <h2 className="manrope-bold text-lg sm:text-2xl font-semibold text-orange-600 dark:text-orange-400">
                 Our Vision
               </h2>
               <p className="mt-2 text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -107,7 +107,7 @@ const About = () => {
       {/* Content Wrapper 3 */}
       <div className="flex flex-col justify-center items-center text-center mt-10 space-y-6">
         <div>
-          <h2 className="text-lg sm:text-2xl font-semibold text-indigo-600 dark:text-indigo-400">
+          <h2 className="manrope-bold text-lg sm:text-2xl font-semibold text-indigo-600 dark:text-indigo-400">
             Get Involved
           </h2>
           <p className="mt-2 text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -115,7 +115,7 @@ const About = () => {
           </p>
         </div>
         <div>
-          <h2 className="text-lg sm:text-2xl font-semibold text-orange-600 dark:text-orange-400">
+          <h2 className="manrope-bold text-lg sm:text-2xl font-semibold text-orange-600 dark:text-orange-400">
             Follow Us
           </h2>
           <p className="mt-2 text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">

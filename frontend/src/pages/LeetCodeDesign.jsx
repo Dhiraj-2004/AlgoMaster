@@ -32,9 +32,9 @@ const LeetCodeDesign = ({ data }) => {
 
 
   return (
-    <div>
+    <div className="manrope-regular">
       {/* Title */}
-      <div className="flex font-semibold justify-center items-center text-xl sm:text-4xl pt-5 pb-7 mb-10">
+      <div className="rajdhani-bold gap-0.5 flex font-semibold justify-center items-center text-xl sm:text-4xl pt-5 pb-7 mb-10">
         <h2 className="text-indigo-500">Leet</h2>
         <h2 className="text-orange-500">Code</h2>
       </div>
@@ -42,7 +42,7 @@ const LeetCodeDesign = ({ data }) => {
         {/* Info */}
         <div className="card flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
           <div>
-            <h1 className="font-bold mt-3 text-2xl">{userData ? userData.name : loading}</h1>
+            <h2 className="manrope-bold mt-3 text-2xl">{userData ? userData.name : loading}</h2>
             <div className="flex flex-col items-center font font-semibold ml-3 mb-auto text-zinc-500 dark:text-gray-500 text-sm">
               <span>#{userData ? userData.usernames.leetcodeUser :loading}</span>
               <span>Rank: {Math.round(User?.userContestRanking?.rating)}</span>

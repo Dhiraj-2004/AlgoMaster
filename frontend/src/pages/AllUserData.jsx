@@ -110,7 +110,7 @@ const AllUserData = () => {
   };
 
   return (
-    <div className="p-4 w-full xl:w-[90%] lg:w-[90%] m-auto">
+    <div className="manrope-regular p-4 w-full xl:w-[90%] lg:w-[90%] m-auto">
       <div>
         <div className="mb-4 flex flex-col sm:flex-row items-start sm:items-center">
           <Dropdown
@@ -153,7 +153,7 @@ const AllUserData = () => {
                 }`}
               >
                 <tr>
-                  <th className={`${tableHead}`}>Sr</th>
+                  <th className={`${tableHead}`}>Sr No.</th>
                   <th
                     className={`${tableHead} cursor-pointer`}
                     onClick={() => handleSort("Roll No")}

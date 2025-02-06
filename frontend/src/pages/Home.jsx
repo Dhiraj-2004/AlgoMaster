@@ -75,20 +75,20 @@ const Home = () => {
       </div>
       {/* Motivation */}
       <div className="flex flex-col items-center justify-center m-10">
-        <div className="box text-white bg-white dark:bg-[#15171c] text-center text-lg sm:text-xl m-10 p-6 rounded-2xl border border-indigo-100 hover:border-indigo-200 hover:shadow-md hover:shadow-indigo-200/30 transition-colors duration-300 ease-in-out">
-          <p className="text-gray-800 dark:text-gray-300">{quote ? `"${quote}"` : "Loading quote..."}</p>
+        <div className="glowCardbig text-center text-lg sm:text-xl m-10 p-6 rounded-2xl relative bg-white dark:bg-[#15171c]">
+          <p className="text-gray-800 dark:text-gray-300 relative z-10">{quote ? `"${quote}"` : "Loading quote..."}</p>
         </div>
       </div>
 
-      <div className="manrope-bold flex font-semibold justify-center items-center gap-2 text-xl sm:text-4xl pt-5 pb-7">
-        <h2 className="text-[#4387f2]">CodeForces</h2>
-        <h2 className="text-[#ed4236]">Contests</h2>
+      <div className="rajdhani-bold flex gap-3 justify-center text-3xl sm:text-4xl mb-12 pb-5">
+        <span className="text-indigo-500">Codechef</span> 
+        <span className="text-orange-500">Contests</span>
       </div>
 
       <div className="flex flex-col xl:flex-row gap-8 sm:gap-10 items-center justify-center m-10">
         {/* Contest 1 */}
-        <div className="w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-5 m-4 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 hover:shadow-[0_0_15px_5px_rgba(75,0,130,0.7)] text-center transparent-bg">
-          <h1 className="text-lg sm:text-2xl pb-2">Upcoming Contest 1</h1>
+        <div className="glowCard relative w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-5 m-4 rounded-2xl text-center border border-indigo-50 hover:border-indigo-100 dark:border-purple-800 hover:shadow-sm hover:shadow-purple-200/30 transition-colors duration-300 ease-in-out">
+          <h1 className="manrope-bold text-lg sm:text-2xl pb-3">Upcoming Contest 1</h1>
           {contest.length > 0 ? (
             <div className="text-lg" key={contest[0].id}>
               <h2>{`Contest 1: ${contest[0].name}`}</h2>
@@ -107,8 +107,8 @@ const Home = () => {
         </div>
 
         {/* Contest 2 */}
-        <div className="w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-5 m-4 rounded-2xl border border-zinc-500 border-transparent hover:border-blue-200 hover:shadow-lg hover:shadow-indigo-500/40 text-center transparent-bg">
-          <h1 className="text-lg sm:text-2xl pb-2">Upcoming Contest 2</h1>
+        <div className="glowCard relative w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-5 m-4 rounded-2xl text-center border border-indigo-50 hover:border-indigo-100 dark:border-purple-800 hover:shadow-sm hover:shadow-purple-200/30 transition-colors duration-300 ease-in-out">
+          <h1 className="manrope-bold text-lg sm:text-2xl pb-3">Upcoming Contest 2</h1>
           {contest.length > 1 ? (
             <div className="text-lg" key={contest[1].id}>
               <h2>{`Contest 2: ${contest[1].name}`}</h2>
