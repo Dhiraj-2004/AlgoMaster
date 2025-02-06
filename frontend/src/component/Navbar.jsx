@@ -17,7 +17,7 @@ export const Navbar = () => {
       bg-white text-black dark:bg-black dark:text-white 
       border-b border-gray-300 dark:border-none">
       
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
         
         <NavLink to="/home" className="hover:opacity-85 transition-opacity duration-200">
           <div className="flex justify-center items-center px-2 md:px-3">

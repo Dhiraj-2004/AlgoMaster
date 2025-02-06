@@ -18,6 +18,8 @@ import Profile_icon from "./profile_icon.svg"
 import Year from "./year.png"
 import Amcat from "./amcat.png"
 import Roll from "./roll.png"
+import Code from "./code.png"
+import Cpp from "./cpp.png"
 
 export const assets = {
     dropdown,
@@ -39,5 +41,7 @@ export const assets = {
     Profile_icon,
     Year,
     Amcat,
-    Roll
+    Roll,
+    Code,
+    Cpp
 }

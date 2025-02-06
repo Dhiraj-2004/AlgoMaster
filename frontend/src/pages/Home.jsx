@@ -61,20 +61,65 @@ const Home = () => {
 
   return (
     <div className="manrope-regular min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors">
-      <div
-        className="flex flex-col xl:flex-row items-center justify-center gap-10 xl:gap-0 border border-zinc-300 dark:border-zinc-800 rounded-3xl p-10 w-full sm:w-4/5 xl:w-[70%] mx-auto"
-      >
-        {/* Left Section */}
-        <div className="flex items-center justify-center h-72 w-full xl:w-1/2">
-          <img
-            className="h-full object-contain rounded-5xl sm:rounded-3xl md:rounded-4xl"
-            src={assets.AlgoMaster}
-            alt="AlgoMasters"
+      <div className="relative h-screen w-full overflow-hidden">
+        {/* Hero Section */}
+        <div className="relative h-full w-full">
+          {/* Scattered Platform Logos */}
+          <img 
+            className="absolute h-12 w-12 -rotate-12 animate-float md:h-16 md:w-16"
+            style={{ top: '20%', left: '20%' }}
+            src={assets.leetcode} 
+            alt="LeetCode" 
           />
+          <img 
+            className="absolute h-12 w-12 rotate-6 animate-float md:h-16 md:w-16"
+            style={{ top: '15%', left: '65%' }}
+            src={assets.codechef} 
+            alt="CodeChef" 
+          />
+          <img 
+            className="absolute h-12 w-12 rotate-6 animate-float md:h-16 md:w-16"
+            style={{ top: '35%', left: '85%' }}
+            src={assets.Cpp} 
+            alt="CodeChef" 
+          />
+          <img 
+            className="absolute h-12 w-12 -rotate-6 animate-float md:h-16 md:w-16"
+            style={{ top: '60%', left: '15%' }}
+            src={assets.codeforce} 
+            alt="Codeforces" 
+          />
+          <img 
+            className="absolute h-12 w-12 rotate-12 animate-float md:h-16 md:w-16"
+            style={{ top: '70%', left: '75%' }}
+            src={assets.Amcat} 
+            alt="AMCAT" 
+          />
+          <img 
+            className="absolute h-12 w-12 rotate-3 animate-float md:h-16 md:w-16"
+            style={{ top: '30%', left: '45%' }}
+            src={assets.Code} 
+            alt="Coding" 
+          />
+
+          {/* Centered Quote */}
+          <div className="absolute left-1/2 top-1/2 z-10 w-4/5 -translate-x-1/2 -translate-y-1/2 transform text-center">
+            <h1 className="text-4xl font-bold text-gray-800 dark:text-white drop-shadow-2xl md:text-6xl">
+              <span className="bg-gradient-to-r from-orange-600 to-purple-800 bg-clip-text text-transparent dark:from-orange-400 dark:to-orange-800">"Merge,</span>
+               
+              <span className="bg-gradient-to-r from-blue-600 to-purple-800 bg-clip-text text-transparent dark:from-blue-400 dark:to-purple-600">
+              Your Coding Universe
+              </span>"
+            </h1>
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-200 md:text-xl">
+            - Where Algorithms Meet Achievement -
+            </p>
+          </div>
         </div>
       </div>
+
       {/* Motivation */}
-      <div className="flex flex-col items-center justify-center m-10">
+      <div className="flex flex-col items-center justify-center mx-10 pb-10">
         <div className="glowCardbig text-center text-lg sm:text-xl m-10 p-6 rounded-2xl relative bg-white dark:bg-[#15171c]">
           <p className="text-gray-800 dark:text-gray-300 relative z-10">{quote ? `"${quote}"` : "Loading quote..."}</p>
         </div>
