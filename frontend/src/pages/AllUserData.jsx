@@ -194,7 +194,7 @@ const AllUserData = () => {
                           : ""
                       }`}
                     >
-                      <td className={`${tableHead}`}>{index+1}</td>
+                      <td className={`${tableHead}`}>{indexOfFirstEntry + index + 1}</td>
                       <td className={`${tableHead}`}>{user.roll}</td>
                       <td className={`${tableHead}`}>{user.name}</td>
                       <td className={`${tableHead}`}>{user.year}</td>

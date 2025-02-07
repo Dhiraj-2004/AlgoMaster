@@ -108,8 +108,8 @@ const Home = () => {
               <span className="bg-gradient-to-r from-orange-600 to-purple-800 bg-clip-text text-transparent dark:from-orange-400 dark:to-orange-800">"Merge,</span>
                
               <span className="bg-gradient-to-r from-blue-600 to-purple-800 bg-clip-text text-transparent dark:from-blue-400 dark:to-purple-600">
-              Your Coding Universe
-              </span>"
+              Your Coding Universe"
+              </span>
             </h1>
             <p className="mt-4 text-lg text-gray-600 dark:text-gray-200 md:text-xl">
             - Where Algorithms Meet Achievement -
