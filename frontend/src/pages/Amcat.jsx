@@ -88,7 +88,7 @@ const Amcat = () => {
       </div>
   
       {amcatRank && (
-        <div className="backdrop-blur-lg bg-white/60 dark:bg-zinc-900/80 p-6 rounded-xl shadow-lg mb-6 transition-all duration-300 hover:shadow-xl">
+        <div className="glowCard backdrop-blur-lg bg-white/60 dark:bg-zinc-900/80 p-6 rounded-xl shadow-lg mb-6 transition-all duration-300 hover:shadow-xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Profile Section */}
             <div className="space-y-4">
@@ -151,7 +151,7 @@ const Amcat = () => {
       )}
 
       {amcatData && (
-        <div className="backdrop-blur-lg bg-white/60 dark:bg-zinc-900/80 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
+        <div className="glowCard backdrop-blur-lg bg-white/60 dark:bg-zinc-900/80 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
           <div className="flex items-center gap-3 mb-8">
             <div className="bg-green-500/10 p-4 rounded-full">
               <ChartBarIcon className="w-8 h-8 text-green-500 dark:text-green-400" />

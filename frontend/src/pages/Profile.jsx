@@ -29,7 +29,7 @@ const Profile = () => {
         </div>
 
         {/* Profile Info */}
-        <div className="backdrop-blur-lg bg-white/60 dark:bg-zinc-900 p-6 pb-8 rounded-lg shadow-sm border border-gray-200/50 dark:border-zinc-600 flex flex-col md:flex-row gap-10 justify-center">
+        <div className="glowCardbig backdrop-blur-lg bg-white/60 dark:bg-zinc-900 p-6 pb-8 rounded-lg shadow-sm flex flex-col md:flex-row gap-10 justify-center">
           
           {/* Left Section */}
           <div className="flex-1 space-y-5">
