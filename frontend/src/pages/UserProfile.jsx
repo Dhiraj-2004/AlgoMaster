@@ -60,13 +60,13 @@ const UserProfile = ({ platformUser, apiEndpoint }) => {
     fetchUserData();
   }, [username, apiEndpoint, platformUser,backendUrl]);
 
-  // useEffect(() => {
-  //   const timeout = setTimeout(() => {
-  //     setShowUpdateMessage(true);
-  //   }, 1000);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowUpdateMessage(true);
+    }, 1000);
 
-  //   return () => clearTimeout(timeout);
-  // }, []);
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <div>
