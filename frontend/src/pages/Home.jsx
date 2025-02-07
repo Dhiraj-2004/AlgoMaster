@@ -67,13 +67,13 @@ const Home = () => {
           {/* Scattered Platform Logos */}
           <img 
             className="absolute h-12 w-12 -rotate-12 animate-float md:h-16 md:w-16"
-            style={{ top: '20%', left: '20%' }}
+            style={{ top: '15%', left: '20%' }}
             src={assets.leetcode} 
             alt="LeetCode" 
           />
           <img 
             className="absolute h-12 w-12 -rotate-12 animate-float md:h-20 md:w-20"
-            style={{ top: '30%', left: '48%' }}
+            style={{ top: '20%', left: '48%' }}
             src={assets.Python} 
             alt="Python" 
           />
@@ -85,25 +85,25 @@ const Home = () => {
           />
           <img 
             className="absolute h-12 w-12 rotate-6 animate-float md:h-16 md:w-16"
-            style={{ top: '38%', left: '85%' }}
+            style={{ top: '38%', left: '80%' }}
             src={assets.Cpp} 
             alt="CodeChef" 
           />
           <img 
             className="absolute h-12 w-12 -rotate-6 animate-float md:h-16 md:w-16"
-            style={{ top: '60%', left: '15%' }}
+            style={{ top: '55%', left: '15%' }}
             src={assets.codeforce} 
             alt="Codeforces" 
           />
           <img 
             className="absolute h-12 w-12 rotate-12 animate-float md:h-16 md:w-16"
-            style={{ top: '70%', left: '65%' }}
+            style={{ top: '65%', left: '65%' }}
             src={assets.Amcat} 
             alt="AMCAT" 
           />
 
           {/* Centered Quote */}
-          <div className="absolute left-1/2 top-1/2 z-10 w-4/5 -translate-x-1/2 -translate-y-1/2 transform text-center">
+          <div className="absolute left-1/2 top-[40%] z-10 w-4/5 -translate-x-1/2 -translate-y-1/2 transform text-center">
             <h1 className="text-4xl font-bold text-gray-800 dark:text-white drop-shadow-2xl md:text-6xl">
               <span className="bg-gradient-to-r from-orange-600 to-purple-800 bg-clip-text text-transparent dark:from-orange-400 dark:to-orange-800">"Merge,</span>
                
