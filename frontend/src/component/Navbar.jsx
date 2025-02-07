@@ -15,7 +15,7 @@ export const Navbar = () => {
   return (
     <nav className="manrope-regular fixed top-0 left-0 w-full z-50 shadow-md transition-all duration-300 
       bg-white text-black dark:bg-black dark:text-white 
-      border-b border-gray-300 dark:border-none">
+      border-b border-gray-300 dark:border-zinc-700 rounded-xl">
       
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
         
