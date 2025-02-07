@@ -9,19 +9,19 @@ const Profile = () => {
   // Helper function to render user details
   const renderUserData = (label, value, icon) => (
     <div className="flex gap-2 sm:gap-3 items-center">
-      <div className="w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-700">
+      <div className="w-8 sm:w-10 h-8 sm:h-10 flex items-center justify-center rounded-lg bg-gray-200 dark:bg-gray-800">
         <img className="h-4 sm:h-6" src={icon} alt={label} />
       </div>
       <div className="text-sm sm:text-lg flex items-center gap-2 flex-wrap">
-        <p className="text-gray-600 dark:text-gray-300 font-semibold whitespace-nowrap">{label}:</p>
+        <p className="text-zinc-800 dark:text-zinc-100 font-semibold whitespace-nowrap">{label}:</p>
         <span className="text-gray-900 dark:text-white break-words">{value || loading}</span>
       </div>
     </div>
   );
 
   return (
-    <div className="flex justify-center min-h-screen px-4">
-      <div className="manrope-regular mx-auto p-5 rounded-lg shadow-lg max-w-6xl xl:[70%] sm:w-[100%]">
+    <div className="flex justify-center min-h-screen px-4 w-full">
+      <div className="manrope-regular mx-auto p- rounded-lg shadow-lg max-w-6xl xl:[70%] sm:w-[100%]">
         {/* Title */}
         <div className="rajdhani-bold flex flex-col sm:flex-row gap-2 justify-center text-xl sm:text-3xl text-center mb-6 sm:mb-8">
           <span className="text-indigo-500">User</span> 
@@ -29,12 +29,12 @@ const Profile = () => {
         </div>
 
         {/* Profile Info */}
-        <div className="glowCardbig backdrop-blur-lg bg-white/60 dark:bg-zinc-900 p-4 sm:p-6 pb-6 sm:pb-8 rounded-lg shadow-sm">
+        <div className="glowCardbig backdrop-blur-lg bg-white/60 dark:bg-zinc-950 p-4 sm:p-6 pb-6 sm:pb-8 rounded-lg shadow-sm">
           
           {/* Left Section */}
           <div className='flex flex-col lg:flex-row justify-center gap-20'>
           <div className="space-y-4 sm:space-y-6">
-            <div className="w-max p-1 sm:p-2 mx-auto rounded-lg bg-gray-200 dark:bg-gray-700">
+            <div className="w-40 p-1 sm:p-2 flex items-center justify-center rounded-lg bg-gray-200 dark:bg-zinc-800">
               <h2 className="manrope-bold text-base sm:text-2xl font-semibold text-zinc-800 dark:text-gray-300">User Data</h2>
             </div>
             {renderUserData('Name', userData?.name, assets.Profile_icon)}
@@ -46,7 +46,7 @@ const Profile = () => {
 
           {/* Right Section */}
           <div className="space-y-4 sm:space-y-6">
-            <div className="w-max p-1 sm:p-2 mx-auto rounded-lg bg-gray-200 dark:bg-gray-700">
+            <div className="w-40 p-1 sm:p-2 flex items-center justify-center rounded-lg bg-gray-200 dark:bg-zinc-800">
               <h2 className="manrope-bold text-base sm:text-2xl font-semibold text-gray-800 dark:text-gray-300">Usernames</h2>
             </div>
             {renderUserData('LeetCode', userData?.usernames?.leetcodeUser, assets.leetcode)}
