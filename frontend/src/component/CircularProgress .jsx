@@ -12,7 +12,7 @@ const CircularProgress = ({ percentage, color }) => {
           r={radius}
           cx="60"
           cy="60"
-          className="fill-none stroke-gray-600"
+          className="fill-none stroke-gray-300 dark:stroke-gray-700"
           strokeWidth="8"
         ></circle>
 
@@ -30,7 +30,7 @@ const CircularProgress = ({ percentage, color }) => {
       </svg>
 
       
-      <span className="absolute inset-0 flex items-center justify-center text-xl font-bold text-gray-600">
+      <span className="absolute inset-0 flex items-center justify-center text-xl font-bold text-gray-700 dark:text-gray-300">
         {percentage}%
       </span>
     </div>

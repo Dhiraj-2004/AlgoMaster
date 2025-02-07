@@ -14,10 +14,9 @@ export const Navbar = () => {
 
   return (
     <nav className="manrope-regular fixed top-0 left-0 w-full z-50 shadow-md transition-all duration-300 
-      bg-white text-black dark:bg-black dark:text-white 
-      border-b border-gray-300 dark:border-zinc-700 rounded-xl">
+      bg-white text-black dark:bg-black dark:text-white ">
       
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         
         <NavLink to="/home" className="hover:opacity-85 transition-opacity duration-200">
           <div className="flex justify-center items-center px-2 md:px-3">

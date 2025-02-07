@@ -1,20 +1,17 @@
 
 import { assets } from '../assets/assets';
+import Title from '../component/PageTitle';
 
 const About = () => {
   return (
     <div className="manrope-regular flex flex-col justify-center items-center">
       {/* Title */}
-      <div className="rajdhani-bold flex justify-center items-center gap-2 text-xl sm:text-4xl pt-5 pb-7">
-        <h2 className="text-indigo-500">About</h2>
-        <h2 className="text-orange-500">Us</h2>
-      </div>
+      <Title text1="About" text2="Us" />
 
-      {/* Content Wrapper */}
-      <div className="navbar flex flex-col rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-4/5 xl:w-[75%] my-5">
+      {/* Content 1 */}
+      <div className="glowCard flex flex-col rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-4/5 xl:w-[75%] my-5">
         {/* Image and Content */}
         <div className="flex flex-col lg:flex-row items-center lg:items-start lg:gap-5 p-2">
-          {/* Image */}
           <div className="w-full lg:w-1/2 h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[30vw] flex items-center justify-center">
             <img
               className="h-full object-contain"
@@ -64,8 +61,8 @@ const About = () => {
         </div>
       </div>
 
-      {/* Content Wrapper 2 */}
-      <div className="navbar flex flex-col rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-4/5 xl:w-[75%] my-20">
+      {/* Content 2 */}
+      <div className="glowCard flex flex-col rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-4/5 xl:w-[75%] my-20">
         {/* Image and Content */}
         <div className="flex flex-col lg:flex-row items-center lg:items-start lg:gap-5 p-2">
 
@@ -92,7 +89,6 @@ const About = () => {
             </div>
           </div>
 
-          {/* Image */}
           <div className="w-full lg:w-1/2 h-48 sm:h-64 md:h-80 lg:h-96 xl:h-[30vw] flex items-center justify-center">
             <img
               className="h-full object-contain"
@@ -104,7 +100,7 @@ const About = () => {
         </div>
       </div>
       
-      {/* Content Wrapper 3 */}
+      {/* Content 3 */}
       <div className="flex flex-col justify-center items-center text-center mt-10 space-y-6">
         <div>
           <h2 className="manrope-bold text-lg sm:text-2xl font-semibold text-indigo-600 dark:text-indigo-400">

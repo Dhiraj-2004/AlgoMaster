@@ -23,10 +23,10 @@ const InputField = ({ type, value, onChange, placeholder, label }) => {
   };
 
   return (
-    <div className="flex flex-col space-y-2 w-full relative">
+    <div className="manrope-regular flex flex-col space-y-2 w-full relative">
       {label && <label className={`text-sm font-medium ${labelStyles}`}>{label}</label>}
       <input
-        className={`w-full h-14 p-4 border ${inputStyles} rounded-xl focus:ring-2 focus:ring-[#ff5757] focus:outline-none pr-12`}
+        className={`w-full h-14 p-4 border ${inputStyles} rounded-xl focus:border-[#ff5757] focus:ring-1 focus:ring-[#ff5757]/30 dark:focus:border-[#60a5fa] dark:focus:ring-[#60a5fa]/30 focus:outline-none pr-12`}
         type={type === 'password' && showPassword ? 'text' : type}
         value={value}
         onChange={onChange}
