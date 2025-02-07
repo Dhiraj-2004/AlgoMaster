@@ -3,6 +3,7 @@ import useAmcatRank from "../component/hook/useAmcatRank";
 import useUserData from "../component/hook/useUserData";
 import { UsersIcon, UserIcon, TrophyIcon, ChartBarIcon } from "@heroicons/react/24/outline";
 import { IdCard } from "lucide-react";
+import PropTypes from "prop-types"
 
 const Amcat = () => {
   const { userData, loading: userLoading, error: userError } = useUserData();
@@ -198,8 +199,14 @@ const Amcat = () => {
 
       </div>
   );
-  
-
 };
+
+Amcat.propTypes={
+  label: PropTypes.object.isRequired,
+  value: PropTypes.object.isRequired,
+  icon: PropTypes.object.isRequired,
+  delta: PropTypes.object.isRequired,
+  max: PropTypes.object.isRequired,
+}
 
 export default Amcat;
