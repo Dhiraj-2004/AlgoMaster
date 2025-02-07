@@ -21,7 +21,7 @@ export const Navbar = () => {
         
         <NavLink to="/home" className="hover:opacity-85 transition-opacity duration-200">
           <div className="flex justify-center items-center px-2 md:px-3">
-            <h1 className="text-3xl md:text-[28px] lg:text-3xl xl:text-3xl lexend-bold whitespace-nowrap">
+            <h1 className="text-2xl lg:text-3xl xl:text-3xl lexend-bold whitespace-nowrap">
               <span className="text-orange-500">{`{`}</span>
               <span className="logo1">Algo</span>
               <span className="logo2">Masters</span>
