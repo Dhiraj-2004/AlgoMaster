@@ -20,6 +20,7 @@ import Amcat from "./amcat.png"
 import Roll from "./roll.png"
 import Code from "./code.png"
 import Cpp from "./cpp.png"
+import Python from "./python.svg"
 
 export const assets = {
     dropdown,
@@ -43,5 +44,5 @@ export const assets = {
     Amcat,
     Roll,
     Code,
-    Cpp
+    Cpp, Python
 }

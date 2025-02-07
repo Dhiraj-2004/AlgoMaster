@@ -72,14 +72,20 @@ const Home = () => {
             alt="LeetCode" 
           />
           <img 
+            className="absolute h-12 w-12 -rotate-12 animate-float md:h-20 md:w-20"
+            style={{ top: '30%', left: '48%' }}
+            src={assets.Python} 
+            alt="Python" 
+          />
+          <img 
             className="absolute h-12 w-12 rotate-6 animate-float md:h-16 md:w-16"
-            style={{ top: '15%', left: '65%' }}
+            style={{ top: '10%', left: '65%' }}
             src={assets.codechef} 
             alt="CodeChef" 
           />
           <img 
             className="absolute h-12 w-12 rotate-6 animate-float md:h-16 md:w-16"
-            style={{ top: '35%', left: '85%' }}
+            style={{ top: '38%', left: '85%' }}
             src={assets.Cpp} 
             alt="CodeChef" 
           />
@@ -91,15 +97,9 @@ const Home = () => {
           />
           <img 
             className="absolute h-12 w-12 rotate-12 animate-float md:h-16 md:w-16"
-            style={{ top: '70%', left: '75%' }}
+            style={{ top: '70%', left: '65%' }}
             src={assets.Amcat} 
             alt="AMCAT" 
-          />
-          <img 
-            className="absolute h-12 w-12 rotate-3 animate-float md:h-16 md:w-16"
-            style={{ top: '30%', left: '45%' }}
-            src={assets.Code} 
-            alt="Coding" 
           />
 
           {/* Centered Quote */}

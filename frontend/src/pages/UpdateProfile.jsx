@@ -24,7 +24,7 @@ const UpdateProfile = () => {
       if (codechefUser) payload.codechefUser = codechefUser;
       if (amcatkey) payload.amcatkey = amcatkey;
       if (year) payload.year = year;
-      await axios.post(`${backendUrl}/api/user/updateUser`,
+      await axios.post(`${backendUrl}/api/user/updateuser`,
         payload,
         {
           headers: {
@@ -83,10 +83,10 @@ const UpdateProfile = () => {
       />
 
       <button
-        className="bg-red-500 rounded-[24px] text-white font-semibold px-8 py-2 mt-5 w-[40%] hover:bg-red-600"
+        className="gradient-button gradient-button--large"
         onClick={handleSubmit}
       >
-        Submit
+        <span className="gradient-button-text">Submit</span>
       </button>
 
       <ToastContainer
