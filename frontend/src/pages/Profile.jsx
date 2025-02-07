@@ -24,36 +24,41 @@ const Profile = () => {
       <div className="manrope-regular mx-auto p- rounded-lg shadow-lg max-w-6xl xl:[70%] sm:w-[100%]">
         {/* Title */}
         <div className="rajdhani-bold flex flex-col sm:flex-row gap-2 justify-center text-xl sm:text-3xl text-center mb-6 sm:mb-8">
-          <span className="text-indigo-500">User</span> 
+          <span className="text-indigo-500">User</span>
           <span className="text-orange-500">Profile</span>
         </div>
 
         {/* Profile Info */}
         <div className="glowCardbig backdrop-blur-lg bg-white/60 dark:bg-zinc-950 p-4 sm:p-6 pb-6 sm:pb-8 rounded-lg shadow-sm">
-          
+
           {/* Left Section */}
           <div className='flex flex-col lg:flex-row justify-center gap-20'>
-          <div className="space-y-4 sm:space-y-6">
-            <div className="w-40 p-1 sm:p-2 flex items-center justify-center rounded-lg bg-gray-200 dark:bg-zinc-800">
-              <h2 className="manrope-bold text-base sm:text-2xl font-semibold text-zinc-800 dark:text-gray-300">User Data</h2>
-            </div>
-            {renderUserData('Name', userData?.name, assets.Profile_icon)}
-            {renderUserData('Email', userData?.email, assets.Gmail)}
-            {renderUserData('College', userData?.college, assets.college)}
-            {renderUserData('Year', userData?.year, assets.Year)}
-            {renderUserData('Roll', userData?.roll, assets.Roll)}
-          </div>
+            <div className="space-y-4 sm:space-y-6">
 
-          {/* Right Section */}
-          <div className="space-y-4 sm:space-y-6">
-            <div className="w-40 p-1 sm:p-2 flex items-center justify-center rounded-lg bg-gray-200 dark:bg-zinc-800">
-              <h2 className="manrope-bold text-base sm:text-2xl font-semibold text-gray-800 dark:text-gray-300">Usernames</h2>
+              <div className="w-40 p-1 sm:p-2 flex items-center justify-center rounded-lg bg-gray-200 dark:bg-zinc-800 mx-auto">
+                <h2 className="manrope-bold text-base sm:text-2xl font-semibold text-zinc-800 dark:text-gray-300">User Data</h2>
+
+              </div>
+
+              {renderUserData('Name', userData?.name, assets.Profile_icon)}
+              {renderUserData('Email', userData?.email, assets.Gmail)}
+              {renderUserData('College', userData?.college, assets.college)}
+              {renderUserData('Year', userData?.year, assets.Year)}
+              {renderUserData('Roll', userData?.roll, assets.Roll)}
             </div>
-            {renderUserData('LeetCode', userData?.usernames?.leetcodeUser, assets.leetcode)}
-            {renderUserData('CodeChef', userData?.usernames?.codechefUser, assets.codechef)}
-            {renderUserData('CodeForces', userData?.usernames?.codeforcesUser, assets.codeforce)}
-            {renderUserData('Amcat ID', userData?.amcat?.amcatID, assets.Amcat)}
-          </div>
+
+            {/* Right Section */}
+            <div className="space-y-4 sm:space-y-6">
+
+              <div className="w-40 p-1 sm:p-2 flex items-center justify-center rounded-lg bg-gray-200 dark:bg-zinc-800 mx-auto">
+                <h2 className="manrope-bold text-base sm:text-2xl font-semibold text-zinc-800 dark:text-gray-300">Usernames</h2>
+              </div>
+
+              {renderUserData('LeetCode', userData?.usernames?.leetcodeUser, assets.leetcode)}
+              {renderUserData('CodeChef', userData?.usernames?.codechefUser, assets.codechef)}
+              {renderUserData('CodeForces', userData?.usernames?.codeforcesUser, assets.codeforce)}
+              {renderUserData('Amcat ID', userData?.amcat?.amcatID, assets.Amcat)}
+            </div>
           </div>
 
         </div>
