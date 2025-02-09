@@ -9,12 +9,8 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-app.use(
-    cors({
-      origin: "https://algo-master-delta.vercel.app",
-      credentials: true, // If you need to allow credentials (cookies, authentication headers)
-    })
-  );connectDB();
+app.use(cors());
+connectDB();
 app.use(express.json());
 
 app.use("/api/user", userRoutes);
