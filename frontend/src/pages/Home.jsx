@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { assets } from "../assets/assets";
+import Title from "../component/PageTitle";
 
 const Home = () => {
 
@@ -73,7 +74,7 @@ const Home = () => {
           />
           <img 
             className="absolute h-12 w-12 -rotate-12 animate-float md:h-20 md:w-20"
-            style={{ top: '20%', left: '48%' }}
+            style={{ top: '25%', left: '48%' }}
             src={assets.Python} 
             alt="Python" 
           />
@@ -125,14 +126,11 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="rajdhani-bold flex gap-3 justify-center text-3xl sm:text-4xl mb-12 pb-5">
-        <span className="text-indigo-500">Codechef</span> 
-        <span className="text-orange-500">Contests</span>
-      </div>
+      <Title text1="CodeForces" text2="Contests" />
 
       <div className="flex flex-col xl:flex-row gap-8 sm:gap-10 items-center justify-center m-10">
         {/* Contest 1 */}
-        <div className="glowCard relative w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-5 m-4 rounded-2xl text-center border border-indigo-50 hover:border-indigo-100 dark:border-indigo-800 hover:shadow-sm hover:shadow-purple-200/30 transition-colors duration-300 ease-in-out">
+        <div className="glowCard relative w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[400px] text-gray-800 dark:text-gray-300 p-5 m-4 rounded-2xl text-center border border-indigo-50 hover:border-indigo-100 dark:border-indigo-800 hover:shadow-sm hover:shadow-purple-200/30 transition-colors duration-300 ease-in-out">
           <h1 className="manrope-bold text-lg sm:text-2xl pb-3">Upcoming Contest 1</h1>
           {contest.length > 0 ? (
             <div className="text-lg" key={contest[0].id}>
@@ -149,7 +147,7 @@ const Home = () => {
         </div>
 
         {/* Contest 2 */}
-        <div className="glowCard relative w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[380px] text-gray-800 dark:text-gray-300 p-5 m-4 rounded-2xl text-center border border-indigo-50 hover:border-indigo-100 dark:border-indigo-800 hover:shadow-sm hover:shadow-purple-200/30 transition-colors duration-300 ease-in-out">
+        <div className="glowCard relative w-full sm:w-80 md:w-96 lg:w-[400px] xl:w-[400px] text-gray-800 dark:text-gray-300 p-5 m-4 rounded-2xl text-center border border-indigo-50 hover:border-indigo-100 dark:border-indigo-800 hover:shadow-sm hover:shadow-purple-200/30 transition-colors duration-300 ease-in-out">
           <h1 className="manrope-bold text-lg sm:text-2xl pb-3">Upcoming Contest 2</h1>
           {contest.length > 1 ? (
             <div className="text-lg" key={contest[1].id}>

@@ -1,6 +1,7 @@
 import useUserData from '../component/hook/useUserData';
 import { assets } from '../assets/assets';
 import { useNavigate } from 'react-router-dom';
+import Title from '../component/PageTitle';
 
 const Profile = () => {
   const { userData, loading } = useUserData();
@@ -23,10 +24,7 @@ const Profile = () => {
     <div className="flex justify-center min-h-screen px-4 w-full">
       <div className="manrope-regular mx-auto p- rounded-lg shadow-lg max-w-6xl xl:[70%] sm:w-[100%]">
         {/* Title */}
-        <div className="rajdhani-bold flex flex-col sm:flex-row gap-2 justify-center text-xl sm:text-3xl text-center mb-6 sm:mb-8">
-          <span className="text-indigo-500">User</span>
-          <span className="text-orange-500">Profile</span>
-        </div>
+        <Title text1="User" text2="Profile" />
 
         {/* Profile Info */}
         <div className="glowCardbig backdrop-blur-lg bg-white/60 dark:bg-zinc-950 p-4 sm:p-6 pb-6 sm:pb-8 rounded-lg shadow-sm">
@@ -67,7 +65,7 @@ const Profile = () => {
         <div className="w-full flex justify-center mt-6 sm:mt-8">
           <button
             type="button"
-            className="gradient-button gradient-button--large px-5 py-2 sm:px-6 sm:py-3 text-sm sm:text-base"
+            className="gradient-button px-5 py-2 sm:px-7 sm:py-3 text-sm sm:text-xl"
             onClick={() => navigate("/update")}
           >
             <span className='gradient-button-text'>Update</span>

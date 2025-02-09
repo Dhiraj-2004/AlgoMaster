@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { assets } from "../assets/assets";
 import useUserData from "../component/hook/useUserData";
 import useCollegeRank from "../component/hook/useCollegeRank";
+import Title from "../component/PageTitle";
 
 const CodeForcesDesign = ({ data }) => {
   const { userData, loading } = useUserData();
@@ -18,10 +19,7 @@ const CodeForcesDesign = ({ data }) => {
   return (
     <div className="manrope-regular ">
       {/* Title */}
-      <div className="rajdhani-bold gap-0.5 flex font-semibold justify-center items-center text-xl sm:text-4xl pt-5 pb-7 mb-10">
-        <h2 className="text-indigo-500">Code</h2>
-        <h2 className="text-orange-500">Forces</h2>
-      </div>
+      <Title text1="Code" text2="Forces" />
       <div className="w-full flex flex-col xl:flex-row gap-10 items-center justify-center">
         {/* Info */}
         <div className="card flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
@@ -64,7 +62,6 @@ const CodeForcesDesign = ({ data }) => {
         </div>
 
         {/* codeforce Data */}
-
 
         <div className="card flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72 gap-6">
           <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">

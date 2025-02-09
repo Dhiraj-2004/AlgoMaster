@@ -24,7 +24,7 @@ const UpdateProfile = () => {
       if (codechefUser) payload.codechefUser = codechefUser;
       if (amcatkey) payload.amcatkey = amcatkey;
       if (year) payload.year = year;
-      await axios.post(`${backendUrl}/api/user/updateuser`,
+      await axios.post(`${backendUrl}/api/user/updateUser`,
         payload,
         {
           headers: {
@@ -41,7 +41,7 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-16 gap-4 text-white">
+    <div className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-16 gap-4">
       <InputField
         type="text"
         value={leetcodeUser}

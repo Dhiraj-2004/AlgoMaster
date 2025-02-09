@@ -4,6 +4,7 @@ import useUserData from "../component/hook/useUserData";
 import { UsersIcon, UserIcon, TrophyIcon, ChartBarIcon } from "@heroicons/react/24/outline";
 import { IdCard } from "lucide-react";
 import PropTypes from "prop-types"
+import Title from "../component/PageTitle";
 
 const Amcat = () => {
   const { userData, loading: userLoading, error: userError } = useUserData();
@@ -83,10 +84,7 @@ const Amcat = () => {
     <div className="manrope-regular p-8 max-w-4xl mx-auto rounded-lg shadow-lg transition-colors duration-300">
       
       {/* Title */}
-      <div className="rajdhani-bold flex gap-2 justify-center text-3xl sm:text-4xl mb-12 pb-5">
-        <span className="text-indigo-500">Amcat</span> 
-        <span className="text-orange-500">Profile</span>
-      </div>
+      <Title text1="Amcat" text2="Profile" />
   
       {amcatRank && (
         <div className="glowCard backdrop-blur-lg bg-white/60 dark:bg-zinc-900/80 p-6 rounded-xl shadow-lg mb-6 transition-all duration-300 hover:shadow-xl">

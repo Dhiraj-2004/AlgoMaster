@@ -4,6 +4,7 @@ import ProgressContainer from "../component/ProgressContainer ";
 import { assets } from "../assets/assets";
 import useUserData from "../component/hook/useUserData";
 import useCollegeRank from "../component/hook/useCollegeRank";
+import Title from "../component/PageTitle";
 
 
 const LeetCodeDesign = ({ data }) => {
@@ -34,10 +35,7 @@ const LeetCodeDesign = ({ data }) => {
   return (
     <div className="manrope-regular">
       {/* Title */}
-      <div className="rajdhani-bold gap-0.5 flex font-semibold justify-center items-center text-xl sm:text-4xl pt-5 pb-7 mb-10">
-        <h2 className="text-indigo-500">Leet</h2>
-        <h2 className="text-orange-500">Code</h2>
-      </div>
+      <Title text1="Leet" text2="Code" />
       <div className="w-full h-full flex flex-col xl:flex-row gap-10 items-center justify-center">
         {/* Info */}
         <div className="card flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
