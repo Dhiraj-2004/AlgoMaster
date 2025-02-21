@@ -8,7 +8,7 @@ const CodeChefDesign = ({ data }) => {
   const { userData, loading } = useUserData();
   const { rankData, totalUsers, error } = useCollegeRank({
     username: userData?.usernames?.codechefUser,
-    college: userData?.college
+    department: userData?.department
    });
    
    if (error) {
@@ -21,7 +21,7 @@ const CodeChefDesign = ({ data }) => {
       <Title text1="Code" text2="Chef" />
       <div className="w-full flex flex-col xl:flex-row gap-10 items-center justify-center">
         {/* Info */}
-        <div className="card flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72">
+        <div className="card flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-80">
           <div>
             <h1 className="manrope-bold mt-3 text-2xl">{userData ? userData.name : loading}</h1>
             <div className="flex flex-col items-center font font-semibold ml-3 mb-auto text-zinc-500 dark:text-gray-500 text-sm">
@@ -52,9 +52,9 @@ const CodeChefDesign = ({ data }) => {
                 <img src={assets.college} alt="College" className="h-5 w-5" />
               </div>
               <div className="flex flex-col items-start min-w-0">
-                <span className="text-sm font-medium text-zinc-600">College</span>
+                <span className="text-sm font-medium text-zinc-600">Department</span>
                 <span className="text-md font-semibold truncate block">
-                  {userData ? userData.college : loading}
+                  {userData ? userData.department : loading}
                 </span>
               </div>
             </div>
@@ -64,13 +64,21 @@ const CodeChefDesign = ({ data }) => {
         {/* Codechef Data */}
 
 
-        <div className="card flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-72 gap-4">
+        <div className="card flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-80 gap-3">
 
           <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
               <span className="font-bold text-md text-[#22C55E]">College Rank</span>
               <div>
-                  <span className="font-bold text-base">{rankData?.codechefRank || "Not Available"}</span>
-                  <span className="text-zinc-500 text-base">/{totalUsers}</span>
+                  <span className="font-bold text-base">{rankData?.overall?.codechef || "Not Available"}</span>
+                  <span className="text-zinc-500 text-base">/{totalUsers?.overall}</span>
+              </div>
+          </div>
+
+          <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
+              <span className="font-bold text-md text-[#22C55E]">Department Rank</span>
+              <div>
+                  <span className="font-bold text-base">{rankData?.department?.codechef || "Not Available"}</span>
+                  <span className="text-zinc-500 text-base">/{totalUsers?.departmentUsers?.codechef}</span>
               </div>
           </div> 
 

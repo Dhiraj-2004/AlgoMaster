@@ -11,7 +11,7 @@ const SubMenu = ({ item, onClick }) => {
       <NavLink
         to={item.path}
         onClick={onClick ? onClick : null} 
-        className={`flex items-center px-5 py-4 text-lg ${
+        className={`flex items-center px-5 py-3 text-lg ${
           theme === 'dark' ? 'hover:bg-zinc-800' : 'hover:bg-zinc-300'
         } hover:border-l-4 hover:border-purple-500 hover:text-orange-500 dark:hover:text-blue-500 transition-all duration-200`}
         aria-label={item.title} 

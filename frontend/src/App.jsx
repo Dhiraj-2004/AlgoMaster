@@ -16,6 +16,7 @@ import Footer from './component/Footer'
 import Amcat from './pages/Amcat'
 import UpdateProfile from './pages/UpdateProfile'
 
+
 const App = () => {
   return (
     <div className="flex flex-col min-h-screen  transition-colors duration-700">
@@ -38,7 +39,7 @@ const App = () => {
               <Route path="/logout" element={<Logout />} />
               <Route path="/users" element={<AllUserData />} />
               <Route path="/team" element={<Home />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/user/:username" element={<Profile />} />
               <Route path="/forgot" element={<ForgotPassword />} />
               <Route path="/amcat" element={<Amcat />} />
               <Route path='/update' element={<UpdateProfile />} />

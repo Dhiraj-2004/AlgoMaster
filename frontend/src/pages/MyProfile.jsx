@@ -7,7 +7,7 @@ import CodeForcesDesign from "./CodeForcesDesign";
 import { NavLink } from "react-router-dom";
 import useUserData from "../component/hook/useUserData";
 
-const UserProfile = ({ platformUser, apiEndpoint }) => {
+const MyProfile = ({ platformUser, apiEndpoint }) => {
   const {userData}=useUserData();
   const [username, setUsername] = useState(null);
   const [data, setUserData] = useState(null);
@@ -93,10 +93,10 @@ const UserProfile = ({ platformUser, apiEndpoint }) => {
   );
 };
 
-UserProfile.propTypes = {
+MyProfile.propTypes = {
   apiEndpoint: PropTypes.string.isRequired,
   usernameEndpoint: PropTypes.string.isRequired,
   platformUser: PropTypes.string.isRequired,
 };
 
-export default UserProfile;
+export default MyProfile;

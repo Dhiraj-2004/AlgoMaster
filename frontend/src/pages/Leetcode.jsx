@@ -1,4 +1,4 @@
-import UserProfile from "./UserProfile"
+import UserProfile from "./MyProfile"
 
 const Leetcode = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;

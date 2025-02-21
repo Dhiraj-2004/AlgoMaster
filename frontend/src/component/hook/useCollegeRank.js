@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const useCollegeRank = ({ username, college }) => {
+const useCollegeRank = ({ username, department }) => {
   const [rankData, setRankData] = useState(null);
   const [totalUsers, setTotalUsers] = useState(null);
   const [error, setError] = useState(null);
@@ -13,7 +13,7 @@ const useCollegeRank = ({ username, college }) => {
     const fetchCollegeRank = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(`${backendUrl}/api/user/college-rank/${username}/${college}`, {
+        const response = await axios.get(`${backendUrl}/api/user/college-rank/${username}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -28,17 +28,17 @@ const useCollegeRank = ({ username, college }) => {
       }
     };
 
-    if (username && college) {
+    if (username && department) {
       fetchCollegeRank();
     }
-  }, [username, college]);
+  }, [username, department]);
 
   return { rankData, totalUsers, error, loading };
 };
 
 useCollegeRank.propTypes = {
   username: PropTypes.string.isRequired,
-  college: PropTypes.string.isRequired,
+  department: PropTypes.string.isRequired,
 };
 
 export default useCollegeRank;

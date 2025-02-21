@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
-const Dropdown = ({ options, value, onChange, label }) => {
+const Dropdown = ({ name, options, value, onChange, label }) => {
   const [select, setSelect] = useState(false);
   const { theme } = useContext(ThemeContext);
   const [themes, setThemes] = useState(theme);
@@ -13,8 +13,9 @@ const Dropdown = ({ options, value, onChange, label }) => {
 
   const handleSelectChange = (event) => {
     setSelect(true);
-    onChange(event);
+    onChange({ target: { name, value: event.target.value } });
   };
+  
 
   const inputStyles = (themes === 'dark')
     ? 'border-gray-600 bg-zinc-800'
@@ -27,6 +28,7 @@ const Dropdown = ({ options, value, onChange, label }) => {
     <div className='flex flex-col space-y-2 w-full'>
       <label className={`text-sm font-medium ${labelStyles} text-sm font-medium`}>{label}</label>
       <select
+        name={name}
         value={value}
         onChange={handleSelectChange}
         className={`w-full h-14 p-4 border ${inputStyles} rounded-xl focus:ring-2 focus:ring-[#ff5757] focus:outline-none ${(select && themes==='dark') ? 'text-white' : (select && themes==='light') ? '' : 'text-gray-400'}`}
@@ -42,6 +44,7 @@ const Dropdown = ({ options, value, onChange, label }) => {
 };
 
 Dropdown.propTypes = {
+  name: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,

@@ -3,12 +3,14 @@ const express = require("express");
 const {
     loginUser,
     signUser,
-    userRank,
+    saveUserRank,
     insertUsernames,
     updateUsernames,
     getAllUsers,
     getUserRank,
     getUserData,
+    userProfile,
+    checkUsername,
 } = require("../controllers/userController");
 
 const {
@@ -28,12 +30,14 @@ router.post("/forgotPass", forgotPassword);
 router.post("/changePassword", verifyOTPAndChangePassword);
 
 router.put("/resetPass", resetPassword);
-router.put("/rank",protect,userRank);
+router.put("/rank",protect,saveUserRank);
 router.put('/updateUser', protect, updateUsernames);
 
+router.get('/check-username/:username', checkUsername);
 router.get('/',getAllUsers);
 router.get('/leetcode/:username',leetCode);
 router.get('/userdata',protect,getUserData);
-router.get("/college-rank/:username/:college",protect,getUserRank);
+router.get("/college-rank/:username",getUserRank);
+router.get("/:username",userProfile)
 
 module.exports = router;

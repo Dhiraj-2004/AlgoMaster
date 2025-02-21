@@ -1,81 +1,109 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import InputField from '../component/InputField';
-import Dropdown from '../component/Dropdown';
-import AuthSwitch from '../component/AuthSwitch';
-import SubmitButton from '../component/SubmitButton';
-import { ToastContainer, toast } from 'react-toastify';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import InputField from "../component/InputField";
+import Dropdown from "../component/Dropdown";
+import AuthSwitch from "../component/AuthSwitch";
+import SubmitButton from "../component/SubmitButton";
+import { ToastContainer, toast } from "react-toastify";
+
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const LoginForm = () => {
-  const [currentState, setCurrentState] = useState('Login');
-  const [name, setName] = useState("");
-  const [roll, setRoll] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [college, setCollege] = useState("Select your college");
-  const [year, setYear] = useState("Select studying year");
+  const [currentState, setCurrentState] = useState("Login");
+  const [formData, setFormData] = useState({
+    name: "",
+    roll: "",
+    registeredID: "",
+    username: "",
+    email: "",
+    password: "",
+    department: "Select your Department",
+    year: "Select studying year",
+  });
+
+  const [usernameStatus, setUsernameStatus] = useState("");
+  const [checkingUsername, setCheckingUsername] = useState(false);
+
   const navigate = useNavigate();
 
-  const colleges = [
-    'Select your college',
-    'Pune Institute of Computer Technology (PICT)',
-    'Vishwakarma Institute of Technology (VIT)',
-    'College of Engineering Pune (COEP)',
-    'MIT-WPU',
-    'Dr. D. Y. Patil Institute Of Technology, Pune',
-    'Army Institute of Technology',
-    'None'
+  const departmentOptions = [
+    "Select your Department",
+    "COMPUTER ENGINEERING",
+    "ELECTRONICS AND TELECOMMUNICATION",
+    "INFORMATION TECHNOLOGY",
+    "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+    "ELECTRONICS AND COMPUTER",
+    "None",
   ];
 
-  const years = [
-    'Select studying year',
-    'First Year',
-    'Second Year',
-    'Third Year',
-    'Last Year',
-  ];
+  const yearOptions = ["Select studying year", "First Year", "Second Year", "Third Year", "Forth Year"];
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // cheack username
+  useEffect(() => {
+    if (formData.username.length < 3) {
+      setUsernameStatus("");
+      return;
+    }
+    let isMounted = true;
+
+    const checkUsername = async () => {
+      setCheckingUsername(true);
+      try {
+        const response = await axios.get(`${backendUrl}/api/user/check-username/${formData.username}`);
+        if (isMounted) {
+          setUsernameStatus(response.data.msg)
+        }
+      } catch (error) {
+        if (isMounted) {
+          if (error.response) {
+            if (error.response) {
+              if (error.response.status === 400) {
+                setUsernameStatus(error.response.data.msg);
+              }
+              else {
+                setUsernameStatus("Server error. Please try again.");
+              }
+            }
+            else {
+              setUsernameStatus("Network error. Please check your connection.");
+            }
+          }
+        }
+      } finally {
+        if (isMounted) {
+          setCheckingUsername(false);
+        }
+      }
+    };
+
+    const debounceTimeout = setTimeout(checkUsername, 500);
+
+    return () => {
+      isMounted = false;
+      clearTimeout(debounceTimeout);
+    };
+  }, [formData.username]);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    if (currentState === 'Sign Up') {
-      try {
-        const response = await axios.post(`${backendUrl}/api/user/signup`, {
-          name,
-          roll,
-          email,
-          password,
-          college,
-          year,
-        });
-        
-        localStorage.setItem('token', response.data.token);
-        toast.success('Sign Up successful!');
-        setTimeout(() => {
-          navigate('/add');
-        }, 2000);
-      } catch (error) {
-        console.error('Error in signup:', error);
-        toast.error('Failed to sign up. Try again!');
-      }
-    } else {
-      try {
+    try {
+      const url = currentState === "Sign Up" ? "/api/user/signup" : "/api/user/login";
+      const response = await axios.post(`${backendUrl}${url}`, formData);
 
-        const response = await axios.post(`${backendUrl}/api/user/login`, {
-          email,
-          password,
-        });
-        toast.success('Login successful!');
-        setTimeout(() => {
-          navigate('/');
-        }, 2000);
-        localStorage.setItem('token', response.data.token);
-      } catch (error) {
-        console.error('Error during login:', error);
-        toast.error('Failed to login!');
+      localStorage.setItem("token", response.data.token);
+      toast.success(`${currentState} successful!`);
 
-      }
+      setTimeout(() => {
+        navigate(currentState === "Sign Up" ? "/add" : "/");
+      }, 2000);
+    } catch (error) {
+      toast.error(`Failed to ${currentState.toLowerCase()}! Try again.`);
     }
   };
 
@@ -85,70 +113,88 @@ const LoginForm = () => {
       className="manrope-regular flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-5 gap-4 mb-24"
     >
       <div className="inline-flex items-center gap-2 mb-6 mt-10">
-        <p className="rajdhani-bold text-4xl font-semibold text-pretty text-blue-500">{currentState}</p>
+        <p className="rajdhani-bold text-4xl font-semibold text-blue-500">{currentState}</p>
       </div>
 
-      {currentState === 'Sign Up' && (
+      {currentState === "Sign Up" && (
         <>
+          <div className="w-full">
+            <InputField name="username" value={formData.username} onChange={handleChange} placeholder="Username" label="Username" />
+            {checkingUsername ? (
+              <p className="text-blue-500 text-sm animate-pulse">Checking...</p>
+            ) : (
+              <p className={`text-sm ${usernameStatus === "Username is available" ? "text-green-500" : "text-red-500"}`}>
+                {usernameStatus}
+              </p>)}
+          </div>
+
           <InputField
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
             placeholder="Name"
             label="Name"
           />
           <InputField
-            type="text"
-            value={roll}
-            onChange={(e) => setRoll(e.target.value)}
+            name="roll"
+            value={formData.roll}
+            onChange={handleChange}
             placeholder="Roll Number"
             label="Roll"
           />
+          <InputField
+            name="registeredID"
+            value={formData.registeredID}
+            onChange={handleChange}
+            placeholder="Registered ID"
+            label="Registered ID" />
           <Dropdown
-            options={colleges}
-            value={college}
-            onChange={(e) => setCollege(e.target.value)}
-            label="Select College"
+            name="department"
+            options={departmentOptions}
+            value={formData.department}
+            onChange={handleChange}
+            label="Select Department"
           />
           <Dropdown
-            options={years}
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
+            name="year"
+            options={yearOptions}
+            value={formData.year}
+            onChange={handleChange}
             label="Select Year"
           />
         </>
       )}
 
       <InputField
+        name="email"
         type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={formData.email}
+        onChange={handleChange}
         placeholder="Email"
         label="Email"
       />
       <InputField
+        name="password"
         type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder={currentState === 'Login' ? 'Password' : 'Set Password'}
+        value={formData.password}
+        onChange={handleChange}
+        placeholder="Password"
         label="Password"
       />
 
-      <AuthSwitch currentState={currentState} setCurrentState={setCurrentState} />
+      <AuthSwitch
+        currentState={currentState}
+        setCurrentState={setCurrentState}
+      />
       <SubmitButton currentState={currentState} />
 
       <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
         pauseOnHover
         theme="dark"
-      ></ToastContainer>
+      />
     </form>
   );
 };

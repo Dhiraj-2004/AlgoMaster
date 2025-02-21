@@ -2,13 +2,22 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
     {
+        username: {
+            type: String,
+            required: true,
+            unique: true,
+            trim: true,
+        },
         name: {
             type: String,
             required: true,
         },
-        roll:{
+        roll: {
             type: String,
             required: true,
+        },
+        registeredID: {
+            type: String,
         },
         email: {
             type: String,
@@ -19,7 +28,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        college: {
+        department: {
             type: String,
             required: true,
         },
@@ -28,34 +37,62 @@ const userSchema = new mongoose.Schema(
             required: true,
         },
         usernames: {
-            codechefUser: {
-                type: String,
-                sparse: true,
+            codechefUser: { 
+                type: String, 
+                sparse: true 
             },
-            codeforcesUser: {
-                type: String,
-                sparse: true,
+            codeforcesUser: { 
+                type: String, 
+                sparse: true 
             },
-            leetcodeUser: {
-                type: String,
-                sparse: true,
+            leetcodeUser: { 
+                type: String, 
+                sparse: true 
             },
         },
-        amcatkey:{
+        amcatkey: {
             type: String,
         },
-        ranks:{
-            codechefRank:{
-                type:String,
-                sparse:true,
+        ranks: {
+            codechefRank: { 
+                type: String, 
+                sparse: true 
             },
-            codeforcesRank:{
-                type:String,
-                sparse:true,
+            codeforcesRank: { 
+                type: String, 
+                sparse: true 
             },
-            leetcodeRank:{
-                type:String,
-                sparse:true,
+            leetcodeRank: { 
+                type: String, 
+                sparse: true 
+            },
+        },
+        collegeRank:{
+            codechefRank: { 
+                type: String, 
+                sparse: true 
+            },
+            codeforcesRank: { 
+                type: String, 
+                sparse: true 
+            },
+            leetcodeRank: { 
+                type: String, 
+                sparse: true 
+            },
+        },
+        departmentRank:{
+            codechefRank: { 
+                type: String, 
+                sparse: true 
+            },
+            codeforcesRank: { 
+                type: String, 
+                sparse: true 
+            },
+            leetcodeRank: { 
+                type: String, 
+                sparse: true 
             },
         },
         otp: {
@@ -68,7 +105,6 @@ const userSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "Amcat",
         }
-        
     },
     { timestamps: true }
 );
