@@ -1,9 +1,23 @@
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { motion } from "framer-motion";
 
 const CircularProgress = ({ percentage, color }) => {
+  const [animatedPercentage, setAnimatedPercentage] = useState(0);
   const radius = 54;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (percentage / 100) * circumference;
+
+  useEffect(() => {
+    let start = 0;
+    const step = percentage / 50;
+    const interval = setInterval(() => {
+      start += step;
+      setAnimatedPercentage(Math.min(start, percentage));
+      if (start >= percentage) clearInterval(interval);
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [percentage]);
 
   return (
     <div className="relative w-42 h-42">
@@ -14,9 +28,8 @@ const CircularProgress = ({ percentage, color }) => {
           cy="60"
           className="fill-none stroke-gray-300 dark:stroke-gray-700"
           strokeWidth="8"
-        ></circle>
-
-        <circle
+        />
+        <motion.circle
           r={radius}
           cx="60"
           cy="60"
@@ -24,22 +37,26 @@ const CircularProgress = ({ percentage, color }) => {
           stroke={color}
           strokeWidth="8"
           strokeDasharray={circumference}
-          strokeDashoffset={offset}
-          style={{ transition: "stroke-dashoffset 0.6s ease" }}
-        ></circle>
+          strokeDashoffset={circumference}
+          animate={{ strokeDashoffset: circumference - (animatedPercentage / 100) * circumference }}
+          transition={{ duration: 2.5, ease: "easeOut" }}
+        />
       </svg>
 
-      
-      <span className="absolute inset-0 flex items-center justify-center text-xl font-bold text-gray-700 dark:text-gray-300">
-        {percentage}%
-      </span>
+      <motion.span
+        className="absolute inset-0 flex items-center justify-center text-xl font-bold text-gray-700 dark:text-gray-300"
+        animate={{ opacity: [0.5, 1], scale: [0.9, 1] }}
+        transition={{ duration: 2.5, ease: "easeOut" }}
+      >
+        {Math.round(animatedPercentage)}%
+      </motion.span>
     </div>
   );
 };
 
 CircularProgress.propTypes = {
-  color: PropTypes.string.isRequired,
   percentage: PropTypes.number.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 export default CircularProgress;

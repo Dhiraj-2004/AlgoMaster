@@ -6,8 +6,11 @@ import { assets } from '../assets/assets';
 import React, { useEffect, useState, } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import ScoreCard from "../component/ScoreCard";
 
 
+
+// Profile section
 const Pofile = () => {
   const { username } = useParams();
   const [userData, setUserData] = useState(null);
@@ -133,9 +136,9 @@ const Pofile = () => {
 const Section = ({ overallRank, totalUsers, departmentRank, departmentUsers, currentRating }) => {
   const getRankColor = (rank) => {
     if (rank === null || rank === undefined) return "text-gray-500";
-    if (rank <= 90) return "text-yellow-400";
-    else if (rank <= 180 && rank > 90) return "text-[#22C55E]";
-    else if (rank <= 220 && rank > 180) return "text-blue-500";
+    if (rank < 50) return "text-green-500";
+    else if (rank < 150) return "text-yellow-500";
+    else if (rank < 220) return "text-blue-500";
     return "text-red-500";
   };
 
@@ -191,6 +194,8 @@ const InfoSection = ({ icon, placeholder, data }) => {
   )
 }
 
+
+// Amcat data
 const Amcat = ({ amcatdata }) => {
   const { amcatRank } = useAmcatRank(amcatdata);
   const amcatData = amcatRank ? amcatRank : null;
@@ -211,20 +216,33 @@ const Amcat = ({ amcatdata }) => {
     </div>
   );
 
-  const ScoreCard = ({ label, value, max }) => (
-    <div className="bg-zinc-100 dark:bg-zinc-900 w-40 p-2 md:w-48 rounded-lg">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-sm text-gray-500 dark:text-gray-400">{label}</span>
-        <span className={`text-sm font-semibold text-orange-400`}>{value}/{max}</span>
-      </div>
-      <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-        <div
-          className={`h-full bg-green-400 dark:bg-green-600 transition-all duration-500`}
-          style={{ width: `${(value / max) * 100}%` }}
-        />
-      </div>
-    </div>
-  );
+  // const ScoreCard = ({ label, value, max }) => {
+  //   const percentage = max > 0 ? Math.round((value / max) * 100) : 0;
+  
+  //   const getRankColor = (percentage) => {
+  //     if (percentage === null || percentage === undefined || isNaN(percentage)) return "bg-gray-500";
+  //     if (percentage > 65) return "bg-green-500";
+  //     if (percentage > 50) return "bg-yellow-500";
+  //     if (percentage > 40) return "bg-blue-500";
+  //     return "bg-red-500";
+  //   };
+  
+  //   return (
+  //     <div className="bg-zinc-100 dark:bg-zinc-900 w-40 p-2 md:w-48 rounded-lg">
+  //       <div className="flex justify-between items-center mb-2">
+  //         <span className="text-sm text-gray-500 dark:text-gray-400">{label}</span>
+  //         <span className="text-sm font-semibold text-orange-400">{value}/{max}</span>
+  //       </div>
+  //       <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+  //         <div
+  //           className={`h-full ${getRankColor(percentage)} transition-all duration-500`}
+  //           style={{ width: `${percentage}%` }}
+  //         />
+  //       </div>
+  //     </div>
+  //   );
+  // };
+  
 
   const InfoBadge = ({ label, value, icon }) => (
     <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
