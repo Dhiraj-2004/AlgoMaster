@@ -33,13 +33,13 @@ const Pofile = () => {
     <div className="flex flex-col h-full justify-center items-center px-4 w-full">
       <div className="flex flex-col min-w-full md:flex-row gap-6">
         {/* User Data */}
-        <div className="card flex flex-col items-start rounded-3xl border dark:border-zinc-800 p-6 w-full md:w-5/6 lg:w-11/12 xl:w-5/12">
+        <div className="card flex flex-col items-start rounded-3xl border dark:border-zinc-800 p-4 w-full md:w-5/6 lg:w-11/12 xl:w-5/12">
           <InfoSection
-            icon={<UserIcon className="w-8 h-8 text-indigo-500 dark:text-indigo-400" />}
+            icon={<UserIcon className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />}
             placeholder="Username:"
             data={userData?.username} />
           <InfoSection
-            icon={<UserIcon className="w-8 h-8 text-indigo-500 dark:text-indigo-400" />}
+            icon={<UserIcon className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />}
             placeholder="Name:"
             data={userData?.name} />
           <InfoSection
@@ -176,7 +176,7 @@ const InfoSection = ({ icon, placeholder, data }) => {
         <div className="flex gap-x-2 items-center">
           <div className=" bg-zinc-200 dark:bg-zinc-800 p-2 rounded-lg">
             {typeof icon === "string" ? (
-              <img src={icon} alt="icon" className="w-8 h-8" />
+              <img src={icon} alt="icon" className="w-6 h-6" />
             ) : (
               icon
             )}
@@ -196,7 +196,7 @@ const Amcat = ({ amcatdata }) => {
   const amcatData = amcatRank ? amcatRank : null;
 
   const MetricCard = ({ label, value, delta }) => (
-    <div className="bg-zinc-100 dark:bg-zinc-900 w-48 p-2 rounded-lg">
+    <div className="bg-zinc-100 dark:bg-zinc-900 w-40 p-2 md:w-48 rounded-lg">
       <p className="text-sm text-gray-500 dark:text-zinc-300 mb-1">{label}</p>
       <div className="flex items-baseline gap-2">
         <span className="text-2xl font-bold text-gray-800 dark:text-gray-100">
@@ -212,7 +212,7 @@ const Amcat = ({ amcatdata }) => {
   );
 
   const ScoreCard = ({ label, value, max }) => (
-    <div className="bg-zinc-100 dark:bg-zinc-900 w-48 h-14 p-2 rounded-lg">
+    <div className="bg-zinc-100 dark:bg-zinc-900 w-40 p-2 md:w-48 rounded-lg">
       <div className="flex justify-between items-center mb-2">
         <span className="text-sm text-gray-500 dark:text-gray-400">{label}</span>
         <span className={`text-sm font-semibold text-orange-400`}>{value}/{max}</span>
