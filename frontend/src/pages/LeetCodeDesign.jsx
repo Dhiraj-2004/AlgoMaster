@@ -5,6 +5,7 @@ import { assets } from "../assets/assets";
 import useUserData from "../component/hook/useUserData";
 import useCollegeRank from "../component/hook/useCollegeRank";
 import Title from "../component/PageTitle";
+import LeetCodeRatingGraph from "../component/LeetCodeRatingGraph ";
 
 
 const LeetCodeDesign = ({ data }) => {
@@ -30,8 +31,7 @@ const LeetCodeDesign = ({ data }) => {
     (submission) => submission.difficulty === "Hard"
   )?.count;
   const totalhard = User?.allQuestionsCount?.find(q => q.difficulty === 'Hard')?.count;
-
-
+  
   return (
     <div className="manrope-regular">
       {/* Title */}
@@ -115,8 +115,9 @@ const LeetCodeDesign = ({ data }) => {
             </div>
           </div>
         </div>
-
+        
       </div>
+      <LeetCodeRatingGraph attendedContests={data.data.attendedContests} />
     </div>
   );
 };

@@ -5,7 +5,7 @@ const HEADERS = {
     'x-csrftoken': process.env.LEETCODE_CSRF_TOKEN,
     'cookie': process.env.LEETCODE_COOKIE,
     'content-type': 'application/json',
-}
+};
 
 exports.leetCode = async (req, res) => {
     const username = req.params.username;
@@ -58,7 +58,7 @@ exports.leetCode = async (req, res) => {
         const data = response.data?.data;
 
         if (!data) {
-            return res.status(500).json({ error: 'Invalid response from LeetCode' });
+            return res.status(500).json({ error: 'Invalid response from LeetCode', data: {} });
         }
 
         // Extract matched user details
@@ -75,10 +75,15 @@ exports.leetCode = async (req, res) => {
             topPercentage: data?.userContestRanking?.topPercentage ?? null
         };
 
-        // Filter attended contests
-        const attendedContests = data?.userContestRankingHistory
-            ?.filter(contest => contest.attended)
-            ?.map(contest => ({
+        // Ensure userContestRankingHistory exists and is an array
+        const contestHistory = Array.isArray(data?.userContestRankingHistory)
+            ? data?.userContestRankingHistory
+            : [];
+
+        // Filter attended contests safely
+        const attendedContests = contestHistory
+            .filter(contest => contest?.attended)
+            .map(contest => ({
                 contestTitle: contest?.contest?.title ?? 'Unknown',
                 startTime: contest?.contest?.startTime ?? null,
                 problemsSolved: contest?.problemsSolved ?? 0,
@@ -87,21 +92,19 @@ exports.leetCode = async (req, res) => {
                 rating: contest?.rating ?? null,
                 ranking: contest?.ranking ?? null,
                 trendDirection: contest?.trendDirection ?? 'UNKNOWN'
-            })) || [];
+            }));
 
         // Construct final response
-        const result = {
+        res.json({
             data: {
                 matchedUser,
                 userContestRanking,
                 allQuestionsCount,
                 attendedContests
             }
-        };
-
-        res.json(result);
+        });
     } catch (error) {
         console.error('Error fetching data from LeetCode:', error.message);
-        res.status(500).json({ error: 'Failed to fetch data from LeetCode' });
+        res.status(500).json({ error: 'Failed to fetch data from LeetCode', data: {} });
     }
 };
