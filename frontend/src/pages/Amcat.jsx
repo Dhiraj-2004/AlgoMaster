@@ -5,6 +5,8 @@ import { UsersIcon, UserIcon, TrophyIcon, ChartBarIcon } from "@heroicons/react/
 import { IdCard } from "lucide-react";
 import PropTypes from "prop-types"
 import Title from "../component/PageTitle";
+import ScoreCard from "../component/ScoreCard";
+
 
 const Amcat = () => {
   const { userData, loading: userLoading, error: userError } = useUserData();
@@ -41,20 +43,8 @@ const Amcat = () => {
     </div>
   );
   
-  const ScoreCard = ({ label, value, max }) => (
-    <div className="bg-gray-50/50 dark:bg-gray-800 p-4 rounded-lg">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-sm text-gray-500 dark:text-gray-400">{label}</span>
-        <span className={`text-sm font-semibold text-orange-400`}>{value}/{max}</span>
-      </div>
-      <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-        <div 
-          className={`h-full bg-green-400 dark:bg-green-600 transition-all duration-500`}
-          style={{ width: `${(value/max)*100}%` }}
-        />
-      </div>
-    </div>
-  );
+
+  
   
   const InfoBadge = ({ label, value, icon }) => (
     <div className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
