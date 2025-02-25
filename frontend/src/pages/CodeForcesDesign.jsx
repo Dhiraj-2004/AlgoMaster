@@ -92,7 +92,7 @@ const CodeForcesDesign = ({ data }) => {
         </div>
       </div>
       <div className="p-5 m-5">
-        <CodeForcesRatingGraph handle={userData.usernames.codeforcesUser} />
+        <CodeForcesRatingGraph handle={userData?.usernames?.codeforcesUser} />
       </div>
 
     </div>

@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import  { useContext, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { format } from "date-fns";
@@ -52,6 +53,21 @@ const CodeForcesRatingGraph = ({ handle }) => {
     return null;
   };
 
+  CustomTooltip.propTypes = {
+    active: PropTypes.bool,
+    payload: PropTypes.arrayOf(
+      PropTypes.shape({
+        payload: PropTypes.shape({
+          contestTitle: PropTypes.string.isRequired,
+          date: PropTypes.instanceOf(Date).isRequired,
+          rating: PropTypes.number.isRequired,
+          rank: PropTypes.number,
+          oldRating: PropTypes.number.isRequired,
+        }),
+      })
+    ),
+  };
+
   return (
     <div className="w-full h-96">
       <Title text1="Rating" text2="History" />
@@ -86,6 +102,15 @@ const CodeForcesRatingGraph = ({ handle }) => {
       </ResponsiveContainer>
     </div>
   );
+};
+
+CodeForcesRatingGraph.propTypes = {
+  handle: PropTypes.string.isRequired,
+};
+
+Title.propTypes = {
+  text1: PropTypes.string.isRequired,
+  text2: PropTypes.string.isRequired,
 };
 
 export default CodeForcesRatingGraph;
