@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import LeetCodeDesign from "./LeetCodeDesign";
 import CodeChefDesign from "./CodeChefDesign";
 import CodeForcesDesign from "./CodeForcesDesign";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useUserData from "../component/hook/useUserData";
 import useCollegeRank from "../component/hook/useCollegeRank";
 
@@ -14,6 +14,7 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
   const [loader, setLoader] = useState(true);
   const [showUpdateMessage, setShowUpdateMessage] = useState(false);
   const { userData, loading } = useUserData();
+  const navigate=useNavigate();
   const { rankData, totalUsers, error } = useCollegeRank({
     username:
       platformUser === "leetcodeUser"
@@ -101,12 +102,9 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
       {showUpdateMessage ? (
         <div className="flex flex-col gap-6 items-center justify-center mt-40 m-auto">
           <p className="text-red-500 font-semibold">Please Update Profile</p>
-          <NavLink
-            to={`/user/${userData?.username}`}
-            className="text-blue-500 font-semibold hover:text-blue-700"
-          >
-            Go to Profile
-          </NavLink>
+          <button className="custom-button h-14 w-48 my-1"
+              onClick={()=>navigate(`/user/${userData?.username}`)}
+          >Go to Profile</button>
         </div>
       ) : loader ? (
         <div className="flex flex-col gap-6 items-center justify-center mt-40 m-auto">

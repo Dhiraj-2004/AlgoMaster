@@ -31,16 +31,9 @@ export const Navbar = () => {
 
         <div className="flex md:order-2 space-x-2 md:space-x-0 rtl:space-x-reverse">
           {!isLoggedIn ? (
-            <button
-              type="button"
-              className="text-white bg-orange-500 hover:bg-red-600 dark:bg-orange-700 dark:hover:bg-orange-600 
-              focus:ring-4 dark:focus:ring-orange-700 font-medium text-sm md:text-lg 
-              px-3 md:px-4 py-1.5 md:py-2 text-center w-20 md:w-28 h-10 md:h-12 
-              rounded-2xl transition-all duration-300"
-              onClick={() => navigate("/login")}
-            >
-              Login
-            </button>
+            <button className="custom-button h-14 w-32 md:w-36 my-1"
+              onClick={()=>navigate("/login")}
+            >Login</button>
           ) : (
             <div className="flex items-center">
               <ThemeToggle/>
