@@ -3,6 +3,7 @@ import { assets } from "../assets/assets";
 import useUserData from "../component/hook/useUserData";
 import useCollegeRank from "../component/hook/useCollegeRank";
 import Title from "../component/PageTitle";
+import CodeForcesRatingGraph from "../component/CodeForcesRatingGraph";
 
 const CodeForcesDesign = ({ data }) => {
   const { userData, loading } = useUserData();
@@ -90,6 +91,10 @@ const CodeForcesDesign = ({ data }) => {
           </div>
         </div>
       </div>
+      <div className="p-5 m-5">
+        <CodeForcesRatingGraph handle={userData.usernames.codeforcesUser} />
+      </div>
+
     </div>
   );
 };

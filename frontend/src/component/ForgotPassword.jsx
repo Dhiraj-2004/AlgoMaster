@@ -3,6 +3,7 @@ import { useState } from 'react';
 import InputField from './InputField';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import Title from './PageTitle';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -11,8 +12,6 @@ const ForgotPassword = () => {
   const [otpSent, setOtpSent] = useState(false);
   const navigate = useNavigate();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
-
 
   const handleForgotPassword = async () => {
     try {
@@ -43,61 +42,71 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-[90%] sm:max-w-96 m-auto mt-16 pt-3 text-sm space-y-4">
-      <p className="text-4xl font-semibold text-pretty text-blue-500 mb-10">Forgot Password</p>
-      <InputField
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter your email"
-        label="Email"
-      />
-      {otpSent && (
-        <div className='space-y-4 w-full'>
+    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+      <div className="manrope-regular border border-gray-200 dark:border-gray-800 rounded-2xl shadow-lg dark:shadow-gray-900/50 transition-all duration-300 hover:shadow-xl dark:hover:shadow-gray-900/70 hover:scale-[1.01] dark:shadow-xl p-8 w-full max-w-md mx-auto mt-10 space-y-6">
+        <Title text1="Forgot" text2="Password" className="text-center dark:text-white" />
+        
+        <div className="space-y-5">
           <InputField
-            type="text"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            placeholder="Enter your OTP"
-            label="OTP"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+            label="Email"
+            className="focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400"
           />
-          <InputField
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your new password"
-            label="New Password"
-          />
-        </div>
-      )}
-      <p onClick={() => { navigate("/login") }} className='cursor-pointer text-blue-400 mr-auto'>
-        Back to login
-      </p>
 
-      <div className="flex justify-center mt-5">
-        {otpSent ? (
-          <button onClick={handleChangeForgotPassword}
-            className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 font-medium text-lg px-4 py-2 text-center dark:hover:bg-red-700 dark:focus:ring-red-800 w-32 h-12 rounded-2xl"
-          >Login</button>
-        ) :
-          <button
-            onClick={handleForgotPassword}
-            className="text-white bg-red-500 hover:bg-red-600 focus:ring-4 font-medium text-lg px-4 py-2 text-center dark:hover:bg-red-700 dark:focus:ring-red-800 w-32 h-12 rounded-2xl"
-          >Send OTP</button>
-        }
+          {otpSent && (
+            <div className='space-y-5'>
+              <InputField
+                type="text"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                placeholder="Enter your OTP"
+                label="OTP"
+                className="focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400"
+              />
+              <InputField
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your new password"
+                label="New Password"
+                className="focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400"
+              />
+            </div>
+          )}
+        </div>
+
+        <p 
+          onClick={() => navigate("/login")} 
+          className="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition-colors"
+        >
+          Back to login
+        </p>
+
+        <div className="flex justify-center">
+          <button 
+            onClick={otpSent ? handleChangeForgotPassword : handleForgotPassword}
+            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 
+                     dark:from-blue-700 dark:to-indigo-700 dark:hover:from-blue-800 dark:hover:to-indigo-800
+                     text-white font-semibold py-3 px-4 rounded-lg transition-all transform hover:scale-105 active:scale-95"
+          >
+            {otpSent ? 'Reset Password' : 'Send OTP'}
+          </button>
+        </div>
+
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={true}
+          newestOnTop={true}
+          closeOnClick
+          theme="colored"
+          toastClassName="rounded-lg shadow-lg dark:bg-gray-700 dark:text-white"
+          progressClassName="bg-gradient-to-r from-blue-500 to-purple-500"
+        />
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      ></ToastContainer>
     </div>
   );
 };

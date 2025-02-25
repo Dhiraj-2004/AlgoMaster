@@ -311,9 +311,9 @@
 .gradient-button {
   margin-top: 1rem;
   padding: 0.5rem;
-  border: 2px solid #3a6aca;
+  border: 2px solid #6192f3;
   border-radius: 0.75rem;
-  background-color: transparent;
+  background-color: #5083e9;
   color: #1f2937;
   position: relative;
   overflow: hidden;
@@ -324,6 +324,8 @@
 /* Dark mode text color */
 .dark .gradient-button {
   color: #e5e7eb;
+  background-color: #0536be;
+  border: 2px solid #0536be;
 }
 
 /* Hover effects */
@@ -350,6 +352,7 @@
 .gradient-button-text {
   position: relative;
   z-index: 10;
+  color: white;
 }
 
 .gradient-button--large {

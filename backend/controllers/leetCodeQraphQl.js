@@ -19,6 +19,10 @@ exports.leetCode = async (req, res) => {
             count
           }
         }
+        userCalendar {
+          streak
+          totalActiveDays
+        }
       }
       userContestRanking(username: $username) {
         rating
@@ -43,6 +47,15 @@ exports.leetCode = async (req, res) => {
         ranking
         trendDirection
       }
+      activeDailyCodingChallengeQuestion {
+        date
+        link
+        question {
+          title
+          titleSlug
+          difficulty
+        }
+      }
     }
   `;
 
@@ -61,13 +74,12 @@ exports.leetCode = async (req, res) => {
             return res.status(500).json({ error: 'Invalid response from LeetCode', data: {} });
         }
 
-        // Extract matched user details
-        const matchedUser = data?.matchedUser || { username: 'Unknown', submitStats: { acSubmissionNum: [] } };
+        const matchedUser = data?.matchedUser || {
+            username: 'Unknown',
+            submitStats: { acSubmissionNum: [] },
+            userCalendar: null
+        };
 
-        // Extract allQuestionsCount
-        const allQuestionsCount = data?.allQuestionsCount || [];
-
-        // Extract user contest ranking
         const userContestRanking = {
             rating: data?.userContestRanking?.rating ?? null,
             globalRanking: data?.userContestRanking?.globalRanking ?? null,
@@ -75,12 +87,10 @@ exports.leetCode = async (req, res) => {
             topPercentage: data?.userContestRanking?.topPercentage ?? null
         };
 
-        // Ensure userContestRankingHistory exists and is an array
         const contestHistory = Array.isArray(data?.userContestRankingHistory)
             ? data?.userContestRankingHistory
             : [];
 
-        // Filter attended contests safely
         const attendedContests = contestHistory
             .filter(contest => contest?.attended)
             .map(contest => ({
@@ -94,13 +104,15 @@ exports.leetCode = async (req, res) => {
                 trendDirection: contest?.trendDirection ?? 'UNKNOWN'
             }));
 
-        // Construct final response
+        const dailyChallenge = data?.activeDailyCodingChallengeQuestion || null;
+
         res.json({
             data: {
                 matchedUser,
-                userContestRanking,
-                allQuestionsCount,
-                attendedContests
+                userContestRanking: userContestRanking,
+                allQuestionsCount: data?.allQuestionsCount || [],
+                attendedContests,
+                dailyChallenge
             }
         });
     } catch (error) {

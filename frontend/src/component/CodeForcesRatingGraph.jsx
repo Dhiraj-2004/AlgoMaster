@@ -1,24 +1,38 @@
-import React, { useContext } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { format } from 'date-fns';
-import Title from './PageTitle';
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { format } from "date-fns";
+import Title from "./PageTitle";
 import { ThemeContext } from "../context/ThemeContext";
 
-const LeetCodeRatingGraph = ({ attendedContests }) => {
-  if (!attendedContests || attendedContests.length === 0) {
-    return <div className="text-gray-500">No contest history available</div>;
-  }
-
+const CodeForcesRatingGraph = ({ handle }) => {
+  const [ratingHistory, setRatingHistory] = useState([]);
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark";
 
-  const chartData = attendedContests
-    .map(contest => ({
-      ...contest,
-      date: new Date(contest.startTime * 1000),
-      rating: Number(contest.rating.toFixed(2))
-    }))
-    .sort((a, b) => a.date - b.date);
+  useEffect(() => {
+    const fetchRatingHistory = async () => {
+      try {
+        const response = await axios.get(`https://codeforces.com/api/user.rating?handle=${handle}`);
+        const data = response.data.result.map((entry) => ({
+          contestTitle: entry.contestName,
+          date: new Date(entry.ratingUpdateTimeSeconds * 1000),
+          rating: entry.newRating,
+          rank: entry.rank,
+          oldRating: entry.oldRating,
+        }));
+        setRatingHistory(data);
+      } catch (error) {
+        console.error("Error fetching CodeForces rating history:", error);
+      }
+    };
+
+    fetchRatingHistory();
+  }, [handle]);
+
+  if (!ratingHistory || ratingHistory.length === 0) {
+    return <div className="text-gray-500">No contest history available</div>;
+  }
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -26,18 +40,12 @@ const LeetCodeRatingGraph = ({ attendedContests }) => {
       return (
         <div className="bg-white dark:bg-gray-700 p-3 rounded-lg shadow-md border">
           <h3 className="font-semibold text-indigo-500">{contest.contestTitle}</h3>
-          <p className="text-sm">
-            {format(contest.date, 'MMM dd, yyyy')}
-          </p>
+          <p className="text-sm">{format(contest.date, "MMM dd, yyyy")}</p>
           <p className="mt-2">
             Rating: <span className="font-medium text-orange-500">{contest.rating}</span>
           </p>
-          <p>
-            Solved: {contest.problemsSolved}/{contest.totalProblems}
-          </p>
-          <p>
-            Rank: {contest.ranking?.toLocaleString() || 'N/A'}
-          </p>
+          <p>Rank: {contest.rank?.toLocaleString() || "N/A"}</p>
+          <p>Old Rating: {contest.oldRating}</p>
         </div>
       );
     }
@@ -48,7 +56,7 @@ const LeetCodeRatingGraph = ({ attendedContests }) => {
     <div className="w-full h-96">
       <Title text1="Rating" text2="History" />
       <ResponsiveContainer width="95%" height="90%">
-        <LineChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+        <LineChart data={ratingHistory} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" stroke={isDarkMode ? "#333" : "#eee"} />
           <XAxis
             dataKey="date"
@@ -62,7 +70,7 @@ const LeetCodeRatingGraph = ({ attendedContests }) => {
               angle: -90,
               position: "left",
               offset: 10,
-              style: { fill: isDarkMode ? "#ddd" : "#666" }
+              style: { fill: isDarkMode ? "#ddd" : "#666" },
             }}
           />
           <Tooltip content={<CustomTooltip />} />
@@ -80,4 +88,4 @@ const LeetCodeRatingGraph = ({ attendedContests }) => {
   );
 };
 
-export default LeetCodeRatingGraph;
+export default CodeForcesRatingGraph;

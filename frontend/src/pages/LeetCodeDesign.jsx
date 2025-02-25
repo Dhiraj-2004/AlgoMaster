@@ -6,6 +6,7 @@ import useUserData from "../component/hook/useUserData";
 import useCollegeRank from "../component/hook/useCollegeRank";
 import Title from "../component/PageTitle";
 import LeetCodeRatingGraph from "../component/LeetCodeRatingGraph ";
+import LeetcodeDailyData from "../component/LeetcodeDailyData";
 
 
 const LeetCodeDesign = ({ data }) => {
@@ -117,7 +118,13 @@ const LeetCodeDesign = ({ data }) => {
         </div>
         
       </div>
-      <LeetCodeRatingGraph attendedContests={data.data.attendedContests} />
+      <div className="p-5 pt-10 mx-5 my-10">
+        <LeetCodeRatingGraph attendedContests={data.data.attendedContests} />
+      </div>
+      <div className="p-5 mt-10 pt-10">
+        <LeetcodeDailyData dailyChallenge={data.data.dailyChallenge} />
+      </div>
+      
     </div>
   );
 };

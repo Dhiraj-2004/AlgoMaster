@@ -1,23 +1,18 @@
 import PropTypes from 'prop-types';
-import { useContext, useEffect, useState } from 'react';
-import { ThemeContext } from '../context/ThemeContext';
+import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-const InputField = ({ type, name, value, onChange, placeholder, label }) => {
-  const { theme } = useContext(ThemeContext);
-  const [themes, setThemes] = useState(theme);
+const InputField = ({ 
+  type, 
+  name, 
+  value, 
+  onChange, 
+  placeholder, 
+  label,
+  className,
+  ...props
+}) => {
   const [showPassword, setShowPassword] = useState(false);
-
-  useEffect(() => {
-    setThemes(theme);
-  }, [theme]);
-
-  const inputStyles =
-    themes === 'dark'
-      ? 'border-gray-600 bg-zinc-800 text-white'
-      : 'border-gray-300 bg-white text-black';
-
-  const labelStyles = themes === 'dark' ? 'text-white' : 'text-gray-900';
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -25,25 +20,43 @@ const InputField = ({ type, name, value, onChange, placeholder, label }) => {
 
   return (
     <div className="manrope-regular flex flex-col space-y-2 w-full">
-      {label && <label className={`text-sm font-medium ${labelStyles}`}>{label}</label>}
+      {label && (
+        <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+          {label}
+        </label>
+      )}
       <div className="relative w-full">
         <input
-          className={`w-full h-14 p-4 border ${inputStyles} rounded-xl pr-12 focus:border-[#ff5757] focus:ring-1 focus:ring-[#ff5757]/30 dark:focus:border-[#60a5fa] dark:focus:ring-[#60a5fa]/30 focus:outline-none`}
+          className={`w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg
+            bg-white dark:bg-gray-700 text-gray-900 dark:text-white
+            focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+            dark:focus:ring-blue-400 dark:focus:border-blue-400
+            placeholder-gray-400 dark:placeholder-gray-400
+            transition-all duration-200 outline-none
+            ${type === 'password' ? 'pr-12' : ''}
+            ${className}`}
           type={type === 'password' && showPassword ? 'text' : type}
           name={name}
           value={value}
-          onChange={(e) => onChange(e)}
+          onChange={onChange}
           placeholder={placeholder}
-          required
           autoComplete="off"
+          {...props}
         />
         {type === 'password' && (
           <button
             type="button"
             onClick={togglePasswordVisibility}
-            className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center text-gray-500 hover:text-gray-700 focus:outline-none"
+            className="absolute right-4 top-1/2 -translate-y-1/2 
+                     text-gray-500 dark:text-gray-400 
+                     hover:text-gray-700 dark:hover:text-gray-300
+                     transition-colors duration-200"
           >
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
+            {showPassword ? (
+              <FaEyeSlash className="w-5 h-5" />
+            ) : (
+              <FaEye className="w-5 h-5" />
+            )}
           </button>
         )}
       </div>
@@ -58,6 +71,11 @@ InputField.propTypes = {
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
   label: PropTypes.string,
+  className: PropTypes.string,
+};
+
+InputField.defaultProps = {
+  type: 'text',
 };
 
 export default InputField;
