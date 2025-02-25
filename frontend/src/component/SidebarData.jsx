@@ -8,7 +8,7 @@ export const SidebarData = [
   },
   {
     title: 'Profile',
-    path: '/profile',
+    path: 'profile',
     icon: <img src={assets.profile} alt="Profile" className="w-6 h-6" />,
   },
   {

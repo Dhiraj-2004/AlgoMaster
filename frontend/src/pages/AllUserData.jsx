@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import Dropdown from "../component/Dropdown";
 import InputField from "../component/InputField";
 import { ThemeContext } from "../context/ThemeContext";
+import { useNavigate } from "react-router-dom";
 
 const AllUserData = () => {
   const [platform, setPlatform] = useState("LeetCode");
@@ -14,6 +15,7 @@ const AllUserData = () => {
   const [sortOrder, setSortOrder] = useState("asc");
   const { theme } = useContext(ThemeContext);
   const [loader, setLoader] = useState(true);
+  const navigate =useNavigate();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const entriesPerPage = 20;
 
@@ -40,8 +42,8 @@ const AllUserData = () => {
           platform === "Codeforces"
             ? "codeforcesUser"
             : platform === "CodeChef"
-            ? "codechefUser"
-            : "leetcodeUser";
+              ? "codechefUser"
+              : "leetcodeUser";
 
         const response = await axios.get(
           `${backendUrl}/api/user?platform=${site}`
@@ -54,7 +56,7 @@ const AllUserData = () => {
     };
 
     fetchData();
-  }, [platform,backendUrl]);
+  }, [platform, backendUrl]);
 
   const handleSort = (column) => {
     const newSortOrder =
@@ -65,18 +67,18 @@ const AllUserData = () => {
 
   const sortedUsers = users
     ? [...users].sort((a, b) => {
-        if (sortColumn === "Roll No") {
-          return sortOrder === "asc"
-            ? a.roll.localeCompare(b.roll)
-            : b.roll.localeCompare(a.roll);
-        }
-        if (sortColumn === "Rank") {
-          const rankA = a.ranks?.[`${platform?.toLowerCase()}Rank`] || Infinity;
-          const rankB = b.ranks?.[`${platform?.toLowerCase()}Rank`] || Infinity;
-          return sortOrder === "asc" ? rankA - rankB : rankB - rankA;
-        }
-        return 0;
-      })
+      if (sortColumn === "Roll No") {
+        return sortOrder === "asc"
+          ? a.roll.localeCompare(b.roll)
+          : b.roll.localeCompare(a.roll);
+      }
+      if (sortColumn === "Rank") {
+        const rankA = a.ranks?.[`${platform?.toLowerCase()}Rank`] || Infinity;
+        const rankB = b.ranks?.[`${platform?.toLowerCase()}Rank`] || Infinity;
+        return sortOrder === "asc" ? rankA - rankB : rankB - rankA;
+      }
+      return 0;
+    })
     : [];
 
   const filteredUsers = sortedUsers.filter((user) => {
@@ -129,86 +131,62 @@ const AllUserData = () => {
             placeholder={`Search by ${item}`}
           />
           <div className=" -translate-y-1 w-full">
-          <Dropdown
-            options={searchOptions}
-            value={item}
-            onChange={(e) => setItem(e.target.value)}
-          />
+            <Dropdown
+              options={searchOptions}
+              value={item}
+              onChange={(e) => setItem(e.target.value)}
+            />
           </div>
-          
+
         </div>
       </div>
 
       {loader ? (
-        <div className="flex justify-center mt-20">
+        <div className="flex justify-center mt-10">
           <div className="loader"></div>
         </div>
       ) : platform && platform !== "Select Platform" ? (
         users ? (
-          <div className="mt-10 overflow-x-auto">
+          <div className="mt-8 overflow-x-auto">
             <table className="w-full border-collapse border border-gray-200 text-sm">
-              <thead
-                className={`${
-                  theme === "dark" ? "bg-zinc-800" : "bg-gray-300"
-                }`}
-              >
+              <thead className={`${theme === "dark" ? "bg-zinc-800" : "bg-gray-300"}`}>
                 <tr>
                   <th className={`${tableHead}`}>Sr No.</th>
-                  <th
-                    className={`${tableHead} cursor-pointer`}
-                    onClick={() => handleSort("Roll No")}
-                  >
-                    Roll No{" "}
-                    {sortColumn === "Roll No"
-                      ? sortOrder === "asc"
-                        ? "↑"
-                        : "↓"
-                      : ""}
-                  </th>
-                  <th className={`${tableHead}`}>Name</th>
-                  <th className={`${tableHead}`}>Year</th>
                   <th className={`${tableHead}`}>UserName</th>
-                  <th
-                    className={`${tableHead} cursor-pointer`}
-                    onClick={() => handleSort("Rank")}
-                  >
-                    Rank{" "}
-                    {sortColumn === "Rank"
-                      ? sortOrder === "asc"
-                        ? "↑"
-                        : "↓"
-                      : ""}
+                  <th className={`${tableHead} cursor-pointer`} onClick={() => handleSort("Roll No")}>
+                    Roll No {sortColumn === "Roll No" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
+                  </th>
+                  <th className={`${tableHead}`}>{`${platform} ID`}</th>
+                  
+                  <th className={`${tableHead} hidden md:table-cell`}>Name</th>
+                  <th className={`${tableHead} hidden md:table-cell`}>Department</th>
+                  <th className={`${tableHead} hidden md:table-cell`}>Year</th>
+                  <th className={`${tableHead} hidden md:table-cell`}>Registered ID</th>
+                  <th className={`${tableHead} cursor-pointer`} onClick={() => handleSort("Rank")}>
+                    Rank {sortColumn === "Rank" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {currentEntries.length > 0 ? (
                   currentEntries.map((user, index) => (
-                    <tr
-                      key={user._id}
-                      className={`text-center ${
-                        index % 2 === 0 ? "" : "bg-gray-100"
-                      } ${
-                        theme === "dark" && index % 2 !== 0
-                          ? "bg-zinc-900"
-                          : ""
-                      }`}
+                    <tr key={user._id} className={`text-center cursor-pointer ${index % 2 === 0 ? "" : "bg-gray-100"} ${theme === "dark" && index % 2 !== 0 ? "bg-zinc-900" : ""}`}
+                      onClick={()=>navigate(`/user/${user.username}`)}
                     >
                       <td className={`${tableHead}`}>{indexOfFirstEntry + index + 1}</td>
+                      <td className={`${tableHead}`}>{user.username}</td>
                       <td className={`${tableHead}`}>{user.roll}</td>
-                      <td className={`${tableHead}`}>{user.name}</td>
-                      <td className={`${tableHead}`}>{user.year}</td>
-                      <td className={`${tableHead}`}>
-                        {user.usernames?.[`${platform.toLowerCase()}User`]}
-                      </td>
-                      <td className={`${tableHead}`}>
-                        {user.ranks?.[`${platform.toLowerCase()}Rank`]}
-                      </td>
+                      <td className={`${tableHead}`}>{user.usernames?.[`${platform.toLowerCase()}User`]}</td>
+                      <td className={`${tableHead} hidden md:table-cell`}>{user.name}</td>
+                      <td className={`${tableHead} hidden md:table-cell`}>{user.department}</td>
+                      <td className={`${tableHead} hidden md:table-cell`}>{user.year}</td>
+                      <td className={`${tableHead} hidden md:table-cell`}>{user.registeredID}</td>
+                      <td className={`${tableHead}`}>{user.ranks?.[`${platform.toLowerCase()}Rank`]}</td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6" className="border px-4 py-2 text-center">
+                    <td colSpan="9" className="border px-4 py-2 text-center">
                       No users found
                     </td>
                   </tr>
@@ -217,33 +195,16 @@ const AllUserData = () => {
             </table>
 
             <div className="mt-4 flex justify-between items-center">
-              <button
-                onClick={handlePrev}
-                disabled={currentPage === 1}
-                className={`px-4 py-2 bg-gray-300 rounded-xl hover:text-blue-500 ${
-                  theme === "dark"
-                    ? "bg-zinc-700 hover:bg-zinc-900 disabled:bg-gray-600"
-                    : "hover:bg-gray-400"
-                } transition-colors duration-500`}
-              >
+              <button onClick={handlePrev} disabled={currentPage === 1} className="px-4 py-2 bg-zinc-300 dark:bg-zinc-800 rounded-xl hover:bg-zinc-600">
                 Prev
               </button>
-              <span>
-                Page {currentPage} of {totalPages}
-              </span>
-              <button
-                onClick={handleNext}
-                disabled={currentPage === totalPages}
-                className={`px-4 py-2 bg-gray-300 rounded-xl hover:text-blue-500 ${
-                  theme === "dark"
-                    ? "bg-zinc-700 hover:bg-zinc-900 disabled:bg-gray-600"
-                    : "hover:bg-gray-400"
-                } transition-colors duration-500`}
-              >
+              <span>Page {currentPage} of {totalPages}</span>
+              <button onClick={handleNext} disabled={currentPage === totalPages} className="px-4 py-2 bg-zinc-300 dark:bg-zinc-800 rounded-xl hover:bg-zinc-600">
                 Next
               </button>
             </div>
           </div>
+
         ) : (
           <p className="mt-6 text-center">Loading...</p>
         )

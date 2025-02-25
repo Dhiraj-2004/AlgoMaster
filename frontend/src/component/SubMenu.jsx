@@ -1,16 +1,26 @@
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { ThemeContext } from '../context/ThemeContext';
 
-const SubMenu = ({ item, onClick }) => {
+
+const SubMenu = ({ item, onClick,userData }) => {
   const { theme } = useContext(ThemeContext);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (item.title === "Profile" && userData?.username) {
+      navigate(`/user/${userData.username}`);
+    } else if (onClick) {
+      onClick();
+    }
+  };
 
   return (
     <div>
       <NavLink
-        to={item.path}
-        onClick={onClick ? onClick : null} 
+        to={item.title === "Profile" ? `/user/${userData?.username}` : item.path}
+        onClick={handleClick}
         className={`flex items-center px-5 py-3 text-lg ${
           theme === 'dark' ? 'hover:bg-zinc-800' : 'hover:bg-zinc-300'
         } hover:border-l-4 hover:border-purple-500 hover:text-orange-500 dark:hover:text-blue-500 transition-all duration-200`}
@@ -32,6 +42,7 @@ SubMenu.propTypes = {
     icon: PropTypes.node.isRequired,  
   }).isRequired,
   onClick: PropTypes.func,
+  userData:PropTypes.isRequired
 };
 
 export default SubMenu;

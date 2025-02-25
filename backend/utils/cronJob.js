@@ -44,6 +44,49 @@ const updateUserData = async (platformUser, username) => {
     }
 };
 
+// Update department and college ranks
+const updateDepartmentAndCollegeRanks = async () => {
+    console.log(`Updating department and college ranks...`);
+
+    const allUsers = await User.find().select("name ranks usernames department college").exec();
+
+    const calculateRank = (users, key) => {
+        const sortedRanks = users
+            .map(u => u.ranks[key])
+            .filter(rank => rank !== undefined)
+            .sort((a, b) => b - a);
+
+        return (user) => ({
+            rank: sortedRanks.indexOf(user.ranks[key]) + 1,
+        });
+    };
+
+    for (const user of allUsers) {
+        const usersInDepartment = allUsers.filter(u => u.department === user.department);
+        const usersInCollege = allUsers.filter(u => u.college === user.college);
+
+        const departmentRanks = {
+            codeforcesRank: calculateRank(usersInDepartment, "codeforcesRank")(user).rank,
+            codechefRank: calculateRank(usersInDepartment, "codechefRank")(user).rank,
+            leetcodeRank: calculateRank(usersInDepartment, "leetcodeRank")(user).rank
+        };
+
+        const collegeRanks = {
+            codeforcesRank: calculateRank(usersInCollege, "codeforcesRank")(user).rank,
+            codechefRank: calculateRank(usersInCollege, "codechefRank")(user).rank,
+            leetcodeRank: calculateRank(usersInCollege, "leetcodeRank")(user).rank
+        };
+
+        user.departmentRank = departmentRanks;
+        user.collegeRank = collegeRanks;
+
+        await user.save();
+    }
+
+    console.log("Department and college ranks updated successfully.");
+};
+
+
 // api for update rank
 const getPlatformApiEndpoint = (platformUser) => {
     switch (platformUser) {
@@ -102,7 +145,7 @@ const getRank = (userData, platformUser) => {
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // schedule data update every saturday
-cron.schedule("0 0 * * 6", async () => {
+cron.schedule("0 0 */4 * *", async () => {
     console.log(`Cron job started at ${new Date().toISOString()}`);
 
     const users = await User.find({});
@@ -123,6 +166,8 @@ cron.schedule("0 0 * * 6", async () => {
             await delay(2000);
         }
     }
+    console.log(`Rank update completed. Now updating department and college ranks...`);
+    await updateDepartmentAndCollegeRanks();
 
     console.log(`Cron job completed at ${new Date().toISOString()}`);
 });

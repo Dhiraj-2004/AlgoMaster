@@ -5,10 +5,11 @@ import * as AiIcons from 'react-icons/ai';
 import { SidebarData } from './SidebarData';
 import SubMenu from './SubMenu';
 import { IconContext } from 'react-icons/lib';
+import useUserData from './hook/useUserData';
 
 const Sidebar = () => {
   const [sidebar, setSidebar] = useState(false);
-
+  const { userData } = useUserData();
   const showSidebar = () => setSidebar(!sidebar);
   const closeSidebar = (e) => {
     if (!e.target.closest('.sidebar') && !e.target.closest('.sidebar-toggle')) {
@@ -41,7 +42,7 @@ const Sidebar = () => {
           </Link>
 
           {SidebarData.map((item, index) => (
-            <SubMenu item={item} key={index} 
+            <SubMenu item={item} key={index} userData={userData}
             onClick={showSidebar}/>
           ))}
         </div>

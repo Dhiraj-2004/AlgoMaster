@@ -12,14 +12,13 @@ const ScoreCard = ({ label, value, max }) => {
   }, [percentage]);
 
   const getRankColor = (percentage) => {
-    if (percentage > 65) return "#22c55e";
+    if (percentage > 70) return "#22c55e";
     if (percentage > 50) return "#eab308";
-    if (percentage > 40) return "#3b82f6";
     return "#ef4444";
   };
 
   return (
-    <div className="bg-gray-50/50 dark:bg-gray-800 p-4 rounded-lg">
+    <div className="bg-zinc-100 dark:bg-zinc-900 p-4 rounded-lg">
       <div className="flex justify-between items-center mb-2">
         <span className="text-sm text-gray-500 dark:text-gray-400">{label}</span>
         <span className="text-sm font-semibold text-orange-400">{value}/{max}</span>

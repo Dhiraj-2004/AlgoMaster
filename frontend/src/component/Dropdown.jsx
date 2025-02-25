@@ -31,7 +31,8 @@ const Dropdown = ({ name, options, value, onChange, label }) => {
         name={name}
         value={value}
         onChange={handleSelectChange}
-        className={`w-full h-14 p-4 border ${inputStyles} rounded-xl focus:ring-2 focus:ring-[#ff5757] focus:outline-none ${(select && themes==='dark') ? 'text-white' : (select && themes==='light') ? '' : 'text-gray-400'}`}
+        className={`w-full h-14 p-4 border ${inputStyles} rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+            dark:focus:ring-blue-400 dark:focus:border-blue-400 focus:outline-none ${(select && themes==='dark') ? 'text-white' : (select && themes==='light') ? '' : 'text-gray-400'}`}
       >
         {options.map((option, index) => (
           <option key={index} value={option}>
