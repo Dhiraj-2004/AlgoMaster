@@ -7,28 +7,27 @@ const useUserData = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!userData) {
-      const backendUrl = import.meta.env.VITE_BACKEND_URL;
-      const fetchUserData = async () => {
-        try {
-          setLoading(true);
-          const token = localStorage.getItem("token");
-          const response = await axios.get(`${backendUrl}/api/user/userdata`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          setUserData(response.data);
-        } catch (error) {
-          setError(error.response?.data?.msg || "An error occurred");
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-      fetchUserData();
-    }
-  }, [userData]); 
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    
+    const fetchUserData = async () => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem("token");
+        const response = await axios.get(`${backendUrl}/api/user/userdata`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUserData(response.data);
+      } catch (error) {
+        setError(error.response?.data?.msg || "An error occurred");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   return { userData, error, loading };
 };

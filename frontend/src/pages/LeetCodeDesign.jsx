@@ -2,19 +2,13 @@
 import PropTypes from "prop-types";
 import ProgressContainer from "../component/ProgressContainer ";
 import { assets } from "../assets/assets";
-import useUserData from "../component/hook/useUserData";
-import useCollegeRank from "../component/hook/useCollegeRank";
 import Title from "../component/PageTitle";
 import LeetCodeRatingGraph from "../component/LeetCodeRatingGraph ";
 import LeetcodeDailyData from "../component/LeetcodeDailyData";
 
 
-const LeetCodeDesign = ({ data }) => {
-  const { userData, loading } = useUserData();
-  const { rankData, totalUsers } = useCollegeRank({
-    username: userData?.usernames?.leetcodeUser,
-    department: userData?.department,
-  });
+const LeetCodeDesign = ({ data,userData,loading,rankData,totalUsers}) => {
+ 
 
   const User=data.data;
 
@@ -130,7 +124,12 @@ const LeetCodeDesign = ({ data }) => {
 };
 
 LeetCodeDesign.propTypes = {
-  data: PropTypes.object.isRequired,
-}
+  data: PropTypes.object,
+  userData: PropTypes.object,
+  loading: PropTypes.bool.isRequired,
+  rankData: PropTypes.object,
+  totalUsers: PropTypes.number,
+  error: PropTypes.string,
+};
 
 export default LeetCodeDesign;

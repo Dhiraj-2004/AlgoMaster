@@ -11,6 +11,7 @@ const {
     getUserData,
     userProfile,
     checkUsername,
+    getUserName,
 } = require("../controllers/userController");
 
 const {
@@ -34,6 +35,7 @@ router.put("/rank",protect,saveUserRank);
 router.put('/updateUser', protect, updateUsernames);
 
 router.get('/check-username/:username', checkUsername);
+router.get("/profile",protect,getUserName);
 router.get('/',getAllUsers);
 router.get('/leetcode/:username',leetCode);
 router.get('/userdata',protect,getUserData);

@@ -1,16 +1,10 @@
 import PropTypes from "prop-types";
 import { assets } from "../assets/assets";
-import useUserData from "../component/hook/useUserData";
-import useCollegeRank from "../component/hook/useCollegeRank";
 import Title from "../component/PageTitle";
 import CodeForcesRatingGraph from "../component/CodeForcesRatingGraph";
 
-const CodeForcesDesign = ({ data }) => {
-  const { userData, loading } = useUserData();
-  const { rankData, totalUsers, error } = useCollegeRank({
-    username: userData?.usernames?.codeforcesUser,
-    department: userData?.department
-  });
+const CodeForcesDesign = ({ data,userData,loading,rankData,totalUsers,error }) => {
+
 
   if (error) {
     return <div>{error}</div>;
@@ -100,7 +94,12 @@ const CodeForcesDesign = ({ data }) => {
 };
 
 CodeForcesDesign.propTypes = {
-    data: PropTypes.array.isRequired,
-  };
+  data: PropTypes.object,
+  userData: PropTypes.object,
+  loading: PropTypes.bool.isRequired,
+  rankData: PropTypes.object,
+  totalUsers: PropTypes.number,
+  error: PropTypes.string,
+};
 
 export default CodeForcesDesign;

@@ -1,15 +1,8 @@
 import PropTypes from "prop-types";
 import { assets } from "../assets/assets";
-import useUserData from "../component/hook/useUserData";
-import useCollegeRank from "../component/hook/useCollegeRank";
 import Title from "../component/PageTitle";
 
-const CodeChefDesign = ({ data }) => {
-  const { userData, loading } = useUserData();
-  const { rankData, totalUsers, error } = useCollegeRank({
-    username: userData?.usernames?.codechefUser,
-    department: userData?.department
-   });
+const CodeChefDesign = ({ data,userData,loading,rankData,totalUsers,error }) => {
    
    if (error) {
     return <div>{error}</div>;
@@ -104,7 +97,12 @@ const CodeChefDesign = ({ data }) => {
 };
 
 CodeChefDesign.propTypes = {
-  data: PropTypes.string.isRequired,
+  data: PropTypes.object,
+  userData: PropTypes.object,
+  loading: PropTypes.bool.isRequired,
+  rankData: PropTypes.object,
+  totalUsers: PropTypes.number,
+  error: PropTypes.string,
 };
 
 export default CodeChefDesign;

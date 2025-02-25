@@ -497,3 +497,23 @@ exports.userProfile = async (req, res) => {
         });
     }
 };
+
+
+// get user name for platform id
+
+exports.getUserName=async(req,res)=>{
+    try {
+        const user=await User.findById(req.user.id).select("usernames");
+        if(!user){
+            return res.status(404).json({
+                msg:"User not found"
+            });
+        }
+        res.json({ 
+            username: user.usernames 
+        });
+    } catch (error) {
+        console.error("Error fetching user profile:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+}

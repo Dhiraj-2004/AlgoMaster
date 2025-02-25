@@ -16,6 +16,7 @@ const Pofile = () => {
   const [localUserData, setUserData] = useState(null);
   const [amcatdata, setAmcatdata] = useState(null)
   const {userData}=useUserData();
+  const [loder,setLoder]=useState(false);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const user=userData?.username;
@@ -23,6 +24,7 @@ const Pofile = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoder(true);
       try {
         const name=username || user;
         const response = await axios.get(`${backendUrl}/api/user/${name}`);
@@ -31,10 +33,15 @@ const Pofile = () => {
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
+      finally{
+        setLoder(false);
+      }
     };
     fetchData();
-  }, [username]);
-
+  }, [user,username]);
+  if(loder==true){
+    <div className="loader"></div>
+  }
   return (
     <div className="flex flex-col h-full justify-center items-center px-4 w-full">
       <div className="flex flex-col min-w-full md:flex-row gap-6">
