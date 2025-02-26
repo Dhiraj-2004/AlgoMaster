@@ -1,4 +1,4 @@
-import { Routes, Route, BrowserRouter } from 'react-router-dom'
+import { Routes, Route, HashRouter  } from 'react-router-dom'
 import Navbar from "./component/Navbar"
 import Home from './pages/Home'
 import Codechef from './pages/Codechef'
@@ -20,7 +20,7 @@ import UpdateProfile from './pages/UpdateProfile'
 const App = () => {
   return (
     <div className="flex flex-col min-h-screen  transition-colors duration-700">
-      <BrowserRouter>
+      <HashRouter >
         <ThemeContext>
           {/* Navbar */}
           <Navbar />
@@ -49,7 +49,7 @@ const App = () => {
           {/* Footer */}
           <Footer />
         </ThemeContext>
-      </BrowserRouter>
+      </HashRouter >
     </div>
   );
 };
