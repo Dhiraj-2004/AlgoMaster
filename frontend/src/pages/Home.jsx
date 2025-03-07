@@ -137,8 +137,9 @@ const Home = () => {
               <h2>{`Contest 1: ${contest[0].name}`}</h2>
               <p>{`Start Time: ${new Date(contest[0].startTimeSeconds * 1000).toLocaleString()}`}</p>
               <p>{`Duration: ${contest[0].durationSeconds / 3600} hours`}</p>
-              <button onClick={() => handleNavigate(contest[0].id)} className="gradient-button">
-                <span className="gradient-button-text">Enter Contest</span>
+              <button onClick={() => handleNavigate(contest[0].id)} 
+                className="gradient-hover-btn relative mt-2 focus:outline-none">
+                <span>Enter Contest</span>
               </button>
             </div>
           ) : (
@@ -154,9 +155,12 @@ const Home = () => {
               <h2>{`Contest 2: ${contest[1].name}`}</h2>
               <p>{`Start Time: ${new Date(contest[1].startTimeSeconds * 1000).toLocaleString()}`}</p>
               <p>{`Duration: ${contest[1].durationSeconds / 3600} hours`}</p>
-              <button onClick={() => handleNavigate(contest[0].id)} className="gradient-button">
-                <span className="gradient-button-text">Enter Contest</span>
+              <button 
+                onClick={() => handleNavigate(contest[0].id)} 
+                className="gradient-hover-btn relative mt-2 focus:outline-none">
+                <span>Enter Contest</span>
               </button>
+
             </div>
           ) : (
             <p className="text-lg">There are no upcoming Contests at the moment.</p>

@@ -72,7 +72,7 @@ const Add = () => {
       />
 
       <button
-        className="bg-red-500 rounded-[24px] text-white font-semibold px-8 py-2 mt-5 w-[40%] hover:bg-red-600"
+        className="gradient-button gradient-button--large"
         onClick={handleSubmit}
       >
         Submit

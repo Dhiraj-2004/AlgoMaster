@@ -83,10 +83,10 @@ const UpdateProfile = () => {
       />
 
       <button
-        className="gradient-button gradient-button--large"
+        className="custom-button text-xl m-5 w-[65%]"
         onClick={handleSubmit}
       >
-        <span className="gradient-button-text">Submit</span>
+        <span>Submit</span>
       </button>
 
       <ToastContainer

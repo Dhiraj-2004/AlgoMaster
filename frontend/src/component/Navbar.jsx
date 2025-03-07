@@ -13,10 +13,13 @@ export const Navbar = () => {
   }, [navigate]);
 
   return (
-    <nav className="manrope-regular fixed top-0 left-0 w-full z-50 shadow-md transition-all duration-300 
-      bg-white text-black dark:bg-black dark:text-white border-b-2 dark:border-zinc-400/50">
+    <nav className="manrope-regular fixed top-0 left-0 w-full z-50 
+    bg-white text-black dark:bg-black dark:text-white 
+    border-b border-zinc-200/80 dark:border-zinc-800/60
+    shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_12px_rgba(255,255,255,0.03)]
+    transition-all duration-300 hover:shadow-[0_6px_16px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_6px_16px_rgba(255,255,255,0.05)]">
       
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-1">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
         
         <NavLink to="/home" className="hover:opacity-85 transition-opacity duration-200">
           <div className="flex justify-center items-center px-2 md:px-3">
@@ -31,7 +34,7 @@ export const Navbar = () => {
 
         <div className="flex md:order-2 space-x-2 md:space-x-0 rtl:space-x-reverse">
           {!isLoggedIn ? (
-            <button className="custom-button h-14 w-32 md:w-36 my-1"
+            <button className="custom-button text-xl h-12 w-28 md:w-36 my-1"
               onClick={()=>navigate("/login")}
             >Login</button>
           ) : (

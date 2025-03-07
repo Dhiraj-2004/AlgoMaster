@@ -88,9 +88,7 @@ const ForgotPassword = () => {
         <div className="flex justify-center">
           <button 
             onClick={otpSent ? handleChangeForgotPassword : handleForgotPassword}
-            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 
-                     dark:from-blue-700 dark:to-indigo-700 dark:hover:from-blue-800 dark:hover:to-indigo-800
-                     text-white font-semibold py-3 px-4 rounded-lg transition-all transform hover:scale-105 active:scale-95"
+            className="w-[90%] custom-button"
           >
             {otpSent ? 'Reset Password' : 'Send OTP'}
           </button>

@@ -1,17 +1,18 @@
 import PropTypes from "prop-types";
 import useAmcatRank from "../component/hook/useAmcatRank";
 import { UsersIcon, UserIcon, TrophyIcon, ChartBarIcon } from "@heroicons/react/24/outline";
-import { IdCard } from "lucide-react";
+import { IdCard, User } from "lucide-react";
 import { assets } from '../assets/assets';
 import React, { useEffect, useState, } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate , useParams } from "react-router-dom";
 import ScoreCard from "../component/ScoreCard";
 import useUserData from "../component/hook/useUserData";
+import Title from "../component/PageTitle";
 
 
 // Profile section
-const Pofile = () => {
+const Profile = () => {
   const { username } = useParams();
   const [localUserData, setUserData] = useState(null);
   const [amcatdata, setAmcatdata] = useState(null)
@@ -43,100 +44,103 @@ const Pofile = () => {
     <div className="loader"></div>
   }
   return (
-    <div className="flex flex-col h-full justify-center items-center px-4 w-full">
-      <div className="flex flex-col min-w-full md:flex-row gap-6">
-        {/* User Data */}
-        <div className="card flex flex-col items-start rounded-3xl border dark:border-zinc-800 p-4 w-full md:w-5/6 lg:w-11/12 xl:w-5/12">
-          <InfoSection
-            icon={<UserIcon className="w-4 h-4 sm:w-6 sm:h-6 text-indigo-500 dark:text-indigo-400" />}
-            placeholder="Username:"
-            data={localUserData?.username} />
-          <InfoSection
-            icon={<UserIcon className="w-4 h-4 sm:w-6 sm:h-6 text-indigo-500 dark:text-indigo-400" />}
-            placeholder="Name:"
-            data={localUserData?.name} />
-          <InfoSection
-            icon={assets.Gmail}
-            placeholder="Email:"
-            data={localUserData?.email} />
-          <InfoSection
-            icon={assets.Roll}
-            placeholder="Roll:"
-            data={localUserData?.roll} />
-          <InfoSection
-            icon={assets.Roll}
-            placeholder="Registered ID:"
-            data={localUserData?.registeredID} />
-          <InfoSection
-            icon={assets.college}
-            placeholder="Department:"
-            data={localUserData?.department} />
-          <InfoSection
-            icon={assets.Year}
-            placeholder="Year:"
-            data={localUserData?.year} />
-          <InfoSection
-            icon={assets.codechef}
-            placeholder="CodeChef:"
-            data={localUserData?.usernames?.codechef} />
-          <InfoSection
-            icon={assets.codeforce}
-            placeholder="CodeForces:"
-            data={localUserData?.usernames?.codeforces} />
-          <InfoSection
-            icon={assets.leetcode}
-            placeholder="Leetcode:"
-            data={localUserData?.usernames?.leetcode} />
-          <InfoSection
-            icon={assets.Amcat}
-            placeholder="Amcat ID:"
-            data={localUserData?.usernames?.amcatKey} />
-        </div>
+    <div>
+      <Title text1="User" text2="Profile" />
+      <div className="flex flex-col h-full justify-center items-center px-4 w-full">
+        <div className="flex flex-col min-w-full md:flex-row gap-6">
+          {/* User Data */}
+          <div className="card flex flex-col items-start rounded-3xl border dark:border-zinc-800 p-4 w-full md:w-5/6 lg:w-11/12 xl:w-5/12">
+            <InfoSection
+              icon={<UserIcon className="w-4 h-4 sm:w-6 sm:h-6 text-indigo-500 dark:text-indigo-400" />}
+              placeholder="Username:"
+              data={localUserData?.username} />
+            <InfoSection
+              icon={<UserIcon className="w-4 h-4 sm:w-6 sm:h-6 text-indigo-500 dark:text-indigo-400" />}
+              placeholder="Name:"
+              data={localUserData?.name} />
+            <InfoSection
+              icon={assets.Gmail}
+              placeholder="Email:"
+              data={localUserData?.email} />
+            <InfoSection
+              icon={assets.Roll}
+              placeholder="Roll:"
+              data={localUserData?.roll} />
+            <InfoSection
+              icon={assets.Roll}
+              placeholder="Registered ID:"
+              data={localUserData?.registeredID} />
+            <InfoSection
+              icon={assets.college}
+              placeholder="Department:"
+              data={localUserData?.department} />
+            <InfoSection
+              icon={assets.Year}
+              placeholder="Year:"
+              data={localUserData?.year} />
+            <InfoSection
+              icon={assets.codechef}
+              placeholder="CodeChef:"
+              data={localUserData?.usernames?.codechef} />
+            <InfoSection
+              icon={assets.codeforce}
+              placeholder="CodeForces:"
+              data={localUserData?.usernames?.codeforces} />
+            <InfoSection
+              icon={assets.leetcode}
+              placeholder="Leetcode:"
+              data={localUserData?.usernames?.leetcode} />
+            <InfoSection
+              icon={assets.Amcat}
+              placeholder="Amcat ID:"
+              data={localUserData?.usernames?.amcatKey} />
+          </div>
 
-        {/* Platform Rankings */}
-        <div className="w-full flex flex-col gap-6">
-          <div className="w-full flex flex-col xl:flex-row gap-6">
-            {/* Leetcode */}
-            <div className="card flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-6 w-full md:w-5/6 lg:w-11/12 xl:w-5/12 h-64 gap-3">
-              <h1 className="text-lg font-semibold">Leetcode</h1>
-              <Section
-                overallRank={localUserData?.collegeRank?.leetcode}
-                totalUsers={localUserData?.totalUsers?.leetcode}
-                departmentRank={localUserData?.departmentRank?.leetcode}
-                departmentUsers={localUserData?.departmentUsers?.leetcode}
-                currentRating={localUserData?.ranks?.leetcode} />
+          {/* Platform Rankings */}
+          <div className="w-full flex flex-col gap-6">
+            <div className="w-full flex flex-col xl:flex-row gap-6">
+              {/* Leetcode */}
+              <div className="card flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-6 w-full md:w-5/6 lg:w-11/12 xl:w-5/12 h-64 gap-3">
+                <h1 className="text-lg font-semibold">Leetcode</h1>
+                <Section
+                  overallRank={localUserData?.collegeRank?.leetcode}
+                  totalUsers={localUserData?.totalUsers?.leetcode}
+                  departmentRank={localUserData?.departmentRank?.leetcode}
+                  departmentUsers={localUserData?.departmentUsers?.leetcode}
+                  currentRating={localUserData?.ranks?.leetcode} />
+              </div>
+
+              {/* CodeChef */}
+              <div className="card flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-6 w-full md:w-5/6 lg:w-11/12 xl:w-5/12 h-64 gap-3">
+                <h1 className="text-lg font-semibold">CodeChef</h1>
+                <Section
+                  overallRank={localUserData?.collegeRank?.codechef}
+                  totalUsers={localUserData?.totalUsers?.codechef}
+                  departmentRank={localUserData?.departmentRank?.codechef}
+                  departmentUsers={localUserData?.departmentUsers?.codechef}
+                  currentRating={localUserData?.ranks?.codechef} />
+              </div>
+
+              {/* CodeForces */}
+              <div className="card flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-6 w-full md:w-5/6 lg:w-11/12 xl:w-5/12 h-64 gap-3">
+                <h1 className="text-lg font-semibold">CodeForces</h1>
+                <Section
+                  overallRank={localUserData?.collegeRank?.codeforces}
+                  totalUsers={localUserData?.totalUsers?.codeforces}
+                  departmentRank={localUserData?.departmentRank?.codeforces}
+                  departmentUsers={localUserData?.departmentUsers?.codeforces}
+                  currentRating={localUserData?.ranks?.codeforces} />
+              </div>
             </div>
-
-            {/* CodeChef */}
-            <div className="card flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-6 w-full md:w-5/6 lg:w-11/12 xl:w-5/12 h-64 gap-3">
-              <h1 className="text-lg font-semibold">CodeChef</h1>
-              <Section
-                overallRank={localUserData?.collegeRank?.codechef}
-                totalUsers={localUserData?.totalUsers?.codechef}
-                departmentRank={localUserData?.departmentRank?.codechef}
-                departmentUsers={localUserData?.departmentUsers?.codechef}
-                currentRating={localUserData?.ranks?.codechef} />
-            </div>
-
-            {/* CodeForces */}
-            <div className="card flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-6 w-full md:w-5/6 lg:w-11/12 xl:w-5/12 h-64 gap-3">
-              <h1 className="text-lg font-semibold">CodeForces</h1>
-              <Section
-                overallRank={localUserData?.collegeRank?.codeforces}
-                totalUsers={localUserData?.totalUsers?.codeforces}
-                departmentRank={localUserData?.departmentRank?.codeforces}
-                departmentUsers={localUserData?.departmentUsers?.codeforces}
-                currentRating={localUserData?.ranks?.codeforces} />
+            <div className="w-full hidden xl:flex">
+              <Amcat amcatdata={amcatdata} />
             </div>
           </div>
-          <div className="w-full hidden xl:flex">
-            <Amcat amcatdata={amcatdata} />
-          </div>
         </div>
-      </div>
 
-      <div className="w-full xl:hidden mt-6">
-        <Amcat amcatdata={amcatdata} />
+        <div className="w-full xl:hidden mt-6">
+          <Amcat amcatdata={amcatdata} />
+        </div>
       </div>
     </div>
   )
@@ -213,6 +217,7 @@ const InfoSection = ({ icon, placeholder, data }) => {
 const Amcat = ({ amcatdata }) => {
   const { amcatRank } = useAmcatRank(amcatdata);
   const amcatData = amcatRank ? amcatRank : null;
+  const navigate = useNavigate();
 
   const MetricCard = ({ label, value, delta }) => (
     <div className="bg-zinc-100 dark:bg-zinc-900 w-40 p-2 md:w-48 rounded-lg">
@@ -256,6 +261,7 @@ const Amcat = ({ amcatdata }) => {
   );
 
   return (
+    <div>
     <div className="flex flex-col lg:flex-row gap-3">
       {amcatRank && (
         <div className="card flex flex-col items-center rounded-3xl  dark:border-zinc-800 p-5 w-full md:w-[443.2px]">
@@ -365,8 +371,17 @@ const Amcat = ({ amcatdata }) => {
           </div>
         </div>
       )}
+      </div>
+      
+      <div className="flex justify-center">
+        <button onClick={()=>navigate('/update')} className="custom-button m-10">
+          Update Profile
+        </button>
+      </div>
+      
 
     </div>
+    
   );
 };
 
@@ -405,4 +420,4 @@ InfoSection.propTypes = {
 
 
 
-export default Pofile
+export default Profile
