@@ -3,6 +3,7 @@ import InputField from "../component/InputField";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import Dropdown from "../component/Dropdown";
 
 
 const UpdateProfile = () => {
@@ -13,7 +14,7 @@ const UpdateProfile = () => {
   const [year, setYear] = useState("");
   const navigate = useNavigate();
 
-
+  const yearOptions = ["Select studying year", "First Year", "Second Year", "Third Year", "Forth Year"];
   const handleSubmit = async () => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     try {
@@ -24,7 +25,7 @@ const UpdateProfile = () => {
       if (codechefUser) payload.codechefUser = codechefUser;
       if (amcatkey) payload.amcatkey = amcatkey;
       if (year) payload.year = year;
-      await axios.post(`${backendUrl}/api/user/updateUser`,
+      await axios.put(`${backendUrl}/api/user/updateUser`,
         payload,
         {
           headers: {
@@ -74,12 +75,14 @@ const UpdateProfile = () => {
         label="AMCAT ID"
       />
 
-      <InputField
-        type="text"
+      <Dropdown
+        name="year"
+        options={yearOptions}
         value={year}
-        onChange={(e) => setYear(e.target.value)}
-        placeholder="Studying Year"
-        label="Studying Year"
+        onChange={(e)=>setYear(e.target.value)}
+        label="Select Year"
+        className="focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400
+                 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
       />
 
       <button

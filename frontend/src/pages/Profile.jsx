@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import useAmcatRank from "../component/hook/useAmcatRank";
 import { UsersIcon, UserIcon, TrophyIcon, ChartBarIcon } from "@heroicons/react/24/outline";
-import { IdCard, User } from "lucide-react";
+import { IdCard } from "lucide-react";
 import { assets } from '../assets/assets';
 import React, { useEffect, useState, } from "react";
 import axios from "axios";
@@ -20,9 +20,8 @@ const Profile = () => {
   const [loder,setLoder]=useState(false);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
+  
   const user=userData?.username;
-
-
   useEffect(() => {
     const fetchData = async () => {
       setLoder(true);
