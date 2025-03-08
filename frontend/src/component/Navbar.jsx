@@ -14,10 +14,8 @@ export const Navbar = () => {
 
   return (
     <nav className="manrope-regular fixed top-0 left-0 w-full z-50 
-    bg-white text-black dark:bg-black dark:text-white 
-    border-b border-zinc-200/80 dark:border-zinc-800/60
-    shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_12px_rgba(255,255,255,0.03)]
-    transition-all duration-300 hover:shadow-[0_6px_16px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_6px_16px_rgba(255,255,255,0.05)]">
+    bg-white text-black dark:bg-black dark:text-white"
+    style={{boxShadow: "rgba(102, 116, 204, 0.25) 0px 4px 10px"}}>
       
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
         
