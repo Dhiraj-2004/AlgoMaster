@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 import { assets } from "../assets/assets";
 import Title from "../component/PageTitle";
+import CodeChefGraph from "../component/CodeChefGraph";
 
-const CodeChefDesign = ({ data,userData,loading,rankData,totalUsers,error }) => {
-   
-   if (error) {
+const CodeChefDesign = ({ data, userData, loading, rankData, totalUsers, error }) => {
+
+  if (error) {
     return <div>{error}</div>;
-   }
+  }
 
   return (
     <div className="manrope-regular">
@@ -23,7 +24,7 @@ const CodeChefDesign = ({ data,userData,loading,rankData,totalUsers,error }) => 
               </span>
               <span className="text-yellow-400 font-bold text-lg">{userData ? data.stars : loading}</span>
               <span>
-                  Rank : {userData ? data.currentRating : loading}
+                Rank : {userData ? data.currentRating : loading}
               </span>
             </div>
           </div>
@@ -56,24 +57,23 @@ const CodeChefDesign = ({ data,userData,loading,rankData,totalUsers,error }) => 
 
         {/* Codechef Data */}
 
-
         <div className="card flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-80 gap-3">
 
           <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
-              <span className="font-bold text-md text-[#22C55E]">College Rank</span>
-              <div>
-                  <span className="font-bold text-base">{rankData?.overall?.codechef || "Not Available"}</span>
-                  <span className="text-zinc-500 text-base">/{totalUsers?.overall}</span>
-              </div>
+            <span className="font-bold text-md text-[#22C55E]">College Rank</span>
+            <div>
+              <span className="font-bold text-base">{rankData?.overall?.codechef || "Not Available"}</span>
+              <span className="text-zinc-500 text-base">/{totalUsers?.overall}</span>
+            </div>
           </div>
 
           <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
-              <span className="font-bold text-md text-[#22C55E]">Department Rank</span>
-              <div>
-                  <span className="font-bold text-base">{rankData?.department?.codechef || "Not Available"}</span>
-                  <span className="text-zinc-500 text-base">/{totalUsers?.departmentUsers?.codechef}</span>
-              </div>
-          </div> 
+            <span className="font-bold text-md text-[#22C55E]">Department Rank</span>
+            <div>
+              <span className="font-bold text-base">{rankData?.department?.codechef || "Not Available"}</span>
+              <span className="text-zinc-500 text-base">/{totalUsers?.departmentUsers?.codechef}</span>
+            </div>
+          </div>
 
           <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
             <span className="font-bold text-md text-[#22C55E]">Current Rating</span>
@@ -90,7 +90,11 @@ const CodeChefDesign = ({ data,userData,loading,rankData,totalUsers,error }) => 
             <span className="font-bold text-base">{data.globalRank}</span>
           </div>
         </div>
-        {/* </div> */}
+      </div>
+      <div className="mt-10">
+        <CodeChefGraph 
+        attendedContests={data?.ratingData}
+        ></CodeChefGraph>
       </div>
     </div>
   );

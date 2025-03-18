@@ -10,6 +10,7 @@ const CodeForcesDesign = ({ data,userData,loading,rankData,totalUsers,error }) =
     return <div>{error}</div>;
   }
   const User = data?.result?.[0];
+  console.log(User)
 
   return (
     <div className="manrope-regular ">

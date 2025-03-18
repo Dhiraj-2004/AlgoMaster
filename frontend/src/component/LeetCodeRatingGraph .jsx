@@ -5,11 +5,11 @@ import Title from './PageTitle';
 import { ThemeContext } from "../context/ThemeContext";
 
 const LeetCodeRatingGraph = ({ attendedContests }) => {
+  const { theme } = useContext(ThemeContext);
   if (!attendedContests || attendedContests.length === 0) {
     return <div className="text-gray-500">No contest history available</div>;
   }
 
-  const { theme } = useContext(ThemeContext);
   const isDarkMode = theme === "dark";
 
   const chartData = attendedContests
