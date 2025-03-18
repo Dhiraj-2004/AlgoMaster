@@ -4,6 +4,7 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import Dropdown from "../component/Dropdown";
+import Title from "../component/PageTitle";
 
 
 const UpdateProfile = () => {
@@ -42,7 +43,8 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-16 gap-4">
+    <div className="flex flex-col items-center w-[90%] sm:max-w-96 m-auto gap-4">
+      <Title text1="Update" text2="Profile" />
       <InputField
         type="text"
         value={leetcodeUser}
@@ -86,7 +88,7 @@ const UpdateProfile = () => {
       />
 
       <button
-        className="custom-button text-xl m-5 w-[65%]"
+        className="custom-button text-xl m-5 w-full"
         onClick={handleSubmit}
       >
         <span>Submit</span>

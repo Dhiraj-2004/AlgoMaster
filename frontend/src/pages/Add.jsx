@@ -72,7 +72,7 @@ const Add = () => {
       />
 
       <button
-        className="gradient-button gradient-button--large"
+        className="custom-button w-full mt-5"
         onClick={handleSubmit}
       >
         Submit
