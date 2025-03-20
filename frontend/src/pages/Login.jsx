@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import InputField from "../component/InputField";
@@ -7,10 +7,12 @@ import AuthSwitch from "../component/AuthSwitch";
 import SubmitButton from "../component/SubmitButton";
 import { ToastContainer, toast } from "react-toastify";
 import Title from "../component/PageTitle";
+import { AuthContext } from "../context/AuthContext";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const LoginForm = () => {
+  const { fetchUser } = useContext(AuthContext);
   const [currentState, setCurrentState] = useState("Login");
   const [formData, setFormData] = useState({
     name: "",
@@ -98,6 +100,7 @@ const LoginForm = () => {
       const response = await axios.post(`${backendUrl}${url}`, formData);
 
       localStorage.setItem("token", response.data.token);
+      await fetchUser();
       toast.success(`${currentState} successful!`);
 
       setTimeout(() => {

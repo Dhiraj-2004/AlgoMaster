@@ -3,14 +3,9 @@ import { assets } from "../assets/assets";
 import Title from "../component/PageTitle";
 import CodeForcesRatingGraph from "../component/CodeForcesRatingGraph";
 
-const CodeForcesDesign = ({ data,userData,loading,rankData,totalUsers,error }) => {
+const CodeForcesDesign = ({ data,userData,rankData, }) => {
 
-
-  if (error) {
-    return <div>{error}</div>;
-  }
   const User = data?.result?.[0];
-  console.log(User)
 
   return (
     <div className="manrope-regular ">
@@ -20,13 +15,13 @@ const CodeForcesDesign = ({ data,userData,loading,rankData,totalUsers,error }) =
         {/* Info */}
         <div className="card flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-80">
           <div>
-            <h1 className="manrope-bold mt-3 text-2xl">{userData ? userData.name : loading}</h1>
+            <h1 className="manrope-bold mt-3 text-2xl">{userData?.name}</h1>
             <div className="flex flex-col items-center font font-semibold ml-3 mb-auto text-zinc-500 dark:text-gray-500 text-sm">
               <span>
-                #{userData ? userData.usernames.codeforcesUser : loading}
+                #{userData?.platform?.usernames.codeforcesUser}
               </span>
               <span>
-                  Rank : {userData ? User.rank : loading}
+                  Rank : {User.rank}
               </span>
             </div>
           </div>
@@ -38,7 +33,7 @@ const CodeForcesDesign = ({ data,userData,loading,rankData,totalUsers,error }) =
               <div className="flex flex-col items-start min-w-0">
                 <span className="text-sm font-medium text-zinc-600">Email</span>
                 <span className="text-md font-semibold truncate block">
-                  {userData ? userData.email : loading}
+                  {userData.email}
                 </span>
               </div>
             </div>
@@ -50,7 +45,7 @@ const CodeForcesDesign = ({ data,userData,loading,rankData,totalUsers,error }) =
               <div className="flex flex-col items-start min-w-0">
                 <span className="text-sm font-medium text-zinc-600">Department</span>
                 <span className="text-md font-semibold truncate block">
-                  {userData ? userData.department : loading}
+                  {userData.department}
                 </span>
               </div>
             </div>
@@ -62,16 +57,16 @@ const CodeForcesDesign = ({ data,userData,loading,rankData,totalUsers,error }) =
           <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
               <span className="font-bold text-md text-[#22C55E]">College Rank</span>
               <div>
-                  <span className="font-bold text-base">{rankData?.overall?.codeforces || "Not Available"}</span>
-                  <span className="text-zinc-500 text-base">/{totalUsers?.overall}</span>
+                  <span className="font-bold text-base">{rankData?.userRank?.overall?.codeforces || "Not Available"}</span>
+                  <span className="text-zinc-500 text-base">/{rankData?.totalUsers?.college}</span>
               </div>
           </div>
 
           <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
               <span className="font-bold text-md text-[#22C55E]">Department Rank</span>
               <div>
-                  <span className="font-bold text-base">{rankData?.department?.codeforces || "Not Available"}</span>
-                  <span className="text-zinc-500 text-base">/{totalUsers?.departmentUsers?.codeforces}</span>
+                  <span className="font-bold text-base">{rankData?.userRank?.overall?.codeforces || "Not Available"}</span>
+                  <span className="text-zinc-500 text-base">/{rankData?.totalUsers?.department}</span>
               </div>
           </div> 
 
@@ -87,7 +82,7 @@ const CodeForcesDesign = ({ data,userData,loading,rankData,totalUsers,error }) =
         </div>
       </div>
       <div className="p-5 m-5">
-        <CodeForcesRatingGraph handle={userData?.usernames?.codeforcesUser} />
+        <CodeForcesRatingGraph handle={userData?.platform?.usernames.codeforcesUser} />
       </div>
 
     </div>
@@ -97,10 +92,8 @@ const CodeForcesDesign = ({ data,userData,loading,rankData,totalUsers,error }) =
 CodeForcesDesign.propTypes = {
   data: PropTypes.object,
   userData: PropTypes.object,
-  loading: PropTypes.bool.isRequired,
   rankData: PropTypes.object,
-  totalUsers: PropTypes.number,
-  error: PropTypes.string,
+
 };
 
 export default CodeForcesDesign;

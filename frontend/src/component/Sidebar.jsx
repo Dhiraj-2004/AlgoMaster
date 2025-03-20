@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { SidebarData } from './SidebarData';
 import SubMenu from './SubMenu';
 import { IconContext } from 'react-icons/lib';
-import useUserData from './hook/useUserData';
+import { AuthContext } from '../context/AuthContext';
 
 const Sidebar = () => {
   const [sidebar, setSidebar] = useState(false);
-  const { userData } = useUserData();
+  const {user}=useContext(AuthContext);
   const showSidebar = () => setSidebar(!sidebar);
   const closeSidebar = (e) => {
     if (!e.target.closest('.sidebar') && !e.target.closest('.sidebar-toggle')) {
@@ -42,7 +42,7 @@ const Sidebar = () => {
           </Link>
 
           {SidebarData.map((item, index) => (
-            <SubMenu item={item} key={index} userData={userData}
+            <SubMenu item={item} key={index} user={user?.username}
             onClick={showSidebar}/>
           ))}
         </div>

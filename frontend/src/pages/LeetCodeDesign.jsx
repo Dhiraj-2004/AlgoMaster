@@ -7,11 +7,10 @@ import LeetCodeRatingGraph from "../component/LeetCodeRatingGraph ";
 import LeetcodeDailyData from "../component/LeetcodeDailyData";
 
 
-const LeetCodeDesign = ({ data,userData,loading,rankData,totalUsers}) => {
- 
+const LeetCodeDesign = ({ data,userData,rankData}) => { 
 
   const User=data.data;
-
+  
   const easySolved = User?.matchedUser?.submitStats?.acSubmissionNum.find(
     (submission) => submission.difficulty === "Easy"
   )?.count;
@@ -35,9 +34,9 @@ const LeetCodeDesign = ({ data,userData,loading,rankData,totalUsers}) => {
         {/* Info */}
         <div className="card flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-80">
           <div>
-            <h2 className="manrope-bold mt-3 text-2xl">{userData ? userData.name : loading}</h2>
+            <h2 className="manrope-bold mt-3 text-2xl">{userData?.name}</h2>
             <div className="flex flex-col items-center font font-semibold ml-3 mb-auto text-zinc-500 dark:text-gray-500 text-sm">
-              <span>#{userData ? userData.usernames.leetcodeUser :loading}</span>
+              <span>#{userData?.platform?.usernames?.leetcodeUser}</span>
               <span>Rank: {Math.round(User?.userContestRanking?.rating)}</span>
             </div>
           </div>
@@ -73,16 +72,16 @@ const LeetCodeDesign = ({ data,userData,loading,rankData,totalUsers}) => {
           <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
             <span className="font-bold text-md text-[#22C55E]">College Rank</span>
             <div>
-              <span className="font-bold text-base">{rankData?.overall?.leetcode || "Not Available"}</span>
-              <span className="text-zinc-500 text-base">/{totalUsers?.overall}</span>
+              <span className="font-bold text-base">{rankData?.userRank?.overall?.leetcode || "Not Available"}</span>
+              <span className="text-zinc-500 text-base">/{rankData?.totalUsers?.college}</span>
             </div>
           </div>
 
           <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
             <span className="font-bold text-md text-[#22C55E]">Department Rank</span>
             <div>
-              <span className="font-bold text-base">{rankData?.department?.leetcode || "Not Available"}</span>
-              <span className="text-zinc-500 text-base">/{totalUsers?.departmentUsers?.leetcode}</span>
+              <span className="font-bold text-base">{rankData?.userRank?.department?.leetcode || "Not Available"}</span>
+              <span className="text-zinc-500 text-base">/{rankData?.totalUsers?.department}</span>
             </div>
           </div> 
 
@@ -126,10 +125,7 @@ const LeetCodeDesign = ({ data,userData,loading,rankData,totalUsers}) => {
 LeetCodeDesign.propTypes = {
   data: PropTypes.object,
   userData: PropTypes.object,
-  loading: PropTypes.bool.isRequired,
   rankData: PropTypes.object,
-  totalUsers: PropTypes.number,
-  error: PropTypes.string,
 };
 
 export default LeetCodeDesign;

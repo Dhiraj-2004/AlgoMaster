@@ -15,7 +15,7 @@ const AllUserData = () => {
   const [sortOrder, setSortOrder] = useState("asc");
   const { theme } = useContext(ThemeContext);
   const [loader, setLoader] = useState(true);
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const entriesPerPage = 20;
 
@@ -65,21 +65,23 @@ const AllUserData = () => {
     setSortOrder(newSortOrder);
   };
 
-  const sortedUsers = users
-    ? [...users].sort((a, b) => {
+  const sortedUsers = users ? [...users] : [];
+
+  if (sortColumn) {
+    sortedUsers.sort((a, b) => {
       if (sortColumn === "Roll No") {
         return sortOrder === "asc"
           ? a.roll.localeCompare(b.roll)
           : b.roll.localeCompare(a.roll);
       }
       if (sortColumn === "Rank") {
-        const rankA = a.ranks?.[`${platform?.toLowerCase()}Rank`] || Infinity;
-        const rankB = b.ranks?.[`${platform?.toLowerCase()}Rank`] || Infinity;
+        const rankA = Number(a.ranks?.globalRank) || Infinity;
+        const rankB = Number(b.ranks?.globalRank) || Infinity;
         return sortOrder === "asc" ? rankA - rankB : rankB - rankA;
       }
       return 0;
-    })
-    : [];
+    });
+  }
 
   const filteredUsers = sortedUsers.filter((user) => {
     if (item === "Roll No") {
@@ -96,6 +98,7 @@ const AllUserData = () => {
   const indexOfLastEntry = currentPage * entriesPerPage;
   const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
   const currentEntries = filteredUsers.slice(indexOfFirstEntry, indexOfLastEntry);
+
 
   const totalPages = Math.ceil(filteredUsers.length / entriesPerPage);
 
@@ -157,7 +160,7 @@ const AllUserData = () => {
                     Roll No {sortColumn === "Roll No" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
                   </th>
                   <th className={`${tableHead}`}>{`${platform} ID`}</th>
-                  
+
                   <th className={`${tableHead} hidden md:table-cell`}>Name</th>
                   <th className={`${tableHead} hidden md:table-cell`}>Department</th>
                   <th className={`${tableHead} hidden md:table-cell`}>Year</th>
@@ -171,17 +174,16 @@ const AllUserData = () => {
                 {currentEntries.length > 0 ? (
                   currentEntries.map((user, index) => (
                     <tr key={user._id} className={`text-center cursor-pointer ${index % 2 === 0 ? "" : "bg-gray-100"} ${theme === "dark" && index % 2 !== 0 ? "bg-zinc-900" : ""}`}
-                      onClick={()=>navigate(`/user/${user.username}`)}
                     >
                       <td className={`${tableHead}`}>{indexOfFirstEntry + index + 1}</td>
-                      <td className={`${tableHead}`}>{user.username}</td>
-                      <td className={`${tableHead}`}>{user.roll}</td>
+                      <td className={`${tableHead}`} onClick={() => navigate(`/user/${user.username}`)}>{user.username}</td>
+                      <td className={`${tableHead}`} onClick={() => navigate(`/user/${user.username}`)}>{user.roll}</td>
                       <td className={`${tableHead}`}>{user.usernames?.[`${platform.toLowerCase()}User`]}</td>
                       <td className={`${tableHead} hidden md:table-cell`}>{user.name}</td>
                       <td className={`${tableHead} hidden md:table-cell`}>{user.department}</td>
                       <td className={`${tableHead} hidden md:table-cell`}>{user.year}</td>
                       <td className={`${tableHead} hidden md:table-cell`}>{user.registeredID}</td>
-                      <td className={`${tableHead}`}>{user.ranks?.[`${platform.toLowerCase()}Rank`]}</td>
+                      <td className={`${tableHead}`}>{user.ranks?.globalRank}</td>
                     </tr>
                   ))
                 ) : (

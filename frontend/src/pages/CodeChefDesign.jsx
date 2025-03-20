@@ -3,11 +3,7 @@ import { assets } from "../assets/assets";
 import Title from "../component/PageTitle";
 import CodeChefGraph from "../component/CodeChefGraph";
 
-const CodeChefDesign = ({ data, userData, loading, rankData, totalUsers, error }) => {
-
-  if (error) {
-    return <div>{error}</div>;
-  }
+const CodeChefDesign = ({ data, userData, rankData }) => {
 
   return (
     <div className="manrope-regular">
@@ -17,14 +13,14 @@ const CodeChefDesign = ({ data, userData, loading, rankData, totalUsers, error }
         {/* Info */}
         <div className="card flex flex-col items-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-5 w-full sm:w-3/5 xl:w-[30%] h-80">
           <div>
-            <h1 className="manrope-bold mt-3 text-2xl">{userData ? userData.name : loading}</h1>
+            <h1 className="manrope-bold mt-3 text-2xl">{userData?.name}</h1>
             <div className="flex flex-col items-center font font-semibold ml-3 mb-auto text-zinc-500 dark:text-gray-500 text-sm">
               <span>
-                #{userData ? userData.usernames.codechefUser : loading}
+                #{userData?.platform?.usernames?.codechefUser}
               </span>
-              <span className="text-yellow-400 font-bold text-lg">{userData ? data.stars : loading}</span>
+              <span className="text-yellow-400 font-bold text-lg">{data.stars}</span>
               <span>
-                Rank : {userData ? data.currentRating : loading}
+                Rank : {data?.currentRating}
               </span>
             </div>
           </div>
@@ -36,7 +32,7 @@ const CodeChefDesign = ({ data, userData, loading, rankData, totalUsers, error }
               <div className="flex flex-col items-start min-w-0">
                 <span className="text-sm font-medium text-zinc-600">Email</span>
                 <span className="text-md font-semibold truncate block">
-                  {userData ? userData.email : loading}
+                  {userData.email}
                 </span>
               </div>
             </div>
@@ -48,7 +44,7 @@ const CodeChefDesign = ({ data, userData, loading, rankData, totalUsers, error }
               <div className="flex flex-col items-start min-w-0">
                 <span className="text-sm font-medium text-zinc-600">Department</span>
                 <span className="text-md font-semibold truncate block">
-                  {userData ? userData.department : loading}
+                  {userData.department}
                 </span>
               </div>
             </div>
@@ -62,16 +58,16 @@ const CodeChefDesign = ({ data, userData, loading, rankData, totalUsers, error }
           <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
             <span className="font-bold text-md text-[#22C55E]">College Rank</span>
             <div>
-              <span className="font-bold text-base">{rankData?.overall?.codechef || "Not Available"}</span>
-              <span className="text-zinc-500 text-base">/{totalUsers?.overall}</span>
+              <span className="font-bold text-base">{rankData?.userRank?.overall?.codechef || "Not Available"}</span>
+              <span className="text-zinc-500 text-base">/{rankData?.totalUsers?.college}</span>
             </div>
           </div>
 
           <div className="flex justify-between items-center rounded-lg border border-zinc-300 dark:border-zinc-800 p-3 w-full">
             <span className="font-bold text-md text-[#22C55E]">Department Rank</span>
             <div>
-              <span className="font-bold text-base">{rankData?.department?.codechef || "Not Available"}</span>
-              <span className="text-zinc-500 text-base">/{totalUsers?.departmentUsers?.codechef}</span>
+              <span className="font-bold text-base">{rankData?.userRank?.overall?.codechef || "Not Available"}</span>
+              <span className="text-zinc-500 text-base">/{rankData?.totalUsers?.department}</span>
             </div>
           </div>
 
@@ -103,10 +99,7 @@ const CodeChefDesign = ({ data, userData, loading, rankData, totalUsers, error }
 CodeChefDesign.propTypes = {
   data: PropTypes.object,
   userData: PropTypes.object,
-  loading: PropTypes.bool.isRequired,
   rankData: PropTypes.object,
-  totalUsers: PropTypes.number,
-  error: PropTypes.string,
 };
 
 export default CodeChefDesign;

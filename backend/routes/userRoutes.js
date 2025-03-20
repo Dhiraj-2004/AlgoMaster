@@ -3,16 +3,20 @@ const express = require("express");
 const {
     loginUser,
     signUser,
-    saveUserRank,
-    insertUsernames,
-    updateUsernames,
     getAllUsers,
-    getUserRank,
-    getUserData,
+    getMyUserName,
     userProfile,
     checkUsername,
-    getUserName,
 } = require("../controllers/userController");
+
+const{
+    insertUsernames,
+    updateUsernames,
+    saveUserRank,
+    getUserRank,
+    getUserName,
+    getUserData
+}=require("../controllers/userDataController")
 
 const {
     verifyOTPAndChangePassword,
@@ -36,10 +40,10 @@ router.put('/updateUser', protect, updateUsernames);
 
 router.get('/check-username/:username', checkUsername);
 router.get("/profile",protect,getUserName);
+router.get("/me", protect, getMyUserName);
 router.get('/',getAllUsers);
 router.get('/leetcode/:username',leetCode);
-router.get('/userdata',protect,getUserData);
+router.get('/userdata/:username',getUserData);
 router.get("/college-rank/:username",getUserRank);
-router.get("/:username",userProfile)
 
 module.exports = router;

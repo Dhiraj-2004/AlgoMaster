@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import InputField from "../component/InputField";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import Dropdown from "../component/Dropdown";
 import Title from "../component/PageTitle";
+import { AuthContext } from "../context/AuthContext";
 
 
 const UpdateProfile = () => {
@@ -14,6 +15,7 @@ const UpdateProfile = () => {
   const [amcatkey, setAmcatID] = useState("");
   const [year, setYear] = useState("");
   const navigate = useNavigate();
+  const { fetchUser } = useContext(AuthContext);
 
   const yearOptions = ["Select studying year", "First Year", "Second Year", "Third Year", "Forth Year"];
   const handleSubmit = async () => {
@@ -34,6 +36,7 @@ const UpdateProfile = () => {
           },
         }
       );
+      await fetchUser();
       toast.success('Data Updated successfully!');
       setTimeout(() => { navigate("/") }, 1000)
     } catch (error) {

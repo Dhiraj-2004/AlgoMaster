@@ -3,33 +3,32 @@ import useAmcatRank from "../component/hook/useAmcatRank";
 import { UsersIcon, UserIcon, TrophyIcon, ChartBarIcon } from "@heroicons/react/24/outline";
 import { IdCard } from "lucide-react";
 import { assets } from '../assets/assets';
-import React, { useEffect, useState, } from "react";
+import React, { useContext, useEffect, useState, } from "react";
 import axios from "axios";
 import { useNavigate , useParams } from "react-router-dom";
 import ScoreCard from "../component/ScoreCard";
-import useUserData from "../component/hook/useUserData";
 import Title from "../component/PageTitle";
+import { AuthContext } from "../context/AuthContext";
 
 
 // Profile section
 const Profile = () => {
   const { username } = useParams();
   const [localUserData, setUserData] = useState(null);
-  const [amcatdata, setAmcatdata] = useState(null)
-  const {userData}=useUserData();
+  const [amcatData, setAmcatdata] = useState(null)
   const [loder,setLoder]=useState(false);
+  const { user } = useContext(AuthContext);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
   
-  const user=userData?.username;
+
   useEffect(() => {
     const fetchData = async () => {
       setLoder(true);
       try {
-        const name=username || user;
-        const response = await axios.get(`${backendUrl}/api/user/${name}`);
-        setUserData(response.data.user);
-        setAmcatdata(response.data.user.usernames.amcatKey)
+        const name=user?.username || username;
+        const response = await axios.get(`${backendUrl}/api/user/userdata/${name}`);
+        setUserData(response?.data);
+        setAmcatdata(response?.data?.amcatData)
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -52,47 +51,47 @@ const Profile = () => {
             <InfoSection
               icon={<UserIcon className="w-4 h-4 sm:w-6 sm:h-6 text-indigo-500 dark:text-indigo-400" />}
               placeholder="Username:"
-              data={localUserData?.username} />
+              data={localUserData?.userData?.username} />
             <InfoSection
               icon={<UserIcon className="w-4 h-4 sm:w-6 sm:h-6 text-indigo-500 dark:text-indigo-400" />}
               placeholder="Name:"
-              data={localUserData?.name} />
+              data={localUserData?.userData?.name} />
             <InfoSection
               icon={assets.Gmail}
               placeholder="Email:"
-              data={localUserData?.email} />
+              data={localUserData?.userData?.email} />
             <InfoSection
               icon={assets.Roll}
               placeholder="Roll:"
-              data={localUserData?.roll} />
+              data={localUserData?.userData?.roll} />
             <InfoSection
               icon={assets.Roll}
               placeholder="Registered ID:"
-              data={localUserData?.registeredID} />
+              data={localUserData?.userData?.registeredID} />
             <InfoSection
               icon={assets.college}
               placeholder="Department:"
-              data={localUserData?.department} />
+              data={localUserData?.userData?.department} />
             <InfoSection
               icon={assets.Year}
               placeholder="Year:"
-              data={localUserData?.year} />
+              data={localUserData?.userData?.year} />
             <InfoSection
               icon={assets.codechef}
               placeholder="CodeChef:"
-              data={localUserData?.usernames?.codechef} />
+              data={localUserData?.platform?.usernames?.codechefUser} />
             <InfoSection
               icon={assets.codeforce}
               placeholder="CodeForces:"
-              data={localUserData?.usernames?.codeforces} />
+              data={localUserData?.platform?.usernames?.codeforcesUser} />
             <InfoSection
               icon={assets.leetcode}
               placeholder="Leetcode:"
-              data={localUserData?.usernames?.leetcode} />
+              data={localUserData?.platform?.usernames?.leetcodeUser} />
             <InfoSection
               icon={assets.Amcat}
               placeholder="Amcat ID:"
-              data={localUserData?.usernames?.amcatKey} />
+              data={localUserData?.userData?.amcatKey} />
           </div>
 
           {/* Platform Rankings */}
@@ -102,43 +101,43 @@ const Profile = () => {
               <div className="card flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-6 w-full md:w-5/6 lg:w-11/12 xl:w-5/12 h-64 gap-3">
                 <h1 className="text-lg font-semibold">Leetcode</h1>
                 <Section
-                  overallRank={localUserData?.collegeRank?.leetcode}
-                  totalUsers={localUserData?.totalUsers?.leetcode}
-                  departmentRank={localUserData?.departmentRank?.leetcode}
-                  departmentUsers={localUserData?.departmentUsers?.leetcode}
-                  currentRating={localUserData?.ranks?.leetcode} />
+                  overallRank={localUserData?.platform?.collegeRank?.leetcodeRank}
+                  totalUsers={localUserData?.platform?.collegeUser?.leetcodeRank}
+                  departmentRank={localUserData?.platform?.departmentRank?.leetcodeRank}
+                  departmentUsers={localUserData?.platform?.departmentUser?.leetcodeRank}
+                  currentRating={localUserData?.platform?.globalRank?.leetcodeRank} />
               </div>
 
               {/* CodeChef */}
               <div className="card flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-6 w-full md:w-5/6 lg:w-11/12 xl:w-5/12 h-64 gap-3">
                 <h1 className="text-lg font-semibold">CodeChef</h1>
                 <Section
-                  overallRank={localUserData?.collegeRank?.codechef}
-                  totalUsers={localUserData?.totalUsers?.codechef}
-                  departmentRank={localUserData?.departmentRank?.codechef}
-                  departmentUsers={localUserData?.departmentUsers?.codechef}
-                  currentRating={localUserData?.ranks?.codechef} />
+                  overallRank={localUserData?.platform?.collegeRank?.codechefRank}
+                  totalUsers={localUserData?.platform?.collegeUser?.codechefRank}
+                  departmentRank={localUserData?.platform?.departmentRank?.codechefRank}
+                  departmentUsers={localUserData?.platform?.departmentUser?.codechefRank}
+                  currentRating={localUserData?.platform?.globalRank?.codechefRank} />
               </div>
 
               {/* CodeForces */}
               <div className="card flex flex-col items-center justify-center rounded-3xl border border-zinc-300 dark:border-zinc-800 p-6 w-full md:w-5/6 lg:w-11/12 xl:w-5/12 h-64 gap-3">
                 <h1 className="text-lg font-semibold">CodeForces</h1>
                 <Section
-                  overallRank={localUserData?.collegeRank?.codeforces}
-                  totalUsers={localUserData?.totalUsers?.codeforces}
-                  departmentRank={localUserData?.departmentRank?.codeforces}
-                  departmentUsers={localUserData?.departmentUsers?.codeforces}
-                  currentRating={localUserData?.ranks?.codeforces} />
+                  overallRank={localUserData?.platform?.collegeRank?.codeforcesRank}
+                  totalUsers={localUserData?.platform?.collegeUser?.codeforcesRank}
+                  departmentRank={localUserData?.platform?.departmentRank?.codeforcesRank}
+                  departmentUsers={localUserData?.platform?.departmentUser?.codeforcesRank}
+                  currentRating={localUserData?.platform?.globalRank?.codeforcesRank} />
               </div>
             </div>
             <div className="w-full hidden xl:flex">
-              <Amcat amcatdata={amcatdata} />
+              <Amcat amcatData={amcatData} />
             </div>
           </div>
         </div>
 
         <div className="w-full xl:hidden mt-6">
-          <Amcat amcatdata={amcatdata} />
+          <Amcat amcatData={amcatData} />
         </div>
       </div>
     </div>
@@ -213,11 +212,9 @@ const InfoSection = ({ icon, placeholder, data }) => {
 
 
 // Amcat data
-const Amcat = ({ amcatdata }) => {
-  const { amcatRank } = useAmcatRank(amcatdata);
-  const amcatData = amcatRank ? amcatRank : null;
+const Amcat = ({ amcatData }) => {
   const navigate = useNavigate();
-
+  const {amcatRank}=useAmcatRank(amcatData?.amcatID);
   const MetricCard = ({ label, value, delta }) => (
     <div className="bg-zinc-100 dark:bg-zinc-900 w-40 p-2 md:w-48 rounded-lg">
       <p className="text-sm text-gray-500 dark:text-zinc-300 mb-1">{label}</p>
@@ -273,10 +270,10 @@ const Amcat = ({ amcatdata }) => {
                 </div>
                 <div>
                   <h2 className="manrope-bold text-2xl text-gray-800 dark:text-gray-100">
-                    {amcatData?.userInfo?.name}
+                    {amcatData?.name}
                   </h2>
                   <p className="text-gray-500 dark:text-gray-400">
-                    {amcatData?.userInfo?.rollNo}
+                    {amcatData?.rollNo}
                   </p>
                 </div>
               </div>
@@ -284,7 +281,7 @@ const Amcat = ({ amcatdata }) => {
               <div className="space-y-2">
                 <InfoBadge
                   label="AMCAT ID"
-                  value={amcatData?.userInfo?.amcatID}
+                  value={amcatData?.amcatID}
                   icon={<IdCard className="w-5 h-5" />}
                 />
               </div>
@@ -339,32 +336,32 @@ const Amcat = ({ amcatdata }) => {
           <div className="grid grid-cols-2 gap-4">
             <ScoreCard
               label="ELQ Score"
-              value={amcatData?.userInfo?.elqScore}
+              value={amcatData?.elqScore}
               max={300}
             />
             <ScoreCard
               label="C++"
-              value={amcatData?.userInfo?.cppScore}
+              value={amcatData?.cppScore}
               max={100}
             />
             <ScoreCard
               label="Automata"
-              value={amcatData?.userInfo?.automata}
+              value={amcatData?.automata}
               max={100}
             />
             <ScoreCard
               label="Quant"
-              value={amcatData?.userInfo?.quant}
+              value={amcatData?.quant}
               max={100}
             />
             <ScoreCard
               label="English"
-              value={amcatData?.userInfo?.english}
+              value={amcatData?.english}
               max={100}
             />
             <ScoreCard
               label="Logical"
-              value={amcatData?.userInfo?.logical}
+              value={amcatData?.logical}
               max={100}
             />
           </div>
@@ -385,7 +382,7 @@ const Amcat = ({ amcatdata }) => {
 };
 
 Amcat.propTypes = {
-  amcatdata: PropTypes.object.isRequired,
+  amcatData: PropTypes.object.isRequired,
   icon: PropTypes.node.isRequired,
   label: PropTypes.any.isRequired,
   value: PropTypes.any.isRequired,

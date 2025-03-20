@@ -36,64 +36,16 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        usernames: {
-            codechefUser: { 
-                type: String, 
-                sparse: true 
-            },
-            codeforcesUser: { 
-                type: String, 
-                sparse: true 
-            },
-            leetcodeUser: { 
-                type: String, 
-                sparse: true 
-            },
-        },
         amcatkey: {
             type: String,
         },
-        ranks: {
-            codechefRank: { 
-                type: String, 
-                sparse: true 
-            },
-            codeforcesRank: { 
-                type: String, 
-                sparse: true 
-            },
-            leetcodeRank: { 
-                type: String, 
-                sparse: true 
-            },
+        amcat: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Amcat",
         },
-        collegeRank:{
-            codechefRank: { 
-                type: String, 
-                sparse: true 
-            },
-            codeforcesRank: { 
-                type: String, 
-                sparse: true 
-            },
-            leetcodeRank: { 
-                type: String, 
-                sparse: true 
-            },
-        },
-        departmentRank:{
-            codechefRank: { 
-                type: String, 
-                sparse: true 
-            },
-            codeforcesRank: { 
-                type: String, 
-                sparse: true 
-            },
-            leetcodeRank: { 
-                type: String, 
-                sparse: true 
-            },
+        platform:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Platform"
         },
         otp: {
             type: String,
@@ -101,10 +53,6 @@ const userSchema = new mongoose.Schema(
         otpExpiration: {
             type: Date,
         },
-        amcat: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Amcat",
-        }
     },
     { timestamps: true }
 );

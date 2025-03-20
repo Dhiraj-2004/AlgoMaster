@@ -1,20 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import useAmcatRank from "../component/hook/useAmcatRank";
-import useUserData from "../component/hook/useUserData";
 import { UsersIcon, UserIcon, TrophyIcon, ChartBarIcon } from "@heroicons/react/24/outline";
 import { IdCard } from "lucide-react";
 import PropTypes from "prop-types"
 import Title from "../component/PageTitle";
 import ScoreCard from "../component/ScoreCard";
+import { AuthContext } from "../context/AuthContext";
 
 
 const Amcat = () => {
-  const { userData, loading: userLoading, error: userError } = useUserData();
-  const amcatdata = userData ? userData.amcat : null;
-  const { amcatRank, error: rankError, loading: rankLoading } = useAmcatRank(amcatdata?.amcatID);
-  const amcatData=amcatRank ? amcatRank : null;
+  const { user } = useContext(AuthContext);
+  const {amcatRank, loading}=useAmcatRank(user?.amcatID);
 
-  if (userLoading || rankLoading) {
+  if (loading) {
     return (
       <div className="flex flex-col gap-6 items-center justify-center mt-20">
         <div className="loader"></div>
@@ -23,7 +21,7 @@ const Amcat = () => {
     );
   }
 
-  if (userError || rankError) {
+  if (loading) {
     return <p className="text-red-500 font-semibold">Error fetching data.</p>;
   }
 
@@ -87,10 +85,10 @@ const Amcat = () => {
                 </div>
                 <div>
                   <h2 className="manrope-bold text-2xl text-gray-800 dark:text-gray-100">
-                    {amcatData?.userInfo?.name}
+                    {amcatRank?.userInfo?.name}
                   </h2>
                   <p className="text-gray-500 dark:text-gray-400">
-                    {amcatData?.userInfo?.rollNo}
+                    {amcatRank?.userInfo?.rollNo}
                   </p>
                 </div>
               </div>
@@ -98,7 +96,7 @@ const Amcat = () => {
               <div className="space-y-2">
                 <InfoBadge 
                   label="AMCAT ID"
-                  value={amcatData?.userInfo?.amcatID}
+                  value={amcatRank?.userInfo?.amcatID}
                   icon={<IdCard className="w-5 h-5" />}
                 />
               </div>
@@ -139,7 +137,7 @@ const Amcat = () => {
         </div>
       )}
 
-      {amcatData && (
+      {amcatRank && (
         <div className="glowCard backdrop-blur-lg bg-white/60 dark:bg-zinc-900/80 p-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl">
           <div className="flex items-center gap-3 mb-8">
             <div className="bg-green-500/10 p-4 rounded-full">
@@ -153,32 +151,32 @@ const Amcat = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <ScoreCard
               label="ELQ Score"
-              value={amcatData?.userInfo?.elqScore}
+              value={amcatRank?.userInfo?.elqScore}
               max={300}
             />
             <ScoreCard
               label="C++"
-              value={amcatData?.userInfo?.cppScore}
+              value={amcatRank?.userInfo?.cppScore}
               max={100}
             />
             <ScoreCard
               label="Automata"
-              value={amcatData?.userInfo?.automata}
+              value={amcatRank?.userInfo?.automata}
               max={100}
             />
             <ScoreCard
               label="Quant"
-              value={amcatData?.userInfo?.quant}
+              value={amcatRank?.userInfo?.quant}
               max={100}
             />
             <ScoreCard
               label="English"
-              value={amcatData?.userInfo?.english}
+              value={amcatRank?.userInfo?.english}
               max={100}
             />
             <ScoreCard
               label="Logical"
-              value={amcatData?.userInfo?.logical}
+              value={amcatRank?.userInfo?.logical}
               max={100}
             />
           </div>
