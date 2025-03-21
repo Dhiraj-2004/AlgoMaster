@@ -152,19 +152,30 @@ const syncIndexes = async () => {
 syncIndexes();
 
 
-// all Users
-
+// all User
 exports.getAllUsers = async (req, res) => {
     try {
         const platform = req.query.platform;
+        const department = req.query.department; 
+        
         if (!platform) {
             return res.status(400).json({ error: "Platform is required" });
         }
+
         const trimmedPlatform = platform.slice(0, -4);
+
+        const matchQuery = {
+            [`platformData.usernames.${platform}`]: { $exists: true, $ne: null }
+        };
+
+        if (department) {
+            matchQuery.department = department;
+        }
+
         const users = await User.aggregate([
             {
                 $lookup: {
-                    from: "platforms",
+                    from: "platforms",  
                     localField: "platform",
                     foreignField: "_id",
                     as: "platformData"
@@ -177,9 +188,7 @@ exports.getAllUsers = async (req, res) => {
                 }
             },
             {
-                $match: {
-                    [`platformData.usernames.${platform}`]: { $exists: true, $ne: null }
-                }
+                $match: matchQuery 
             },
             {
                 $project: {
@@ -189,11 +198,15 @@ exports.getAllUsers = async (req, res) => {
                     registeredID: 1,
                     username: 1,
                     department: 1,
-                    usernames: `$platformData.usernames`,
+                    usernames: `$platformData.usernames.${platform}`,
                     ranks: {
                         globalRank: `$platformData.globalRank.${trimmedPlatform}Rank`,
                         collegeRank: `$platformData.collegeRank.${trimmedPlatform}Rank`,
                         departmentRank: `$platformData.departmentRank.${trimmedPlatform}Rank`
+                    },
+                    platformSpecificData: {
+                        [trimmedPlatform]: `$platformData.question.${trimmedPlatform === 'leetcode' ? 'leetcode.total' : trimmedPlatform}`
+
                     }
                 }
             }

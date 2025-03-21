@@ -102,9 +102,9 @@ const Profile = () => {
                 <h1 className="text-lg font-semibold">Leetcode</h1>
                 <Section
                   overallRank={localUserData?.platform?.collegeRank?.leetcodeRank}
-                  totalUsers={localUserData?.platform?.collegeUser?.leetcodeRank}
+                  totalUsers={localUserData?.platform?.collegeUser?.totalleetcode}
                   departmentRank={localUserData?.platform?.departmentRank?.leetcodeRank}
-                  departmentUsers={localUserData?.platform?.departmentUser?.leetcodeRank}
+                  departmentUsers={localUserData?.platform?.departmentUser?.totalleetcode}
                   currentRating={localUserData?.platform?.globalRank?.leetcodeRank} />
               </div>
 
@@ -113,9 +113,9 @@ const Profile = () => {
                 <h1 className="text-lg font-semibold">CodeChef</h1>
                 <Section
                   overallRank={localUserData?.platform?.collegeRank?.codechefRank}
-                  totalUsers={localUserData?.platform?.collegeUser?.codechefRank}
+                  totalUsers={localUserData?.platform?.collegeUser?.totalcodechef}
                   departmentRank={localUserData?.platform?.departmentRank?.codechefRank}
-                  departmentUsers={localUserData?.platform?.departmentUser?.codechefRank}
+                  departmentUsers={localUserData?.platform?.departmentUser?.totalcodechef}
                   currentRating={localUserData?.platform?.globalRank?.codechefRank} />
               </div>
 
@@ -124,9 +124,9 @@ const Profile = () => {
                 <h1 className="text-lg font-semibold">CodeForces</h1>
                 <Section
                   overallRank={localUserData?.platform?.collegeRank?.codeforcesRank}
-                  totalUsers={localUserData?.platform?.collegeUser?.codeforcesRank}
+                  totalUsers={localUserData?.platform?.collegeUser?.totalcodeforces}
                   departmentRank={localUserData?.platform?.departmentRank?.codeforcesRank}
-                  departmentUsers={localUserData?.platform?.departmentUser?.codeforcesRank}
+                  departmentUsers={localUserData?.platform?.departmentUser?.totalcodeforces}
                   currentRating={localUserData?.platform?.globalRank?.codeforcesRank} />
               </div>
             </div>

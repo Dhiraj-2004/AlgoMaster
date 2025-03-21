@@ -455,3 +455,34 @@ body {
 .gradient-hover-btn:active {
   transform: scale(0.98);
 }
+
+
+@keyframes sortUp {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes sortDown {
+  0% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-sortUp {
+  animation: sortUp 0.3s ease-in-out;
+}
+
+.animate-sortDown {
+  animation: sortDown 0.3s ease-in-out;
+}
+
+.animate-default {
+  transition: transform 0.3s ease-in-out;
+}

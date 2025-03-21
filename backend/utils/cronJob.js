@@ -15,27 +15,38 @@ const updateUserData = async (platformUser, username) => {
     const apiEndpoint = getPlatformApiEndpoint(platformUser);
 
     try {
-        let rank;
-        let userData;
+        let rank, userData, questionData;
 
         if (platformUser === "leetcodeUser") {
             userData = await fetchLeetCodeData(username);
             rank = Math.floor(userData?.data?.userContestRanking?.rating || 0)
+            questionData = await fetchLeetCodeQuestionData(username);
+            
         } else {
             const response = await axios.get(`${apiEndpoint}/${username}`);
             rank = Math.floor(getRank(response.data, platformUser) || 0);
+            questionData = await getQuestionData(username, platformUser);
         }
-
+        console.log("UserName : ",username," Platfrom : ",platformUser," Questions : ",questionData)
         const rankFieldMap = {
             leetcodeUser: "globalRank.leetcodeRank",
             codechefUser: "globalRank.codechefRank",
             codeforcesUser: "globalRank.codeforcesRank",
         };
+        const questionFieldMap = {
+            leetcodeUser: "question.leetcode",
+            codechefUser: "question.codechef",
+            codeforcesUser: "question.codeforces",
+        };
         const rankField = rankFieldMap[platformUser];
-       
+        const questionField = questionFieldMap[platformUser];
+
         await Platform.findOneAndUpdate(
             { [`usernames.${platformUser}`]: username },
-            { [rankField]: rank },
+            { 
+                [rankField]: rank,
+                [questionField]: questionData,
+            },
             { new: true }
         );
 
@@ -160,8 +171,6 @@ const updateDepartmentAndCollegeRanks = async () => {
 module.exports = updateDepartmentAndCollegeRanks;
 
 
-
-
 // api for update rank
 const getPlatformApiEndpoint = (platformUser) => {
     switch (platformUser) {
@@ -200,27 +209,122 @@ const fetchLeetCodeData = async (username) => {
     }
 };
 
+// leetcode question
+const fetchLeetCodeQuestionData = async (username) => {
+    const query = `
+    query userProfileQuestions($username: String!) {
+        matchedUser(username: $username) {
+            submitStats {
+                acSubmissionNum {
+                    difficulty
+                    count
+                }
+            }
+        }
+    }`;
+
+    const variables = { username };
+
+    try {
+        const response = await axios.post(
+            LEETCODE_GRAPHQL_URL,
+            { query, variables },
+            { headers: HEADERS }
+        );
+
+        const submissions = response.data?.data?.matchedUser?.submitStats?.acSubmissionNum || [];
+
+        const solvedProblems = {
+            hard: submissions.find(q => q.difficulty === "Hard")?.count?.toString() || "0",
+            medium: submissions.find(q => q.difficulty === "Medium")?.count?.toString() || "0",
+            easy: submissions.find(q => q.difficulty === "Easy")?.count?.toString() || "0",
+            total: submissions.find(q => q.difficulty === "All")?.count?.toString() || "0",
+        };
+
+        return solvedProblems;
+    } catch (error) {
+        console.error("Error fetching LeetCode questions:", error.message);
+        return { hard: "0", medium: "0", easy: "0", total: "0" };
+    }
+};
+
+
+// featch codeforces question
+const fetchCodeForcesQuestionData = async (username) => {
+    try {
+        let solvedProblems = new Set();
+        let from = 1;
+        let count = 100; 
+        let remaining = 1500;
+
+        while (remaining > 0) {
+            const url = `https://codeforces.com/api/user.status?handle=${username}&from=${from}&count=${count}`;
+            const response = await axios.get(url);
+
+            if (response.data.status === "OK") {
+                const submissions = response.data.result;
+                
+                submissions.forEach(submission => {
+                    if (submission.verdict === "OK") {
+                        const problemId = `${submission.problem.contestId}-${submission.problem.index}`;
+                        solvedProblems.add(problemId);
+                    }
+                });
+
+                if (submissions.length < count) {
+                    break;
+                }
+
+                from += count;
+                remaining -= submissions.length;
+            } else {
+                console.error("Unexpected API response status:", response.data.status);
+                break;
+            }
+        }
+
+        return solvedProblems.size;
+    } catch (error) {
+        console.error("Error fetching Codeforces data:", error.message);
+        return 0;
+    }
+};
+
+
+
 // get rank from api
 const getRank = (userData, platformUser) => {
     switch (platformUser) {
-        case "leetcodeUser":
-            const leetcodeRating = userData?.data?.userContestRanking?.rating;
-            return leetcodeRating ? Math.round(leetcodeRating) : 0;
         case "codechefUser":
             const latestRating = userData?.currentRating;
             return latestRating ? Math.round(latestRating) : Math.round(userData?.currentRating);
         case "codeforcesUser":
-            const codeforcesRating = userData?.result?.[0]?.rating;
-            return codeforcesRating ? Math.round(codeforcesRating) : 0;
+                const codeforcesRating = userData?.result?.[0]?.rating;
+                return codeforcesRating ? Math.round(codeforcesRating) : 0;
         default:
             return 0;
     }
 };
 
+// get question solved
+const getQuestionData = async (username, platformUser) => {
+    switch (platformUser) {
+        case "leetcodeUser":
+            return await fetchLeetCodeQuestionData(username);
+        case "codechefUser":
+            return "0";
+        case "codeforcesUser":
+            return await fetchCodeForcesQuestionData(username);
+        default:
+            return "0";
+    }
+};
+
+
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // schedule data update every saturday
-cron.schedule("0 0 * * 5", async () => {  
+cron.schedule("0 0 * * 6", async () => {   
     console.log(`Cron job started at ${new Date().toISOString()}`);
 
     const users = await Platform.find().select("usernames").lean();
