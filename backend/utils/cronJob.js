@@ -1,7 +1,7 @@
 const axios = require('axios');
+const Platform = require("../models/profileModel");
 const User = require("../models/userModel");
 const cron = require("node-cron");
-const { use } = require('../routes/userRoutes');
 
 const LEETCODE_GRAPHQL_URL = 'https://leetcode.com/graphql/';
 const HEADERS = {
@@ -20,20 +20,20 @@ const updateUserData = async (platformUser, username) => {
 
         if (platformUser === "leetcodeUser") {
             userData = await fetchLeetCodeData(username);
-            rank = getRank(userData, platformUser);
+            rank = Math.floor(userData?.data?.userContestRanking?.rating || 0)
         } else {
             const response = await axios.get(`${apiEndpoint}/${username}`);
-            rank = getRank(response.data, platformUser);
+            rank = Math.floor(getRank(response.data, platformUser) || 0);
         }
 
         const rankFieldMap = {
-            leetcodeUser: "ranks.leetcodeRank",
-            codechefUser: "ranks.codechefRank",
-            codeforcesUser: "ranks.codeforcesRank",
+            leetcodeUser: "globalRank.leetcodeRank",
+            codechefUser: "globalRank.codechefRank",
+            codeforcesUser: "globalRank.codeforcesRank",
         };
         const rankField = rankFieldMap[platformUser];
-
-        const updatedUser = await User.findOneAndUpdate(
+       
+        await Platform.findOneAndUpdate(
             { [`usernames.${platformUser}`]: username },
             { [rankField]: rank },
             { new: true }
@@ -46,45 +46,120 @@ const updateUserData = async (platformUser, username) => {
 
 // Update department and college ranks
 const updateDepartmentAndCollegeRanks = async () => {
-    console.log(`Updating department and college ranks...`);
+    console.log("Updating department and college ranks...");
 
-    const allUsers = await User.find().select("name ranks usernames department college").exec();
+    const allUsers = await User.find()
+        .populate("platform")
+        .select("platform department")
+        .exec();
 
-    const calculateRank = (users, key) => {
-        const sortedRanks = users
-            .map(u => u.ranks[key])
-            .filter(rank => rank !== undefined)
-            .sort((a, b) => b - a);
-
-        return (user) => ({
-            rank: sortedRanks.indexOf(user.ranks[key]) + 1,
-        });
-    };
-
-    for (const user of allUsers) {
-        const usersInDepartment = allUsers.filter(u => u.department === user.department);
-        const usersInCollege = allUsers.filter(u => u.college === user.college);
-
-        const departmentRanks = {
-            codeforcesRank: calculateRank(usersInDepartment, "codeforcesRank")(user).rank,
-            codechefRank: calculateRank(usersInDepartment, "codechefRank")(user).rank,
-            leetcodeRank: calculateRank(usersInDepartment, "leetcodeRank")(user).rank
-        };
-
-        const collegeRanks = {
-            codeforcesRank: calculateRank(usersInCollege, "codeforcesRank")(user).rank,
-            codechefRank: calculateRank(usersInCollege, "codechefRank")(user).rank,
-            leetcodeRank: calculateRank(usersInCollege, "leetcodeRank")(user).rank
-        };
-
-        user.departmentRank = departmentRanks;
-        user.collegeRank = collegeRanks;
-
-        await user.save();
+    if (allUsers.length === 0) {
+        console.log("No users found.");
+        return;
     }
 
-    console.log("Department and college ranks updated successfully.");
+    // Group users by department
+    const departmentGroups = {};
+    allUsers.forEach(user => {
+        if (!user.department || !user.platform) return;
+        if (!departmentGroups[user.department]) departmentGroups[user.department] = [];
+        departmentGroups[user.department].push(user);
+    });
+
+    const departmentUserCounts = {};
+    Object.keys(departmentGroups).forEach(dept => {
+        departmentUserCounts[dept] = {
+            totalcodechef: departmentGroups[dept].filter(u => u.platform?.usernames?.codechefUser).length,
+            totalcodeforces: departmentGroups[dept].filter(u => u.platform?.usernames?.codeforcesUser).length,
+            totalleetcode: departmentGroups[dept].filter(u => u.platform?.usernames?.leetcodeUser).length,
+        };
+    });
+
+    const totalCollegeUsers = {
+        totalcodechef: allUsers.filter(u => u.platform?.usernames?.codechefUser).length,
+        totalcodeforces: allUsers.filter(u => u.platform?.usernames?.codeforcesUser).length,
+        totalleetcode: allUsers.filter(u => u.platform?.usernames?.leetcodeUser).length,
+    };
+
+    // calculate ranks
+    const calculateRank = (users, key) => {
+        const sortedRanks = users
+            .map(u => ({
+                userId: u._id,
+                rank: parseInt(u.platform?.globalRank?.[key], 10), 
+                hasRank: !!(parseInt(u.platform?.globalRank?.[key], 10)),
+            }))
+            .sort((a, b) => {
+                if (!a.hasRank && !b.hasRank) return 0;
+                if (!a.hasRank) return 1;
+                if (!b.hasRank) return -1;
+                return b.rank-a.rank;
+            });
+    
+        return sortedRanks.reduce((acc, entry, index) => {
+            acc[entry.userId] = index + 1;
+            return acc;
+        }, {});
+    };
+    
+
+    const collegeRanks = {
+        codechefRank: calculateRank(allUsers, "codechefRank"),
+        codeforcesRank: calculateRank(allUsers, "codeforcesRank"),
+        leetcodeRank: calculateRank(allUsers, "leetcodeRank"),
+    };
+
+    const departmentRanks = {};
+    for (const dept in departmentGroups) {
+        departmentRanks[dept] = {
+            codechefRank: calculateRank(departmentGroups[dept], "codechefRank"),
+            codeforcesRank: calculateRank(departmentGroups[dept], "codeforcesRank"),
+            leetcodeRank: calculateRank(departmentGroups[dept], "leetcodeRank"),
+        };
+    }
+
+    for (const user of allUsers) {
+        if (!user.platform || !user.department) continue;
+
+        const departmentUsers = departmentUserCounts[user.department] || {
+            totalcodechef: "0",
+            totalcodeforces: "0",
+            totalleetcode: "0",
+        };
+
+        const departmentRankings = {
+            codechefRank: departmentRanks[user.department]?.codechefRank[user._id] || null,
+            codeforcesRank: departmentRanks[user.department]?.codeforcesRank[user._id] || null,
+            leetcodeRank: departmentRanks[user.department]?.leetcodeRank[user._id] || null,
+        };
+
+        const collegeRankings = {
+            codechefRank: collegeRanks.codechefRank[user._id] || null,
+            codeforcesRank: collegeRanks.codeforcesRank[user._id] || null,
+            leetcodeRank: collegeRanks.leetcodeRank[user._id] || null,
+        };
+
+        // Update Platform document
+        await Platform.findByIdAndUpdate(user.platform._id, {
+            departmentRank: departmentRankings,
+            collegeRank: collegeRankings,
+            departmentUser: {
+                totalcodechef: departmentUsers.totalcodechef.toString(),
+                totalcodeforces: departmentUsers.totalcodeforces.toString(),
+                totalleetcode: departmentUsers.totalleetcode.toString(),
+            },
+            collegeUser: {
+                totalcodechef: totalCollegeUsers.totalcodechef.toString(),
+                totalcodeforces: totalCollegeUsers.totalcodeforces.toString(),
+                totalleetcode: totalCollegeUsers.totalleetcode.toString(),
+            },
+        });
+    }
 };
+
+module.exports = updateDepartmentAndCollegeRanks;
+
+
 
 
 // api for update rank
@@ -145,10 +220,10 @@ const getRank = (userData, platformUser) => {
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // schedule data update every saturday
-cron.schedule("0 0 */4 * *", async () => {
+cron.schedule("0 0 * * 5", async () => {  
     console.log(`Cron job started at ${new Date().toISOString()}`);
 
-    const users = await User.find({});
+    const users = await Platform.find().select("usernames").lean();
 
     for (const user of users) {
         const { usernames } = user;
