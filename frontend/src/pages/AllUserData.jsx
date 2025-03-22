@@ -5,6 +5,7 @@ import { ThemeContext } from "../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { assets } from "../assets/assets";
+import { toast,ToastContainer } from 'react-toastify';
 
 const AllUserData = () => {
   const [platform, setPlatform] = useState("LeetCode");
@@ -19,6 +20,7 @@ const AllUserData = () => {
   const [loader, setLoader] = useState(true);
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const entriesPerPage = 15;
 
@@ -51,6 +53,7 @@ const AllUserData = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoader(true);
+      setErrorMessage(null);
       try {
         const site =
           platform === "Codeforces"
@@ -74,7 +77,8 @@ const AllUserData = () => {
         setUsers(response.data.users);
         setCurrentPage(1);
       } catch (error) {
-        console.error("Error fetching users:", error);
+          setErrorMessage(error.response.data.error);
+          toast.error(error.response.data.error);
       } finally {
         setLoader(false);
       }
@@ -198,6 +202,8 @@ const AllUserData = () => {
         <div className="flex justify-center mt-10">
           <div className="loader"></div>
         </div>
+      ) : errorMessage ? (
+        <div className="flex justify-center mt-20 text-red-500">{errorMessage}</div>
       ) : platform && platform !== "Select Platform" ? (
         users ? (
           <div className="mt-8 overflow-x-auto">
@@ -331,6 +337,7 @@ const AllUserData = () => {
       ) : (
         <div className="flex justify-center mt-20">Select Platform First</div>
       )}
+      <ToastContainer />
     </div>
   );
 };
