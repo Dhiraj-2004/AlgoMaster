@@ -223,6 +223,22 @@ exports.getAllUsers = async (req, res) => {
             }
         ]);
 
+        if (!users.length) {
+            let errorMessage = "No users found";
+            if (searchBy && search) {
+                errorMessage += ` with ${searchBy.toLowerCase()} '${search}'`;
+            }
+            if (department) {
+                errorMessage += ` in department '${department}'`;
+            }
+            errorMessage += ".";
+
+            return res.status(404).json({
+                error: errorMessage,
+                success: false
+            });
+        }
+
         res.status(200).json({
             msg: "Data retrieved successfully",
             users
