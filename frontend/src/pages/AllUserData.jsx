@@ -38,7 +38,13 @@ const AllUserData = () => {
     "ELECTRONICS AND COMPUTER",
     "None",
   ];
-  const searchOptions = ["Roll No", "Name", "UserName", "Registered ID"];
+  const searchOptions = [
+    "Search Option",
+    "Roll No", 
+    "Name", 
+    "UserName", 
+    "Registered ID"
+  ];
 
   const tableHead = theme === "dark" ? "px-2 py-2 border border-gray-800 h-12 text-sm" : "px-2 py-2 border h-12 text-sm";
 
@@ -138,10 +144,10 @@ const AllUserData = () => {
 
 
   return (
-    <div className="manrope-regular p-2 sm:p-6 w-full xl:w-[90%] lg:w-[90%] m-auto">
-      <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 px-6 py-5 rounded-xl shadow-lg transition-all duration-300 dark:bg-[#1a1a1a] bg-gray-100">
-        <div className="flex items-center w-full md:w-auto gap-8">
-          <div className="flex flex-col">
+    <div className="manrope-regular p-2 sm:p-6 w-full xl:w-[90%] lg:w-[90%] m-auto -translate-y-10">
+      <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 px-2 sm:px-5 py-5 rounded-xl shadow-lg transition-all duration-300 dark:bg-[#1a1a1a] bg-gray-100">
+        <div className="flex flex-col sm:flex-row items-center w-full md:w-auto gap-2 sm:gap-8">
+          <div className="flex flex-col w-full sm:w-[25%] md:w-[45%]">
             <Dropdown
               label="Search By"
               options={searchOptions}
@@ -238,7 +244,7 @@ const AllUserData = () => {
                       <td className={`${tableHead}`}>{indexOfFirstEntry + index + 1}</td>
                       <td
                         className={`${tableHead} cursor-pointer hover:text-blue-500 hover:font-semibold dark:hover:text-blue-500 dark:transition-colors duration-300`}
-                        onClick={() => navigate(`/user/${user.username}`)}
+                        onClick={() => navigate(`/user/${user?.username}`)}
                       >
                         {user.username}
                       </td>

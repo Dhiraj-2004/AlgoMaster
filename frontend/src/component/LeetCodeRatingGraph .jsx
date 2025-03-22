@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { format } from 'date-fns';
+import PropTypes from 'prop-types';
 import Title from './PageTitle';
 import { ThemeContext } from "../context/ThemeContext";
 
@@ -44,6 +45,20 @@ const LeetCodeRatingGraph = ({ attendedContests }) => {
     return null;
   };
 
+  CustomTooltip.propTypes = {
+    active: PropTypes.bool,
+    payload: PropTypes.arrayOf(PropTypes.shape({
+      payload: PropTypes.shape({
+        contestTitle: PropTypes.string,
+        date: PropTypes.instanceOf(Date),
+        rating: PropTypes.number,
+        problemsSolved: PropTypes.number,
+        totalProblems: PropTypes.number,
+        ranking: PropTypes.number,
+      })
+    })),
+  };
+
   return (
     <div className="w-full h-96">
       <Title text1="Rating" text2="History" />
@@ -78,6 +93,17 @@ const LeetCodeRatingGraph = ({ attendedContests }) => {
       </ResponsiveContainer>
     </div>
   );
+};
+
+LeetCodeRatingGraph.propTypes = {
+  attendedContests: PropTypes.arrayOf(PropTypes.shape({
+    contestTitle: PropTypes.string.isRequired,
+    startTime: PropTypes.number.isRequired,
+    rating: PropTypes.number.isRequired,
+    problemsSolved: PropTypes.number.isRequired,
+    totalProblems: PropTypes.number.isRequired,
+    ranking: PropTypes.number,
+  })),
 };
 
 export default LeetCodeRatingGraph;
