@@ -155,8 +155,7 @@ syncIndexes();
 // all User
 exports.getAllUsers = async (req, res) => {
     try {
-        const platform = req.query.platform;
-        const department = req.query.department; 
+        const { platform, department, searchBy, search } = req.query;
         
         if (!platform) {
             return res.status(400).json({ error: "Platform is required" });
@@ -172,10 +171,23 @@ exports.getAllUsers = async (req, res) => {
             matchQuery.department = department;
         }
 
+        if (searchBy && search) {
+            const searchFieldMap = {
+                "Roll No": "roll",
+                "Name": "name",
+                "UserName": `platformData.usernames.${platform}`,
+                "Registered ID": "registeredID"
+            };
+
+            if (searchFieldMap[searchBy]) {
+                matchQuery[searchFieldMap[searchBy]] = { $regex: search, $options: "i" };
+            }
+        }
+
         const users = await User.aggregate([
             {
                 $lookup: {
-                    from: "platforms",  
+                    from: "platforms",
                     localField: "platform",
                     foreignField: "_id",
                     as: "platformData"
@@ -188,7 +200,7 @@ exports.getAllUsers = async (req, res) => {
                 }
             },
             {
-                $match: matchQuery 
+                $match: matchQuery
             },
             {
                 $project: {
@@ -206,7 +218,6 @@ exports.getAllUsers = async (req, res) => {
                     },
                     platformSpecificData: {
                         [trimmedPlatform]: `$platformData.question.${trimmedPlatform === 'leetcode' ? 'leetcode.total' : trimmedPlatform}`
-
                     }
                 }
             }
@@ -221,7 +232,6 @@ exports.getAllUsers = async (req, res) => {
         res.status(500).json({ error: "Failed to fetch user data" });
     }
 };
-
 
 // get user name for platform id
 exports.getMyUserName = async (req, res) => {

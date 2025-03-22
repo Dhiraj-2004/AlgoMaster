@@ -28,6 +28,7 @@ const Dropdown = ({ name, options, value, onChange, label }) => {
     <div className='flex flex-col space-y-2 w-full'>
       <label className={`text-sm font-medium ${labelStyles} text-sm font-medium`}>{label}</label>
       <select
+        
         name={name}
         value={value}
         onChange={handleSelectChange}

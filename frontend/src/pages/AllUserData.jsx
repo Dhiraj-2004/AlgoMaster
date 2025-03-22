@@ -1,23 +1,24 @@
 import { FcNumericalSorting12, FcNumericalSorting21 } from "react-icons/fc";
 import { useContext, useEffect, useState } from "react";
 import Dropdown from "../component/Dropdown";
-import InputField from "../component/InputField";
 import { ThemeContext } from "../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { assets } from "../assets/assets";
 
 const AllUserData = () => {
   const [platform, setPlatform] = useState("LeetCode");
   const [department, setDepartment] = useState(null);
   const [users, setUsers] = useState(null);
-  const [search, setSearch] = useState("");
-  const [item, setItem] = useState("Roll No");
+  const [searchOption, setSearchOption] = useState("");
+  const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const { theme } = useContext(ThemeContext);
   const [loader, setLoader] = useState(true);
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const entriesPerPage = 15;
 
@@ -37,7 +38,7 @@ const AllUserData = () => {
     "ELECTRONICS AND COMPUTER",
     "None",
   ];
-  const searchOptions = ["Roll No", "Name", "UserName", "ID"];
+  const searchOptions = ["Roll No", "Name", "UserName", "Registered ID"];
 
   const tableHead = theme === "dark" ? "px-2 py-2 border border-gray-800 h-12 text-sm" : "px-2 py-2 border h-12 text-sm";
 
@@ -56,19 +57,29 @@ const AllUserData = () => {
           ? `&department=${department}`
           : "";
 
-        const url = `${backendUrl}/api/user?platform=${site}${departmentParam}`;
+        const searchParam =
+        searchQuery
+            ? `&searchBy=${encodeURIComponent(searchOption)}&search=${encodeURIComponent(searchQuery)}`
+            : "";
+
+
+        const url = `${import.meta.env.VITE_BACKEND_URL}/api/user?platform=${site}${departmentParam}${searchParam}`;
         const response = await axios.get(url);
         setUsers(response.data.users);
+        setCurrentPage(1);
       } catch (error) {
         console.error("Error fetching users:", error);
       } finally {
         setLoader(false);
       }
     };
-
-
     fetchData();
-  }, [platform, department, backendUrl]);
+  }, [platform, department, backendUrl,searchQuery]);
+
+  const handleSearch = () => {
+    setSearchQuery(searchText);
+    setSearchText("");
+  };
 
   const handleSort = (column) => {
     const newSortOrder = sortColumn === column && sortOrder === "asc" ? "desc" : "asc";
@@ -111,25 +122,11 @@ const AllUserData = () => {
     });
   }
 
-  // Apply search filtering to all users before pagination
-  const filteredUsers = users ? sortedUsers.filter((user) => {
-    if (item === "Roll No") {
-      return user.roll.toLowerCase().includes(search.toLowerCase());
-    } else if (item === "Name") {
-      return user.name.toLowerCase().includes(search.toLowerCase());
-    } else if (item === "UserName") {
-      return user.username?.toLowerCase().includes(search.toLowerCase());
-    } else if (item === "ID") {
-      return user.usernames?.toLowerCase().includes(search.toLowerCase());
-    }
-    return true;
-  }) : [];
-
   // Pagination logic
   const indexOfLastEntry = currentPage * entriesPerPage;
   const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
-  const currentEntries = filteredUsers.slice(indexOfFirstEntry, indexOfLastEntry);
-  const totalPages = Math.ceil(filteredUsers.length / entriesPerPage);
+  const currentEntries = sortedUsers.slice(indexOfFirstEntry, indexOfLastEntry);
+  const totalPages = Math.ceil(sortedUsers.length / entriesPerPage);
 
   const handleNext = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
@@ -139,39 +136,55 @@ const AllUserData = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
+
   return (
-    <div className="manrope-regular p-3 w-full xl:w-[90%] lg:w-[90%] m-auto">
-      <div>
-        <div className="mb-4 flex flex-col sm:flex-row items-start sm:items-center">
+    <div className="manrope-regular p-2 sm:p-6 w-full xl:w-[90%] lg:w-[90%] m-auto">
+      <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 px-6 py-5 rounded-xl shadow-lg transition-all duration-300 dark:bg-[#1a1a1a] bg-gray-100">
+        <div className="flex items-center w-full md:w-auto gap-8">
+          <div className="flex flex-col">
+            <Dropdown
+              label="Search By"
+              options={searchOptions}
+              value={searchOption}
+              onChange={(e) => setSearchOption(e.target.value)}
+              className="min-w-[150px] dark:bg-[#272B34] bg-white border dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2"
+            />
+          </div>
+
+          <div className="relative w-full lg:w-[600px] md:w-min-[500px] flex items-center mt-6">
+            <img
+              src={assets.search}
+              alt="Search"
+              className="absolute left-8 w-5 h-5 invert dark:invert-0"
+            />
+            <input
+              type="text"
+              className="w-full h-16 pl-24 pr-24  dark:bg-[#0d0d0d] border border-gray-300 dark:border-gray-700 rounded-3xl outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500 dark:shadow-[0_0_20px_rgba(168,85,247,0.6)] transition-all duration-300"
+              placeholder={`Search  ${searchOption}`}
+              value={searchText}
+              onChange={(e) => { setSearchText(e.target.value) }}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            />
+            <button className="absolute right-9 top-1/2 transform -translate-y-1/2 bg-zinc-300 dark:bg-[#272B34] hover:scale-110 w-11 h-10 flex items-center justify-center rounded-xl transition-all duration-300"
+              onClick={handleSearch}
+            >
+              <img src={assets.arrow} alt="Send" className="w-5 h-5 filter invert dark:invert-0"/>
+            </button>
+          </div>
+        </div>
+        <div className="flex items-center gap-4 w-full md:w-auto">
           <Dropdown
+            label="Platform"
             options={platformOptions}
             value={platform}
             onChange={(e) => setPlatform(e.target.value)}
-            label="Select Platform"
           />
-        </div>
-        <div className="mb-4 flex flex-col sm:flex-row items-start sm:items-center">
           <Dropdown
+            label="Department"
             options={departmentOptions}
             value={department}
             onChange={(e) => setDepartment(e.target.value)}
-            label="Select Department"
           />
-        </div>
-        <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 mt-2">
-          <InputField
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder={`Search by ${item}`}
-          />
-          <div className="-translate-y-1 w-full">
-            <Dropdown
-              options={searchOptions}
-              value={item}
-              onChange={(e) => setItem(e.target.value)}
-            />
-          </div>
         </div>
       </div>
 
