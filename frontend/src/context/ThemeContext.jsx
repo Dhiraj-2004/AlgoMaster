@@ -12,7 +12,7 @@ const ThemeProvider = ({ children }) => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("theme") || systemTheme;
     }
-    return "light"; // Default fallback
+    return "dark";
   });
 
   useEffect(() => {

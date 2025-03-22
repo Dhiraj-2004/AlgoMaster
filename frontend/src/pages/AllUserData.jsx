@@ -5,13 +5,13 @@ import { ThemeContext } from "../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { assets } from "../assets/assets";
-import { toast,ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 const AllUserData = () => {
   const [platform, setPlatform] = useState("LeetCode");
-  const [department, setDepartment] = useState(null);
+  const [department, setDepartment] = useState("Department");
   const [users, setUsers] = useState(null);
-  const [searchOption, setSearchOption] = useState("");
+  const [searchOption, setSearchOption] = useState("Search Option");
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortColumn, setSortColumn] = useState(null);
@@ -21,8 +21,16 @@ const AllUserData = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [entriesPerPage, setEntriesPerPage] = useState(10);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const entriesPerPage = 15;
+
+
+  const pages = [
+    { value: 10, label: '10 / page' },
+    { value: 20, label: '20 / page' },
+    { value: 50, label: '50 / page' },
+    { value: 100, label: '100 / page' },
+  ]
 
   const platformOptions = [
     "Select Platform",
@@ -32,7 +40,7 @@ const AllUserData = () => {
   ];
 
   const departmentOptions = [
-    "Select your Department",
+    "Department",
     "COMPUTER ENGINEERING",
     "ELECTRONICS AND TELECOMMUNICATION",
     "INFORMATION TECHNOLOGY",
@@ -42,9 +50,9 @@ const AllUserData = () => {
   ];
   const searchOptions = [
     "Search Option",
-    "Roll No", 
-    "Name", 
-    "UserName", 
+    "Roll No",
+    "Name",
+    "UserName",
     "Registered ID"
   ];
 
@@ -62,12 +70,12 @@ const AllUserData = () => {
               ? "codechefUser"
               : "leetcodeUser";
 
-        const departmentParam = department && department !== "None" && department !== "Select your Department"
+        const departmentParam = department && department !== "None" && department !== "Department"
           ? `&department=${department}`
           : "";
 
         const searchParam =
-        searchQuery
+          searchQuery
             ? `&searchBy=${encodeURIComponent(searchOption)}&search=${encodeURIComponent(searchQuery)}`
             : "";
 
@@ -77,14 +85,15 @@ const AllUserData = () => {
         setUsers(response.data.users);
         setCurrentPage(1);
       } catch (error) {
-          setErrorMessage(error.response.data.error);
-          toast.error(error.response.data.error);
+        setErrorMessage(error.response.data.error);
+        toast.error(error.response.data.error);
       } finally {
         setLoader(false);
       }
     };
     fetchData();
-  }, [platform, department, backendUrl,searchQuery]);
+  }, [platform, department, backendUrl, searchQuery]);
+
 
   const handleSearch = () => {
     setSearchQuery(searchText);
@@ -96,6 +105,13 @@ const AllUserData = () => {
     setSortColumn(column);
     setSortOrder(newSortOrder);
   };
+
+  const handleDropdownChange = (event) => {
+    const selectedValue = event.target.value;
+    setEntriesPerPage(parseInt(selectedValue));
+  };
+
+
 
   const getSortingIcon = (column) => {
     if (sortColumn === column) {
@@ -149,54 +165,69 @@ const AllUserData = () => {
 
   return (
     <div className="manrope-regular p-2 sm:p-6 w-full xl:w-[90%] lg:w-[90%] m-auto -translate-y-10">
-      <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 px-2 sm:px-5 py-5 rounded-xl shadow-lg transition-all duration-300 dark:bg-[#1a1a1a] bg-gray-100">
-        <div className="flex flex-col sm:flex-row items-center w-full md:w-auto gap-2 sm:gap-8">
-          <div className="flex flex-col w-full sm:w-[25%] md:w-[45%]">
-            <Dropdown
-              label="Search By"
-              options={searchOptions}
-              value={searchOption}
-              onChange={(e) => setSearchOption(e.target.value)}
-              className="min-w-[150px] dark:bg-[#272B34] bg-white border dark:border-gray-700 border-gray-300 rounded-lg px-3 py-2"
-            />
-          </div>
+      <div className="w-full grid grid-cols-1 lg:grid-cols-2 items-center gap-4 px-2 sm:px-5 py-5 rounded-xl shadow-lg transition-all duration-300 dark:bg-[#1a1a1a] bg-gray-100">
+        <div className="flex w-full gap-x-3">
+          <Dropdown
+            options={searchOptions}
+            value={searchOption}
+            onChange={(e) => setSearchOption(e.target.value)}
+            newStyle="h-9 rounded-md lg:w-44 md:w-60"
+          />
 
-          <div className="relative w-full lg:w-[600px] md:w-min-[500px] flex items-center mt-6">
-            <img
-              src={assets.search}
-              alt="Search"
-              className="absolute left-8 w-5 h-5 invert dark:invert-0"
+          <div className="hidden md:flex gap-x-6 flex-grow xl:mr-10">
+            <Dropdown
+              options={platformOptions}
+              value={platform}
+              onChange={(e) => setPlatform(e.target.value)}
+              newStyle="h-9 rounded-md lg:w-44 md:w-64"
             />
-            <input
-              type="text"
-              className="w-full h-16 pl-24 pr-24  dark:bg-[#0d0d0d] border border-gray-300 dark:border-gray-700 rounded-3xl outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500 dark:shadow-[0_0_20px_rgba(168,85,247,0.6)] transition-all duration-300"
-              placeholder={`Search  ${searchOption}`}
-              value={searchText}
-              onChange={(e) => { setSearchText(e.target.value) }}
-              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            <Dropdown
+              options={departmentOptions}
+              value={department}
+              onChange={(e) => setDepartment(e.target.value)}
+              newStyle="h-9 rounded-md lg:w-44 md:w-64"
             />
-            <button className="absolute right-9 top-1/2 transform -translate-y-1/2 bg-zinc-300 dark:bg-[#272B34] hover:scale-110 w-11 h-10 flex items-center justify-center rounded-xl transition-all duration-300"
-              onClick={handleSearch}
-            >
-              <img src={assets.arrow} alt="Send" className="w-5 h-5 filter invert dark:invert-0"/>
-            </button>
           </div>
         </div>
-        <div className="flex items-center gap-4 w-full md:w-auto">
+
+        <div className="relative w-auto flex items-center xl:ml-8">
+          <img
+            src={assets.search}
+            alt="Search"
+            className="absolute left-4 w-4 h-4 invert dark:invert-0"
+          />
+          <input
+            type="text"
+            className="w-full h-12 pl-14 pr-20 dark:bg-[#0d0d0d] border border-gray-300 dark:border-gray-700 rounded-xl outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500 dark:shadow-[0_0_20px_rgba(168,85,247,0.6)] transition-all duration-300"
+            placeholder="Search..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+          />
+          <button
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-zinc-300 dark:bg-[#272B34] hover:scale-110 w-9 h-8 flex items-center justify-center rounded-xl transition-all duration-300"
+            onClick={handleSearch}
+          >
+            <img src={assets.arrow} alt="Send" className="w-4 h-4 filter invert dark:invert-0" />
+          </button>
+        </div>
+
+        <div className="flex md:hidden gap-x-6">
           <Dropdown
-            label="Platform"
             options={platformOptions}
             value={platform}
             onChange={(e) => setPlatform(e.target.value)}
+            newStyle="h-9 rounded-md w-full"
           />
           <Dropdown
-            label="Department"
             options={departmentOptions}
             value={department}
             onChange={(e) => setDepartment(e.target.value)}
+            newStyle="h-9 rounded-md w-full"
           />
         </div>
       </div>
+
 
       {loader ? (
         <div className="flex justify-center mt-10">
@@ -249,7 +280,7 @@ const AllUserData = () => {
                     >
                       <td className={`${tableHead}`}>{indexOfFirstEntry + index + 1}</td>
                       <td
-                        className={`${tableHead} cursor-pointer hover:text-blue-500 hover:font-semibold dark:hover:text-blue-500 dark:transition-colors duration-300`}
+                        className={`${tableHead} cursor-pointer text-blue-700 dark:text-blue-500 hover:font-semibold dark:hover:text-blue-500 dark:transition-colors duration-300`}
                         onClick={() => navigate(`/user/${user?.username}`)}
                       >
                         {user.username}
@@ -281,55 +312,6 @@ const AllUserData = () => {
                 )}
               </tbody>
             </table>
-            <div className="flex justify-between items-center mt-4">
-              <div className="flex items-center justify-center space-x-4">
-                <button
-                  onClick={handlePrev}
-                  disabled={currentPage === 1}
-                  className="flex items-center justify-center py-2 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-400 disabled:bg-gray-300 transition-all duration-300 ease-in-out shadow-lg disabled:cursor-not-allowed"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5 transform transition-transform duration-300 ease-in-out"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                  <span className="ml-2 text-sm font-medium">Prev</span>
-                </button>
-
-                <span className="text-zinc-500 dark:text-zinc-400">{currentPage} of  {totalPages}</span>
-
-                <button
-                  onClick={handleNext}
-                  disabled={currentPage === totalPages}
-                  className="flex items-center justify-center py-2 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-400 disabled:bg-gray-300 transition-all duration-300 ease-in-out shadow-lg disabled:cursor-not-allowed"
-                >
-                  <span className="mr-2 text-sm font-medium">Next</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5 transform transition-transform duration-300 ease-in-out"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
           </div>
         ) : (
           <div>No data available</div>
@@ -337,6 +319,65 @@ const AllUserData = () => {
       ) : (
         <div className="flex justify-center mt-20">Select Platform First</div>
       )}
+      <div className="flex justify-between mt-8">
+        <div className="h-full ">
+          <Dropdown
+            options={pages}
+            value={entriesPerPage}
+            onChange={handleDropdownChange}
+            newStyle="rounded-md h-9 w-32"
+          />
+        </div>
+        <div className="flex justify-between items-center">
+          <div className="flex items-center justify-center space-x-4">
+            <button
+              onClick={handlePrev}
+              disabled={currentPage === 1}
+              className="flex items-center justify-center py-2 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-400 disabled:bg-gray-300 transition-all duration-300 ease-in-out shadow-lg disabled:cursor-not-allowed"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 h-5 transform transition-transform duration-300 ease-in-out"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+              <span className="ml-2 text-sm font-medium">Prev</span>
+            </button>
+
+            <span className="text-zinc-500 dark:text-zinc-400">{currentPage} of  {totalPages}</span>
+
+            <button
+              onClick={handleNext}
+              disabled={currentPage === totalPages}
+              className="flex items-center justify-center py-2 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-400 disabled:bg-gray-300 transition-all duration-300 ease-in-out shadow-lg disabled:cursor-not-allowed"
+            >
+              <span className="mr-2 text-sm font-medium">Next</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 h-5 transform transition-transform duration-300 ease-in-out"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
       <ToastContainer />
     </div>
   );

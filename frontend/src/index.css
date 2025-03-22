@@ -486,3 +486,28 @@ body {
 .animate-default {
   transition: transform 0.3s ease-in-out;
 }
+
+
+
+body {
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: rgba(150, 150, 150, 0.3) rgba(220, 220, 220, 0.3); /* Firefox thumb and track */
+}
+
+::-webkit-scrollbar {
+  width: 8px; /* Thin scrollbar width */
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(220, 220, 220, 0.3); /* Light background for the track */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.3); /* Medium gray thumb */
+  border-radius: 4px; /* Rounded corners for a softer look */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 100, 100, 0.5); /* Darker gray on hover */
+}
