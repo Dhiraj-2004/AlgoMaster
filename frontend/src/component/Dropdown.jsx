@@ -3,17 +3,10 @@ import { useContext, useEffect, useState, useRef } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 
 const Dropdown = ({ name, options, value, onChange, label, newStyle }) => {
-  const [select, setSelect] = useState(false);
-  const { theme } = useContext(ThemeContext);
-  const [themes, setThemes] = useState(theme);
   const [isOpen, setIsOpen] = useState(false);
+  const { theme } = useContext(ThemeContext);
   const [selectedValue, setSelectedValue] = useState(value);
   const dropdownRef = useRef(null);
-  const selectRef = useRef(null);
-
-  useEffect(() => {
-    setThemes(theme);
-  }, [theme]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -21,15 +14,11 @@ const Dropdown = ({ name, options, value, onChange, label, newStyle }) => {
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleSelectChange = (newValue) => {
-    setSelect(true);
     setSelectedValue(newValue);
     onChange({ target: { name, value: newValue } });
     setIsOpen(false);
@@ -39,33 +28,46 @@ const Dropdown = ({ name, options, value, onChange, label, newStyle }) => {
     (option) => (typeof option === "object" ? option.value === selectedValue : option === selectedValue)
   )?.label || selectedValue;
 
-  const inputStyles =
-    themes === "dark"
-      ? "border-gray-600 bg-zinc-800"
-      : "border-gray-300 bg-white text-black";
-  const labelStyles = themes === "dark" ? "text-white" : "text-gray-900";
+  const baseInputStyles = theme === "dark"
+    ? "bg-zinc-800 text-gray-200"
+    : "bg-white text-black";
+  const borderStyles = isOpen 
+    ? "border-blue-500" 
+    : theme === "dark" 
+      ? "border-zinc-600" 
+      : "border-zinc-200";
+  const labelStyles = theme === "dark" ? "text-white" : "text-gray-900";
+
+  const hasSelection = selectedValue && selectedValue !== options[0];
+  const textColor = hasSelection ? "" : "text-zinc-400";
 
   return (
-    <div className="flex flex-col space-y-2 w-full relative" ref={dropdownRef}>
-      {label && <label className={`text-sm font-medium ${labelStyles}`}>{label}</label>}
+    <div className="relative w-full" ref={dropdownRef}>
+      {label && (
+        <label className={`block text-sm font-medium mb-1 ${labelStyles}`}>
+          {label}
+        </label>
+      )}
       <div
-        ref={selectRef}
-        className={`w-full h-14 p-4 border ${inputStyles} rounded-xl flex items-center justify-between cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap ${newStyle || ""}`}
+        className={`${baseInputStyles} ${borderStyles} w-full h-14 px-4 border-2 rounded-xl flex items-center justify-between cursor-pointer shadow-sm hover:shadow-md transition-all duration-300 ${newStyle}`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className={`truncate ${select ? "" : "text-zinc-400"}`}>
+        <span className={`truncate ${textColor}`}>
           {selectedLabel}
         </span>
         <svg
-          className="fill-current h-6 w-6 text-zinc-400"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
+          className={`w-5 h-5 transition-transform duration-200 ${isOpen ? "rotate-180" : ""} text-zinc-400`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <path d="M9.293 12.95l.707 0.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
         </svg>
       </div>
       {isOpen && (
-        <ul className={`absolute z-10 mt-1 max-w-full w-auto rounded-md shadow-lg ${inputStyles}`}>
+        <ul
+          className={`${baseInputStyles} ${borderStyles} absolute z-20 mt-1 w-full max-h-fit border-2 rounded-xl shadow-lg overflow-y-auto max-h-60`}
+        >
           {options.map((option, index) => {
             const isObject = typeof option === "object";
             const optionValue = isObject ? option.value : option;
@@ -74,22 +76,16 @@ const Dropdown = ({ name, options, value, onChange, label, newStyle }) => {
             return (
               <li
                 key={index}
-                className={`flex items-center justify-between p-2 cursor-pointer hover:bg-zinc-300 dark:hover:bg-zinc-700 ${optionValue === selectedValue ? "bg-zinc-700 dark:bg-gray-700 text-blue-500" : ""}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleSelectChange(optionValue);
-                }}
+                className={`px-4 py-2 cursor-pointer transition-colors duration-200 ${
+                  optionValue === selectedValue
+                    ? "text-blue-500 font-medium"
+                    : theme === "dark"
+                    ? "hover:bg-zinc-700"
+                    : "hover:bg-zinc-300"
+                }`}
+                onClick={() => handleSelectChange(optionValue)}
               >
-                <span>{optionLabel}</span>
-                {optionValue === selectedValue && (
-                  <svg
-                    className="fill-current h-4 w-4 text-blue-500"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" fill="currentColor" />
-                  </svg>
-                )}
+                {optionLabel}
               </li>
             );
           })}

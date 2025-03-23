@@ -1,11 +1,13 @@
-import { FcNumericalSorting12, FcNumericalSorting21 } from "react-icons/fc";
 import { useContext, useEffect, useState } from "react";
 import Dropdown from "../component/Dropdown";
 import { ThemeContext } from "../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { assets } from "../assets/assets";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { FaTrophy } from "react-icons/fa";
+import { BiSortUp, BiSortDown } from "react-icons/bi";
 
 const AllUserData = () => {
   const [platform, setPlatform] = useState("LeetCode");
@@ -24,21 +26,14 @@ const AllUserData = () => {
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-
   const pages = [
-    { value: 10, label: '10 / page' },
-    { value: 20, label: '20 / page' },
-    { value: 50, label: '50 / page' },
-    { value: 100, label: '100 / page' },
-  ]
-
-  const platformOptions = [
-    "Select Platform",
-    "LeetCode",
-    "CodeChef",
-    "Codeforces"
+    { value: 10, label: "10 / page" },
+    { value: 20, label: "20 / page" },
+    { value: 50, label: "50 / page" },
+    { value: 100, label: "100 / page" },
   ];
 
+  const platformOptions = ["Select Platform", "LeetCode", "CodeChef", "Codeforces"];
   const departmentOptions = [
     "Department",
     "COMPUTER ENGINEERING",
@@ -48,52 +43,35 @@ const AllUserData = () => {
     "ELECTRONICS AND COMPUTER",
     "None",
   ];
-  const searchOptions = [
-    "Search Option",
-    "Roll No",
-    "Name",
-    "UserName",
-    "Registered ID"
-  ];
-
-  const tableHead = theme === "dark" ? "px-2 py-2 border border-gray-800 h-12 text-sm" : "px-2 py-2 border h-12 text-sm";
+  const searchOptions = ["Search Option", "Roll No", "Name", "UserName", "Registered ID"];
 
   useEffect(() => {
     const fetchData = async () => {
       setLoader(true);
       setErrorMessage(null);
       try {
-        const site =
-          platform === "Codeforces"
-            ? "codeforcesUser"
-            : platform === "CodeChef"
-              ? "codechefUser"
-              : "leetcodeUser";
+        const site = platform === "Codeforces" ? 
+          "codeforcesUser" : platform === "CodeChef" 
+          ? "codechefUser" : "leetcodeUser";
+        const departmentParam = department && department !== "None" && department !== "Department" 
+          ? `&department=${department}` : "";
 
-        const departmentParam = department && department !== "None" && department !== "Department"
-          ? `&department=${department}`
-          : "";
+        const searchParam = searchQuery ? `&searchBy=${encodeURIComponent(searchOption)}&search=${encodeURIComponent(searchQuery)}` : "";
 
-        const searchParam =
-          searchQuery
-            ? `&searchBy=${encodeURIComponent(searchOption)}&search=${encodeURIComponent(searchQuery)}`
-            : "";
+        const url = `${backendUrl}/api/user?platform=${site}${departmentParam}${searchParam}`;
 
-
-        const url = `${import.meta.env.VITE_BACKEND_URL}/api/user?platform=${site}${departmentParam}${searchParam}`;
         const response = await axios.get(url);
         setUsers(response.data.users);
         setCurrentPage(1);
       } catch (error) {
-        setErrorMessage(error.response.data.error);
-        toast.error(error.response.data.error);
+        setErrorMessage(error.response?.data?.error || "An error occurred");
+        toast.error(error.response?.data?.error || "Failed to fetch data");
       } finally {
         setLoader(false);
       }
     };
     fetchData();
-  }, [platform, department, backendUrl, searchQuery]);
-
+  }, [platform, department, searchQuery, backendUrl]);
 
   const handleSearch = () => {
     setSearchQuery(searchText);
@@ -101,46 +79,58 @@ const AllUserData = () => {
   };
 
   const handleSort = (column) => {
-    const newSortOrder = sortColumn === column && sortOrder === "asc" ? "desc" : "asc";
-    setSortColumn(column);
-    setSortOrder(newSortOrder);
+    const sortableColumns = ["Roll No", "Solved", "Rank"];
+    if (sortableColumns.includes(column)) {
+      const newSortOrder = sortColumn === column && sortOrder === "asc" ? "desc" : "asc";
+      setSortColumn(column);
+      setSortOrder(newSortOrder);
+    }
   };
 
   const handleDropdownChange = (event) => {
-    const selectedValue = event.target.value;
-    setEntriesPerPage(parseInt(selectedValue));
+    setEntriesPerPage(parseInt(event.target.value));
+    setCurrentPage(1);
   };
 
-
-
   const getSortingIcon = (column) => {
-    if (sortColumn === column) {
-      return sortOrder === "asc" ? (
-        <FcNumericalSorting12 className="animate-sortUp text-3xl font-bold" />
+    const sortableColumns = ["Roll No", "Solved", "Rank"];
+    if (!sortableColumns.includes(column)) return null;
+
+    const isActive = sortColumn === column;
+    const iconColor = theme === "dark" ? "text-teal-400" : "text-teal-600";
+    const inactiveColor = theme === "dark" ? "text-gray-500" : "text-gray-400";
+
+    return isActive ? (
+      sortOrder === "asc" ? (
+        <BiSortUp className={`inline ml-2 text-xl ${iconColor} transition-transform duration-200`} />
       ) : (
-        <FcNumericalSorting21 className="animate-sortDown text-3xl font-bold" />
-      );
-    }
-    return <FcNumericalSorting21 className="animate-default text-3xl font-bold" />;
+        <BiSortDown className={`inline ml-2 text-xl ${iconColor} transition-transform duration-200`} />
+      )
+    ) : (
+      <BiSortUp className={`inline ml-2 text-xl ${inactiveColor} opacity-60 hover:opacity-100 hover:text-green-400 transition-opacity duration-200`} />
+    );
   };
 
   const sortedUsers = users ? [...users] : [];
-
   if (sortColumn) {
     sortedUsers.sort((a, b) => {
-      let aValue = a[sortColumn.toLowerCase()];
-      let bValue = b[sortColumn.toLowerCase()];
-
-      if (sortColumn === "Rank") {
-        aValue = Number(a.ranks?.globalRank) || Infinity;
-        bValue = Number(b.ranks?.globalRank) || Infinity;
+      let aValue, bValue;
+      switch (sortColumn) {
+        case "Roll No":
+          aValue = a.roll || "";
+          bValue = b.roll || "";
+          break;
+        case "Solved":
+          aValue = Number(a.platformSpecificData?.[platform.toLowerCase()]) || 0;
+          bValue = Number(b.platformSpecificData?.[platform.toLowerCase()]) || 0;
+          break;
+        case "Rank":
+          aValue = Number(a.ranks?.globalRank) || 0;
+          bValue = Number(b.ranks?.globalRank) || 0;
+          break;
+        default:
+          return 0;
       }
-
-      if (sortColumn === "Roll No") {
-        aValue = a.roll;
-        bValue = b.roll;
-      }
-
       if (typeof aValue === "string") {
         return sortOrder === "asc" ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
       }
@@ -148,230 +138,230 @@ const AllUserData = () => {
     });
   }
 
-  // Pagination logic
   const indexOfLastEntry = currentPage * entriesPerPage;
   const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
   const currentEntries = sortedUsers.slice(indexOfFirstEntry, indexOfLastEntry);
   const totalPages = Math.ceil(sortedUsers.length / entriesPerPage);
 
-  const handleNext = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
-
-  const handlePrev = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
+  const handleNext = () => currentPage < totalPages && setCurrentPage(currentPage + 1);
+  const handlePrev = () => currentPage > 1 && setCurrentPage(currentPage - 1);
 
   return (
-    <div className="manrope-regular p-2 sm:p-6 w-full xl:w-[90%] lg:w-[90%] m-auto -translate-y-10">
-      <div className="w-full grid grid-cols-1 lg:grid-cols-2 items-center gap-4 px-2 sm:px-5 py-5 rounded-xl shadow-lg transition-all duration-300 dark:bg-[#1a1a1a] bg-gray-100">
-        <div className="flex w-full gap-x-3">
-          <Dropdown
-            options={searchOptions}
-            value={searchOption}
-            onChange={(e) => setSearchOption(e.target.value)}
-            newStyle="h-9 rounded-md lg:w-44 md:w-60"
-          />
-
-          <div className="hidden md:flex gap-x-6 flex-grow xl:mr-10">
-            <Dropdown
-              options={platformOptions}
-              value={platform}
-              onChange={(e) => setPlatform(e.target.value)}
-              newStyle="h-9 rounded-md lg:w-44 md:w-64"
+    <div className="min-h-screen p-4 sm:p-6 lg:p-8">
+      <div className="max-w-7xl mx-auto">
+        <div className={`rounded-2xl p-6 shadow-xl ${theme === "dark" ? "bg-zinc-800" : "bg-white"}`}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Dropdown 
+            options={searchOptions} 
+            value={searchOption} 
+            onChange={(e) => setSearchOption(e.target.value)} 
+            
             />
-            <Dropdown
-              options={departmentOptions}
-              value={department}
-              onChange={(e) => setDepartment(e.target.value)}
-              newStyle="h-9 rounded-md lg:w-44 md:w-64"
+            <Dropdown 
+            options={platformOptions} 
+            value={platform} 
+            onChange={(e) => setPlatform(e.target.value)} 
             />
+            <Dropdown 
+            options={departmentOptions} 
+            value={department} onChange={(e) => 
+            setDepartment(e.target.value)} 
+            />
+            <div className="relative">
+              <input
+                type="text"
+                className={`w-full h-14 pl-10 pr-12 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 shadow-sm ${
+                  theme === "dark"
+                    ? "bg-zinc-800 border-zinc-700 focus:ring-blue-500"
+                    : "bg-white border-zinc-200  focus:ring-blue-500"
+                }`}
+                placeholder="Search users..."
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+              />
+              <img
+                src={assets.search}
+                alt="Search"
+                className="absolute left-3 top-5 w-5 h-5 invert dark:invert-0"
+              />
+              <button
+                className="absolute right-2 top-6 -translate-y-3 bg-zinc-200 dark:bg-zinc-600 hover:dark:bg-blue-600 hover:bg-blue-300 rounded-full w-9 h-8 flex items-center justify-center transition-all duration-300 shadow-md"
+                onClick={handleSearch}
+              >
+                <img src={assets.arrow} alt="Search" className="w-4 h-4 invert dark:invert-0" />
+              </button>
+            </div>
           </div>
         </div>
 
-        <div className="relative w-auto flex items-center xl:ml-8">
-          <img
-            src={assets.search}
-            alt="Search"
-            className="absolute left-4 w-4 h-4 invert dark:invert-0"
-          />
-          <input
-            type="text"
-            className="w-full h-12 pl-14 pr-20 dark:bg-[#0d0d0d] border border-gray-300 dark:border-gray-700 rounded-xl outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500 dark:shadow-[0_0_20px_rgba(168,85,247,0.6)] transition-all duration-300"
-            placeholder="Search..."
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-          />
-          <button
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-zinc-300 dark:bg-[#272B34] hover:scale-110 w-9 h-8 flex items-center justify-center rounded-xl transition-all duration-300"
-            onClick={handleSearch}
-          >
-            <img src={assets.arrow} alt="Send" className="w-4 h-4 filter invert dark:invert-0" />
-          </button>
-        </div>
-
-        <div className="flex md:hidden gap-x-6">
-          <Dropdown
-            options={platformOptions}
-            value={platform}
-            onChange={(e) => setPlatform(e.target.value)}
-            newStyle="h-9 rounded-md w-full"
-          />
-          <Dropdown
-            options={departmentOptions}
-            value={department}
-            onChange={(e) => setDepartment(e.target.value)}
-            newStyle="h-9 rounded-md w-full"
-          />
-        </div>
-      </div>
-
-
-      {loader ? (
-        <div className="flex justify-center mt-10">
-          <div className="loader"></div>
-        </div>
-      ) : errorMessage ? (
-        <div className="flex justify-center mt-20 text-red-500">{errorMessage}</div>
-      ) : platform && platform !== "Select Platform" ? (
-        users ? (
-          <div className="mt-8 overflow-x-auto">
-            <table className="w-full border-collapse border border-gray-200">
-              <thead className={`${theme === "dark" ? "bg-zinc-800" : "bg-gray-300"}`}>
-                <tr>
-                  <th className={`${tableHead}`}>Sr No.</th>
-                  <th className={`${tableHead}`}>UserName</th>
-                  <th
-                    className={`${tableHead} cursor-pointer flex items-center gap-2 justify-between text lg:block lg:hidden`}
-                    onClick={() => handleSort("Roll No")}
-                  >
-                    Roll {getSortingIcon("Roll No")}
-                  </th>
-                  <th
-                    className={`${tableHead} cursor-pointer hidden lg:flex lg:items-center lg:gap-2 lg:justify-between whitespace-nowrap`}
-                    onClick={() => handleSort("Roll No")}
-                  >
-                    <div className="flex items-center gap-2 justify-between">
-                      Roll No {getSortingIcon("Roll No")}
-                    </div>
-                  </th>
-                  <th className={`${tableHead} hidden md:table-cell`}>Registered ID</th>
-                  <th className={`${tableHead}`}>{`${platform} ID`}</th>
-                  <th className={`${tableHead} hidden md:table-cell`}>Name</th>
-                  <th className={`${tableHead} hidden md:table-cell`}>Department</th>
-                  <th className={`${tableHead} hidden md:table-cell`}>Year</th>
-                  <th className={`${tableHead}`}>Solved</th>
-                  <th
-                    className={`${tableHead} cursor-pointer flex items-center gap-2 justify-between`}
-                    onClick={() => handleSort("Rank")}
-                  >
-                    Rank {getSortingIcon("Rank")}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentEntries.length > 0 ? (
-                  currentEntries.map((user, index) => (
-                    <tr
+        <div className={`mt-6 rounded-2xl overflow-hidden shadow-xl ${theme === "dark" ? "bg-zinc-800" : "bg-white"}`}>
+          {loader ? (
+            <div className="flex justify-center items-center h-64">
+              <div className={`w-12 h-12 border-4 rounded-full animate-spin ${theme === "dark" ? "border-teal-500 border-t-transparent" : "border-teal-400 border-t-transparent"}`}></div>
+            </div>
+          ) : errorMessage ? (
+            <div className={`p-6 text-center ${theme === "dark" ? "text-red-400" : "text-red-500"}`}>{errorMessage}</div>
+          ) : platform && platform !== "Select Platform" ? (
+            users && currentEntries.length > 0 ? (
+              <>
+                <div className="sm:hidden space-y-4 p-4">
+                  {currentEntries.map((user, index) => (
+                    <div
                       key={user._id}
-                      className={`text-center ${index % 2 === 0 ? "" : "bg-gray-100"} ${theme === "dark" && index % 2 !== 0 ? "bg-zinc-900" : ""}`}
+                      className={`rounded-xl p-4 shadow-md hover:shadow-lg  ${theme === "dark" ? "bg-zinc-700" : "bg-zinc-50"}`}
                     >
-                      <td className={`${tableHead}`}>{indexOfFirstEntry + index + 1}</td>
-                      <td
-                        className={`${tableHead} cursor-pointer text-blue-700 dark:text-blue-500 hover:font-semibold dark:hover:text-blue-500 dark:transition-colors duration-300`}
-                        onClick={() => navigate(`/user/${user?.username}`)}
-                      >
-                        {user.username}
-                      </td>
-                      <td className={`${tableHead}`}>{user.roll}</td>
-                      <td className={`${tableHead} hidden md:table-cell`}>{user.registeredID}</td>
-                      <td className={`${tableHead}`}>{user.usernames}</td>
-                      <td className={`${tableHead} hidden md:table-cell`}>{user.name}</td>
-                      <td className={`${tableHead} hidden md:table-cell`}>{user.department}</td>
-                      <td className={`${tableHead} hidden md:table-cell`}>{user.year}</td>
-                      <td className={`${tableHead}`}>
-                        {user?.platformSpecificData?.leetcode
-                          ? `${user.platformSpecificData.leetcode.toLowerCase()}`
-                          : user?.platformSpecificData?.codechef
-                            ? `${user.platformSpecificData.codechef.toLowerCase()}`
-                            : user?.platformSpecificData?.codeforces
-                              ? `${user.platformSpecificData.codeforces.toLowerCase()}`
-                              : 'No platform data available'}
-                      </td>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-teal-500 font-semibold">#{indexOfFirstEntry + index + 1}</span>
+                          <span
+                            className="text-teal-600 hover:text-teal-700 cursor-pointer font-medium"
+                            onClick={() => navigate(`/user/${user?.username}`)}
+                          >
+                            {user.username}
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 text-sm" 
+                           onClick={() => navigate(`/user/${user?.username}`)}>
+                          <span className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>Roll No:</span>
+                          <span>{user.roll}</span>
+                          <span className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>Registered:</span>
+                          <span>{user.registeredID}</span>
+                          <span className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>Year:</span>
+                          <span>{user.year}</span>
+                          <span className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>Department:</span>
+                          <span>{user.department}</span>
+                          <span className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>{platform}:</span>
+                          <span className="truncate">{user.usernames}</span>
+                          <span className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>Name:</span>
+                          <span>{user.name}</span>
+                          <span className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>Solved:</span>
+                          <span className="text-green-500 font-medium">{user?.platformSpecificData?.[platform.toLowerCase()] || "N/A"}</span>
+                          <span className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>Rank:</span>
+                          <div className="flex items-center gap-2">
+                            <FaTrophy className="text-amber-500" />
+                            <span className="text-amber-500 font-medium">{user.ranks?.globalRank || "N/A"}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
 
+                <div className="hidden sm:block overflow-x-auto">
+                  <table className="w-full">
+                    <thead className={theme === "dark" ? "bg-zinc-800" : "bg-zinc-300"}>
+                      <tr>
+                        {["#", "UserName", "Roll No", `${platform} ID`, "Name", "Solved", "Rank"].map((header) => (
+                          <th
+                            key={header}
+                            className={`p-4 text-left font-semibold cursor-pointer transition-colors duration-200`}
+                            onClick={() => handleSort(header)}
+                          >
+                            {header} {getSortingIcon(header)}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {currentEntries.map((user, index) => (
+                        <tr
+                          key={user._id}
+                          className={`border-y ${theme === "dark" ? "border-gray-600 hover:bg-zinc-900" : "border-gray-300 hover:bg-zinc-200"} transition-colors duration-300`}
+                        >
+                          <td className="p-4 text-teal-500 font-medium">#{indexOfFirstEntry + index + 1}</td>
+                          <td className="p-4">
+                            <span
+                              className="text-teal-600 hover:text-blue-500 cursor-pointer font-medium transition-colors"
+                              onClick={() => navigate(`/user/${user?.username}`)}
+                            >
+                              {user.username}
+                            </span>
+                          </td>
+                          <td className="p-4">{user.roll}</td>
+                          <td className="p-4 truncate max-w-xs">{user.usernames}</td>
+                          <td className="p-4">{user.name}</td>
+                          <td className="p-4 text-green-500 font-medium">{user?.platformSpecificData?.[platform.toLowerCase()] || "N/A"}</td>
+                          <td className="p-4">
+                            <div className="flex items-center gap-2">
+                              <FaTrophy className="text-amber-500" />
+                              <span className="text-amber-500 font-medium">{user.ranks?.globalRank || "N/A"}</span>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            ) : (
+              <div className={`p-6 text-center ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>No users found</div>
+            )
+          ) : (
+            <div className={`p-6 text-center ${theme === "dark" ? "text-gray-400" : "text-gray-600"}`}>Please select a platform to start</div>
+          )}
+        </div>
 
-                      <td className={`${tableHead}`}>{user.ranks?.globalRank || "Not Available"}</td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="9" className="text-center text-gray-500">No users found</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+        {/* Pagination */}
+        {users && currentEntries.length > 0 && (
+          <div className={`flex flex-row justify-between items-center mt-6 p-4 rounded-2xl shadow-xl ${theme === "dark" ? "bg-zinc-800" : "bg-zinc-50"}`}>
+            <div>
+              <Dropdown
+                options={pages}
+                value={entriesPerPage}
+                onChange={handleDropdownChange}
+                newStyle="w-[135px] h-9 rounded-md "
+              />
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={handlePrev}
+                disabled={currentPage === 1}
+                className={`flex items-center gap-2 px-4  py-2 rounded-lg transition-all duration-300 shadow-md ${
+                  theme === "dark"
+                    ? "bg-teal-600 hover:bg-teal-700 text-white disabled:bg-gray-600"
+                    : "bg-teal-500 hover:bg-teal-600 text-white disabled:bg-gray-300"
+                }`}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                <span className="hidden sm:inline">Previous</span>
+              </button>
+              <div className={`px-4 py-2 rounded-lg ${theme === "dark" ? "bg-gray-700 text-gray-200" : "bg-gray-200 text-gray-700"}`}>
+                <span className="font-medium">{currentPage}</span> of {totalPages}
+              </div>
+              <button
+                onClick={handleNext}
+                disabled={currentPage === totalPages}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 shadow-md ${
+                  theme === "dark"
+                    ? "bg-teal-600 hover:bg-teal-700 text-white disabled:bg-gray-600"
+                    : "bg-teal-500 hover:bg-teal-600 text-white disabled:bg-gray-300"
+                }`}
+              >
+                <span className="hidden sm:inline">Next</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
           </div>
-        ) : (
-          <div>No data available</div>
-        )
-      ) : (
-        <div className="flex justify-center mt-20">Select Platform First</div>
-      )}
-      <div className="flex flex-row items-center justify-between mt-8 gap-4">
-        <div className="flex justify-start">
-          <Dropdown
-            options={pages}
-            value={entriesPerPage}
-            onChange={handleDropdownChange}
-            newStyle="rounded-[5px] h-9 w-28"
-          />
-        </div>
-
-        <div className="flex items-center justify-end w-full sm:w-auto gap-2 sm:gap-4">
-          <button
-            onClick={handlePrev}
-            disabled={currentPage === 1}
-            className="flex items-center py-2 px-3 sm:px-4 rounded-md bg-blue-500 text-white hover:bg-blue-400 disabled:bg-gray-300 transition-all duration-300 shadow-md disabled:cursor-not-allowed"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-            </svg>
-            <span className="hidden sm:inline ml-2 text-sm font-medium">Prev</span>
-          </button>
-
-          <span className="text-zinc-500 dark:text-zinc-400 text-sm min-w-0 text-center">
-            {currentPage} of {totalPages}
-          </span>
-
-          <button
-            onClick={handleNext}
-            disabled={currentPage === totalPages}
-            className="flex items-center py-2 px-3 sm:px-4 rounded-md bg-blue-500 text-white hover:bg-blue-400 disabled:bg-gray-300 transition-all duration-300 shadow-md disabled:cursor-not-allowed"
-          >
-            <span className="hidden sm:inline mr-2 text-sm font-medium">Next</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
+        )}
       </div>
 
-
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={theme}
+      />
     </div>
   );
 };

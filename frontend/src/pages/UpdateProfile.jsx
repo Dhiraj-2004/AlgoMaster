@@ -13,7 +13,7 @@ const UpdateProfile = () => {
   const [codeforcesUser, setCodeforcesUser] = useState('');
   const [codechefUser, setCodechefUser] = useState('');
   const [amcatkey, setAmcatID] = useState("");
-  const [year, setYear] = useState("");
+  const [year, setYear] = useState("Select studying year");
   const navigate = useNavigate();
   const { fetchUser } = useContext(AuthContext);
 
