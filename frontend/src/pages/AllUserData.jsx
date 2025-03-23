@@ -319,65 +319,58 @@ const AllUserData = () => {
       ) : (
         <div className="flex justify-center mt-20">Select Platform First</div>
       )}
-      <div className="flex justify-between mt-8">
-        <div className="h-full ">
+      <div className="flex flex-row items-center justify-between mt-8 gap-4">
+        <div className="flex justify-start">
           <Dropdown
             options={pages}
             value={entriesPerPage}
             onChange={handleDropdownChange}
-            newStyle="rounded-md h-9 w-32"
+            newStyle="rounded-[5px] h-9 w-28"
           />
         </div>
-        <div className="flex justify-between items-center">
-          <div className="flex items-center justify-center space-x-4">
-            <button
-              onClick={handlePrev}
-              disabled={currentPage === 1}
-              className="flex items-center justify-center py-2 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-400 disabled:bg-gray-300 transition-all duration-300 ease-in-out shadow-lg disabled:cursor-not-allowed"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 transform transition-transform duration-300 ease-in-out"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-              <span className="ml-2 text-sm font-medium">Prev</span>
-            </button>
 
-            <span className="text-zinc-500 dark:text-zinc-400">{currentPage} of  {totalPages}</span>
-
-            <button
-              onClick={handleNext}
-              disabled={currentPage === totalPages}
-              className="flex items-center justify-center py-2 px-4 rounded-lg bg-blue-500 text-white hover:bg-blue-400 disabled:bg-gray-300 transition-all duration-300 ease-in-out shadow-lg disabled:cursor-not-allowed"
+        <div className="flex items-center justify-end w-full sm:w-auto gap-2 sm:gap-4">
+          <button
+            onClick={handlePrev}
+            disabled={currentPage === 1}
+            className="flex items-center py-2 px-3 sm:px-4 rounded-md bg-blue-500 text-white hover:bg-blue-400 disabled:bg-gray-300 transition-all duration-300 shadow-md disabled:cursor-not-allowed"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <span className="mr-2 text-sm font-medium">Next</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 transform transition-transform duration-300 ease-in-out"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-          </div>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            <span className="hidden sm:inline ml-2 text-sm font-medium">Prev</span>
+          </button>
+
+          <span className="text-zinc-500 dark:text-zinc-400 text-sm min-w-0 text-center">
+            {currentPage} of {totalPages}
+          </span>
+
+          <button
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+            className="flex items-center py-2 px-3 sm:px-4 rounded-md bg-blue-500 text-white hover:bg-blue-400 disabled:bg-gray-300 transition-all duration-300 shadow-md disabled:cursor-not-allowed"
+          >
+            <span className="hidden sm:inline mr-2 text-sm font-medium">Next</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
       </div>
+
+
       <ToastContainer />
     </div>
   );
