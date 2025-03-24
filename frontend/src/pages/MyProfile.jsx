@@ -192,11 +192,6 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
           {platformUser === "codeforcesUser" && data && (
             <CodeForcesDesign data={data} userData={userData} rankData={rankData} />
           )}
-          {(!platformUser || !data) && (
-            <div className="flex flex-col gap-6 items-center justify-center mt-40 m-auto">
-              <p className="text-gray-500">No data available for this platform.</p>
-            </div>
-          )}
         </div>
       )}
     </div>
