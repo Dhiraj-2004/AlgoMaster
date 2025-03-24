@@ -23,6 +23,7 @@ import Cpp from "./cpp.png"
 import Python from "./python.svg"
 import arrow from "./arrow.svg"
 import search from "./search.svg"
+import update from "./update.svg"
 
 export const assets = {
     dropdown,
@@ -47,5 +48,5 @@ export const assets = {
     Roll,
     Code,
     Cpp, Python,
-    arrow,search
+    arrow,search,update
 }

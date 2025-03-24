@@ -155,7 +155,7 @@ syncIndexes();
 // all User
 exports.getAllUsers = async (req, res) => {
     try {
-        const { platform, department, searchBy, search } = req.query;
+        const { platform, department, searchBy, search, year } = req.query;
         
         if (!platform) {
             return res.status(400).json({ error: "Platform is required" });
@@ -169,6 +169,10 @@ exports.getAllUsers = async (req, res) => {
 
         if (department) {
             matchQuery.department = department;
+        }
+
+        if (year && year !== "Select year") {
+            matchQuery.year = year;
         }
 
         if (searchBy && search) {
@@ -230,6 +234,9 @@ exports.getAllUsers = async (req, res) => {
             }
             if (department) {
                 errorMessage += ` in department '${department}'`;
+            }
+            if (year && year !== "Select year") {
+                errorMessage += ` for year '${year}'`;
             }
             errorMessage += ".";
 

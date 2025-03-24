@@ -5,7 +5,7 @@ import InputField from "../component/InputField";
 import Dropdown from "../component/Dropdown";
 import AuthSwitch from "../component/AuthSwitch";
 import SubmitButton from "../component/SubmitButton";
-import { ToastContainer, toast } from "react-toastify";
+import toast, { Toaster } from "react-hot-toast";
 import Title from "../component/PageTitle";
 import { AuthContext } from "../context/AuthContext";
 
@@ -37,7 +37,6 @@ const LoginForm = () => {
     "INFORMATION TECHNOLOGY",
     "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
     "ELECTRONICS AND COMPUTER",
-    "First Year",
   ];
 
   const yearOptions = ["Select studying year", "First Year", "Second Year", "Third Year", "Forth Year"];
@@ -102,12 +101,11 @@ const LoginForm = () => {
       localStorage.setItem("token", response.data.token);
       await fetchUser();
       toast.success(`${currentState} successful!`);
-
       setTimeout(() => {
         navigate(currentState === "Sign Up" ? "/add" : "/");
       }, 2000);
     } catch (error) {
-      toast.error(`Failed to ${currentState.toLowerCase()}! Try again.`);
+      toast.error(error.response?.data?.msg || "Login failed! Try again.");
     }
   };
 
@@ -251,18 +249,8 @@ const LoginForm = () => {
           currentState={currentState}
         />
         </div>
-
-        <ToastContainer
-          position="top-center"
-          autoClose={3000}
-          hideProgressBar={true}
-          newestOnTop={true}
-          closeOnClick
-          theme="colored"
-          toastClassName="rounded-lg shadow-lg dark:bg-gray-700 dark:text-white"
-          progressClassName="bg-gradient-to-r from-blue-500 to-purple-500"
-        />
       </form>
+      <Toaster position="top-right" reverseOrder={false}/>
     </div>
   );
 };

@@ -5,7 +5,6 @@ const {
     signUser,
     getAllUsers,
     getMyUserName,
-    userProfile,
     checkUsername,
 } = require("../controllers/userController");
 
@@ -15,7 +14,8 @@ const{
     saveUserRank,
     getUserRank,
     getUserName,
-    getUserData
+    getUserData,
+    getExcelData
 }=require("../controllers/userDataController")
 
 const {
@@ -45,5 +45,6 @@ router.get('/',getAllUsers);
 router.get('/leetcode/:username',leetCode);
 router.get('/userdata/:username',getUserData);
 router.get("/college-rank/:username",getUserRank);
+router.get("/excel/",getExcelData)
 
 module.exports = router;

@@ -36,7 +36,7 @@ const Dropdown = ({ name, options, value, onChange, label, newStyle }) => {
     : theme === "dark" 
       ? "border-zinc-600" 
       : "border-zinc-200";
-  const labelStyles = theme === "dark" ? "text-white" : "text-gray-900";
+  const labelStyles = theme === "dark" ? "text-white" : "text-zinc-600";
 
   const hasSelection = selectedValue && selectedValue !== options[0];
   const textColor = hasSelection ? "" : "text-zinc-400";

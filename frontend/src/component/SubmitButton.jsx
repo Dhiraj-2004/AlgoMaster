@@ -5,7 +5,7 @@ const SubmitButton = ({ currentState }) => {
 
   return (
     <div className="flex items-center justify-center">
-      <button className="custom-button w-[85%] h-13">
+      <button className="custom-button w-full h-13">
         <span className="font-medium text-xl">{buttonText}</span>
       </button>
     </div>

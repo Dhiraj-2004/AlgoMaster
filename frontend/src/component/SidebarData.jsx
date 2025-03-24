@@ -41,6 +41,11 @@ export const SidebarData = [
     icon: <img src={assets.User} alt="users" className="w-6 h-6" />,
   },
   {
+    title: 'Update',
+    path: '/update',
+    icon: <img src={assets.update} alt="users" className="w-6 h-6" />,
+  },
+  {
     title: 'Team',
     path: '/team',
     icon: <img src={assets.team} alt="Team" className="w-6 h-6" />,

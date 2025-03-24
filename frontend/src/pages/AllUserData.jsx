@@ -4,10 +4,11 @@ import { ThemeContext } from "../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { assets } from "../assets/assets";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import toast, { Toaster } from "react-hot-toast";
 import { FaTrophy } from "react-icons/fa";
 import { BiSortUp, BiSortDown } from "react-icons/bi";
+import Export from "../component/Export";
+import { IoMdClose } from "react-icons/io";
 
 const AllUserData = () => {
   const [platform, setPlatform] = useState("LeetCode");
@@ -24,6 +25,9 @@ const AllUserData = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [year, setYear] = useState("Select year");
+  const [isOpen, setIsOpen] = useState(false);
+
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const pages = [
@@ -41,25 +45,30 @@ const AllUserData = () => {
     "INFORMATION TECHNOLOGY",
     "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
     "ELECTRONICS AND COMPUTER",
-    "First Year",
   ];
   const searchOptions = ["Search Option", "Roll No", "Name", "UserName", "Registered ID"];
+  const yearOptions = ["Select year", "First Year", "Second Year", "Third Year", "Forth Year"];
 
   useEffect(() => {
     const fetchData = async () => {
       setLoader(true);
       setErrorMessage(null);
       try {
-        const site = platform === "Codeforces" ? 
-          "codeforcesUser" : platform === "CodeChef" 
-          ? "codechefUser" : "leetcodeUser";
-        const departmentParam = department && department !== "None" && department !== "Department" 
+        const site = platform === "Codeforces" ?
+          "codeforcesUser" : platform === "CodeChef"
+            ? "codechefUser" : "leetcodeUser";
+
+        const departmentParam = department && department !== "Department"
           ? `&department=${department}` : "";
 
-        const searchParam = searchQuery ? `&searchBy=${encodeURIComponent(searchOption)}&search=${encodeURIComponent(searchQuery)}` : "";
+        const yearUser = year && year !== "Select year"
+          ? `&year=${year}` : ""
 
-        const url = `${backendUrl}/api/user?platform=${site}${departmentParam}${searchParam}`;
+        const searchParam = searchQuery
+          ? `&searchBy=${encodeURIComponent(searchOption)}&search=${encodeURIComponent(searchQuery)}`
+          : "";
 
+        const url = `${backendUrl}/api/user?platform=${site}${departmentParam}${yearUser}${searchParam}`;
         const response = await axios.get(url);
         setUsers(response.data.users);
         setCurrentPage(1);
@@ -71,7 +80,7 @@ const AllUserData = () => {
       }
     };
     fetchData();
-  }, [platform, department, searchQuery, backendUrl]);
+  }, [platform, department, searchQuery, backendUrl, year]);
 
   const handleSearch = () => {
     setSearchQuery(searchText);
@@ -148,50 +157,53 @@ const AllUserData = () => {
 
   return (
     <div className="min-h-screen p-4 sm:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto">
-        <div className={`rounded-2xl p-6 shadow-xl ${theme === "dark" ? "bg-zinc-800" : "bg-white"}`}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Dropdown 
-            options={searchOptions} 
-            value={searchOption} 
-            onChange={(e) => setSearchOption(e.target.value)} 
-            
+      <div className={`relative max-w-7xl mx-auto ${isOpen ? "blur-sm" : ""} transition-all duration-300`}>
+        <div className={`rounded-2xl p-6 space-y-5 shadow-xl ${theme === "dark" ? "bg-zinc-800" : "bg-white"}`}>
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Dropdown
+              options={searchOptions}
+              value={searchOption}
+              onChange={(e) => setSearchOption(e.target.value)}
             />
-            <Dropdown 
-            options={platformOptions} 
-            value={platform} 
-            onChange={(e) => setPlatform(e.target.value)} 
+            <Dropdown
+              options={platformOptions}
+              value={platform}
+              onChange={(e) => setPlatform(e.target.value)}
             />
-            <Dropdown 
-            options={departmentOptions} 
-            value={department} onChange={(e) => 
-            setDepartment(e.target.value)} 
+            <Dropdown
+              options={departmentOptions}
+              value={department} onChange={(e) =>
+                setDepartment(e.target.value)}
             />
-            <div className="relative">
-              <input
-                type="text"
-                className={`w-full h-14 pl-10 pr-12 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 shadow-sm ${
-                  theme === "dark"
-                    ? "bg-zinc-800 border-zinc-700 focus:ring-blue-500"
-                    : "bg-white border-zinc-200  focus:ring-blue-500"
+            <Dropdown
+              options={yearOptions}
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+            />
+          </div>
+          <div className="relative">
+            <input
+              type="text"
+              className={`w-full h-14 pl-10 pr-12 rounded-lg border transition-all duration-300 focus:outline-none focus:ring-2 shadow-sm ${theme === "dark"
+                ? "bg-zinc-800 border-zinc-700 focus:ring-blue-500"
+                : "bg-white border-zinc-200  focus:ring-blue-500"
                 }`}
-                placeholder="Search users..."
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-              />
-              <img
-                src={assets.search}
-                alt="Search"
-                className="absolute left-3 top-5 w-5 h-5 invert dark:invert-0"
-              />
-              <button
-                className="absolute right-2 top-6 -translate-y-3 bg-zinc-200 dark:bg-zinc-600 hover:dark:bg-blue-600 hover:bg-blue-300 rounded-full w-9 h-8 flex items-center justify-center transition-all duration-300 shadow-md"
-                onClick={handleSearch}
-              >
-                <img src={assets.arrow} alt="Search" className="w-4 h-4 invert dark:invert-0" />
-              </button>
-            </div>
+              placeholder="Search users..."
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            />
+            <img
+              src={assets.search}
+              alt="Search"
+              className="absolute left-3 top-5 w-5 h-5 invert dark:invert-0"
+            />
+            <button
+              className="absolute right-2 top-6 -translate-y-3 bg-zinc-200 dark:bg-zinc-600 hover:dark:bg-blue-600 hover:bg-blue-300 rounded-full w-9 h-8 flex items-center justify-center transition-all duration-300 shadow-md"
+              onClick={handleSearch}
+            >
+              <img src={assets.arrow} alt="Search" className="w-4 h-4 invert dark:invert-0" />
+            </button>
           </div>
         </div>
 
@@ -209,20 +221,20 @@ const AllUserData = () => {
                   {currentEntries.map((user, index) => (
                     <div
                       key={user._id}
-                      className={`rounded-xl p-4 shadow-md hover:shadow-lg  ${theme === "dark" ? "bg-zinc-700" : "bg-zinc-50"}`}
+                      className={`rounded-xl p-4 shadow-md hover:shadow-lg  ${theme === "dark" ? "bg-zinc-700" : "bg-zinc-50"} cursor-pointer`}
                     >
                       <div className="space-y-3">
                         <div className="flex justify-between items-center">
                           <span className="text-teal-500 font-semibold">#{indexOfFirstEntry + index + 1}</span>
                           <span
-                            className="text-teal-600 hover:text-teal-700 cursor-pointer font-medium"
+                            className="text-blue-500 hover:text-blue-700 cursor-pointer font-medium"
                             onClick={() => navigate(`/user/${user?.username}`)}
                           >
                             {user.username}
                           </span>
                         </div>
-                        <div className="grid grid-cols-2 gap-2 text-sm" 
-                           onClick={() => navigate(`/user/${user?.username}`)}>
+                        <div className="grid grid-cols-2 gap-2 text-sm"
+                          onClick={() => navigate(`/user/${user?.username}`)}>
                           <span className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>Roll No:</span>
                           <span>{user.roll}</span>
                           <span className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>Registered:</span>
@@ -272,7 +284,7 @@ const AllUserData = () => {
                           <td className="p-4 text-teal-500 font-medium">#{indexOfFirstEntry + index + 1}</td>
                           <td className="p-4">
                             <span
-                              className="text-teal-600 hover:text-blue-500 cursor-pointer font-medium transition-colors"
+                              className="text-blue-500 hover:text-blue-700 cursor-pointer font-medium transition-colors"
                               onClick={() => navigate(`/user/${user?.username}`)}
                             >
                               {user.username}
@@ -317,11 +329,10 @@ const AllUserData = () => {
               <button
                 onClick={handlePrev}
                 disabled={currentPage === 1}
-                className={`flex items-center gap-2 px-4  py-2 rounded-lg transition-all duration-300 shadow-md ${
-                  theme === "dark"
-                    ? "bg-teal-600 hover:bg-teal-700 text-white disabled:bg-gray-600"
-                    : "bg-teal-500 hover:bg-teal-600 text-white disabled:bg-gray-300"
-                }`}
+                className={`flex items-center gap-2 px-4  py-2 rounded-lg transition-all duration-300 shadow-md ${theme === "dark"
+                  ? "bg-teal-600 hover:bg-teal-700 text-white disabled:bg-gray-600"
+                  : "bg-teal-500 hover:bg-teal-600 text-white disabled:bg-gray-300"
+                  }`}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
@@ -334,11 +345,10 @@ const AllUserData = () => {
               <button
                 onClick={handleNext}
                 disabled={currentPage === totalPages}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 shadow-md ${
-                  theme === "dark"
-                    ? "bg-teal-600 hover:bg-teal-700 text-white disabled:bg-gray-600"
-                    : "bg-teal-500 hover:bg-teal-600 text-white disabled:bg-gray-300"
-                }`}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 shadow-md ${theme === "dark"
+                  ? "bg-teal-600 hover:bg-teal-700 text-white disabled:bg-gray-600"
+                  : "bg-teal-500 hover:bg-teal-600 text-white disabled:bg-gray-300"
+                  }`}
               >
                 <span className="hidden sm:inline">Next</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -350,18 +360,27 @@ const AllUserData = () => {
         )}
       </div>
 
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme={theme}
-      />
+      <button onClick={() => setIsOpen(true)}
+        className="w-1/4 ml-[38%] mt-10 px-5 py-3 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 transition duration-200"
+      >
+        Export
+      </button>
+
+      {isOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 p-4 bg-zinc-900 bg-opacity-50">
+          <div className="relative w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl h-[60%] bg-white dark:bg-zinc-800 rounded-lg shadow-lg">
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute top-3 right-3 p-2 bg-red-500  rounded-full hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-800"
+            >
+              <IoMdClose size={20} />
+            </button>
+            <Export />
+          </div>
+        </div>
+      )}
+
+    <Toaster position="top-right" reverseOrder={false}/>
     </div>
   );
 };

@@ -1,27 +1,33 @@
 import { useState } from "react";
 import InputField from "../component/InputField";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Add = () => {
-  const [leetcodeUser, setLeetUser] = useState('');
-  const [codeforcesUser, setCodeforcesUser] = useState('');
-  const [codechefUser, setCodechefUser] = useState('');
+  const [leetcodeUser, setLeetUser] = useState("");
+  const [codeforcesUser, setCodeforcesUser] = useState("");
+  const [codechefUser, setCodechefUser] = useState("");
   const [amcatkey, setAmcatID] = useState("");
   const navigate = useNavigate();
 
-
   const handleSubmit = async () => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const payload = {};
+    if (leetcodeUser) payload.leetcodeUser = leetcodeUser;
+    if (codeforcesUser) payload.codeforcesUser = codeforcesUser;
+    if (codechefUser) payload.codechefUser = codechefUser;
+    if (amcatkey) payload.amcatkey = amcatkey;
+
     try {
-      const token = localStorage.getItem('token');
-      const payload = {};
-      if (leetcodeUser) payload.leetcodeUser = leetcodeUser;
-      if (codeforcesUser) payload.codeforcesUser = codeforcesUser;
-      if (codechefUser) payload.codechefUser = codechefUser;
-      if (amcatkey) payload.amcatkey = amcatkey;
-      await axios.post(`${backendUrl}/api/user/insertuser`,
+      if (Object.keys(payload).length === 0) {
+        toast.error("No data provided to add!", { duration: 3000 });
+        return;
+      }
+
+      const token = localStorage.getItem("token");
+      await axios.post(
+        `${backendUrl}/api/user/insertuser`,
         payload,
         {
           headers: {
@@ -29,11 +35,10 @@ const Add = () => {
           },
         }
       );
-      toast.success('Data Added successfully!');
-      setTimeout(() => { navigate("/") }, 1000)
+      toast.success("Data added successfully!", { duration: 3000 });
+      setTimeout(() => navigate("/"), 1000);
     } catch (error) {
-      toast.error('Failed to Add!');
-      console.error('Error inserting user:', error);
+      toast.error(error.response?.data.message);
     }
   };
 
@@ -68,7 +73,7 @@ const Add = () => {
         value={amcatkey}
         onChange={(e) => setAmcatID(e.target.value)}
         placeholder="AMCAT ID"
-        label="AMCAT ID"
+        label="AMCAT ID (Optional)"
       />
 
       <button
@@ -78,20 +83,9 @@ const Add = () => {
         Submit
       </button>
 
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      ></ToastContainer>
+      <Toaster position="top-right" reverseOrder={false} />
     </div>
   );
-}
+};
 
 export default Add;

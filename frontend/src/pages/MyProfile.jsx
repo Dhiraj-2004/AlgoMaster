@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const MyProfile = ({ platformUser, apiEndpoint }) => {
   const [username, setUsername] = useState(null);
   const [data, setUserData] = useState(null);
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(false);
   const [showUpdateMessage, setShowUpdateMessage] = useState(false);
   const [userData, setUserDataLocal] = useState(null);
   const [rankData, setRankData] = useState(null);
@@ -21,6 +21,7 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
   useEffect(() => {
     const fetchUsername = async () => {
       try {
+        setLoader(true);
         const token = localStorage.getItem("token");
         const response = await axios.get(`${backendUrl}/api/user/profile`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -40,7 +41,7 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
         if (!fetchedUsername) {
           setShowUpdateMessage(true);
         }
-
+        setLoader(false);
         setUsername(fetchedUsername);
       } catch (error) {
         console.error("Error fetching username:", error);
@@ -171,9 +172,9 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
           <p className="text-red-500 font-semibold">Please Update Profile</p>
           <button
             className="custom-button h-14 w-48 my-1"
-            onClick={() => navigate(`/user/${userData?.username}`)}
+            onClick={() => navigate('/update')}
           >
-            Go to Profile
+            Please Update
           </button>
         </div>
       ) : loader ? (

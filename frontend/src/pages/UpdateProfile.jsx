@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import InputField from "../component/InputField";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Dropdown from "../component/Dropdown";
 import Title from "../component/PageTitle";
@@ -51,7 +51,7 @@ const UpdateProfile = () => {
       toast.success('Data Updated successfully!');
       setTimeout(() => { navigate("/") }, 1000)
     } catch (error) {
-      toast.error('Failed to Add!');
+      toast.error(error.response?.data?.message)
       console.error('Error inserting user:', error);
     }
   };
@@ -113,18 +113,7 @@ const UpdateProfile = () => {
         <span>Submit</span>
       </button>
 
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      ></ToastContainer>
+      <Toaster position="top-right" reverseOrder={false}/>
     </div>
   );
 }

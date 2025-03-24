@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import InputField from './InputField';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import toast, { Toaster } from "react-hot-toast";
 import Title from './PageTitle';
 
 const ForgotPassword = () => {
@@ -20,7 +20,7 @@ const ForgotPassword = () => {
       toast.success('OTP sent to your email!');
     } catch (error) {
       console.log(error)
-      toast.error('Failed to send OTP. Try again!');
+      toast.error(error.response?.data?.message)
     }
   };
 
@@ -37,7 +37,7 @@ const ForgotPassword = () => {
       }, 2000);
     } catch (error) {
       console.log(error)
-      toast.error('Failed to reset password. Try again!');
+      toast.error(error.response?.data?.msg)
     }
   };
 
@@ -80,7 +80,7 @@ const ForgotPassword = () => {
 
         <p 
           onClick={() => navigate("/login")} 
-          className="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition-colors"
+          className="cursor-pointer text-blue-400 hover:text-blue-600 text-sm transition-colors"
         >
           Back to login
         </p>
@@ -88,23 +88,13 @@ const ForgotPassword = () => {
         <div className="flex justify-center">
           <button 
             onClick={otpSent ? handleChangeForgotPassword : handleForgotPassword}
-            className="w-[90%] custom-button"
+            className="w-full custom-button"
           >
             {otpSent ? 'Reset Password' : 'Send OTP'}
           </button>
         </div>
-
-        <ToastContainer
-          position="top-center"
-          autoClose={3000}
-          hideProgressBar={true}
-          newestOnTop={true}
-          closeOnClick
-          theme="colored"
-          toastClassName="rounded-lg shadow-lg dark:bg-gray-700 dark:text-white"
-          progressClassName="bg-gradient-to-r from-blue-500 to-purple-500"
-        />
       </div>
+      <Toaster position="top-right" reverseOrder={false}/>
     </div>
   );
 };
