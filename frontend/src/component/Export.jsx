@@ -22,7 +22,6 @@ const Export = () => {
 
     const handleDownload = async (e) => {
         e.preventDefault();
-        setLoader(true)
         if (year === "Select year") {
             toast.error("Please select a valid year.", { duration: 3000 });
             return;
@@ -32,6 +31,7 @@ const Export = () => {
         if (department !== "Department") params.department = department;
 
         try {
+            setLoader(true)
             const response = await axios.get(`${backendUrl}/api/user/excel`, {
                 responseType: "blob",
                 params,
