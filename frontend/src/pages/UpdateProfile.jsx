@@ -16,8 +16,18 @@ const UpdateProfile = () => {
   const [year, setYear] = useState("Select studying year");
   const navigate = useNavigate();
   const { fetchUser } = useContext(AuthContext);
+  const [department, setDepartment] = useState("Select your Department");
 
   const yearOptions = ["Select studying year", "First Year", "Second Year", "Third Year", "Forth Year"];
+  const departmentOptions = [
+    "Select your Department",
+    "COMPUTER ENGINEERING",
+    "ELECTRONICS AND TELECOMMUNICATION",
+    "INFORMATION TECHNOLOGY",
+    "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+    "ELECTRONICS AND COMPUTER",
+    "First Year",
+  ];
   const handleSubmit = async () => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     try {
@@ -27,7 +37,8 @@ const UpdateProfile = () => {
       if (codeforcesUser) payload.codeforcesUser = codeforcesUser;
       if (codechefUser) payload.codechefUser = codechefUser;
       if (amcatkey) payload.amcatkey = amcatkey;
-      if (year) payload.year = year;
+      if (year && year!="Select studying year") payload.year = year;
+      if(department && department!="Select your Department") payload.department=department
       await axios.put(`${backendUrl}/api/user/updateUser`,
         payload,
         {
@@ -86,8 +97,13 @@ const UpdateProfile = () => {
         value={year}
         onChange={(e)=>setYear(e.target.value)}
         label="Select Year"
-        className="focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400
-                 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+      />
+      <Dropdown
+        name="year"
+        options={departmentOptions}
+        value={department}
+        onChange={(e)=>setDepartment(e.target.value)}
+        label="Select Department"
       />
 
       <button

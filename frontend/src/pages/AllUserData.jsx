@@ -41,7 +41,7 @@ const AllUserData = () => {
     "INFORMATION TECHNOLOGY",
     "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
     "ELECTRONICS AND COMPUTER",
-    "None",
+    "First Year",
   ];
   const searchOptions = ["Search Option", "Roll No", "Name", "UserName", "Registered ID"];
 
@@ -250,7 +250,7 @@ const AllUserData = () => {
 
                 <div className="hidden sm:block overflow-x-auto">
                   <table className="w-full">
-                    <thead className={theme === "dark" ? "bg-zinc-800" : "bg-zinc-300"}>
+                    <thead className={theme === "dark" ? "bg-zinc-700" : "bg-zinc-300"}>
                       <tr>
                         {["#", "UserName", "Roll No", `${platform} ID`, "Name", "Solved", "Rank"].map((header) => (
                           <th
@@ -328,8 +328,8 @@ const AllUserData = () => {
                 </svg>
                 <span className="hidden sm:inline">Previous</span>
               </button>
-              <div className={`px-4 py-2 rounded-lg ${theme === "dark" ? "bg-gray-700 text-gray-200" : "bg-gray-200 text-gray-700"}`}>
-                <span className="font-medium">{currentPage}</span> of {totalPages}
+              <div className={`h-9 w-16 rounded-lg ${theme === "dark" ? "bg-gray-700 text-gray-200" : "bg-gray-200 text-gray-700"}`}>
+                <span className="font-medium text-xl ml-3">{currentPage}</span> of {totalPages}
               </div>
               <button
                 onClick={handleNext}

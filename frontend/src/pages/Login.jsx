@@ -37,7 +37,7 @@ const LoginForm = () => {
     "INFORMATION TECHNOLOGY",
     "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
     "ELECTRONICS AND COMPUTER",
-    "None",
+    "First Year",
   ];
 
   const yearOptions = ["Select studying year", "First Year", "Second Year", "Third Year", "Forth Year"];
