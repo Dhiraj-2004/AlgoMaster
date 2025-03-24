@@ -17,11 +17,11 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
+
   // Fetch username from backend
   useEffect(() => {
     const fetchUsername = async () => {
       try {
-        setLoader(true);
         const token = localStorage.getItem("token");
         const response = await axios.get(`${backendUrl}/api/user/profile`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -41,7 +41,6 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
         if (!fetchedUsername) {
           setShowUpdateMessage(true);
         }
-        setLoader(false);
         setUsername(fetchedUsername);
       } catch (error) {
         console.error("Error fetching username:", error);
@@ -52,7 +51,7 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
     fetchUsername();
   }, [backendUrl, platformUser]);
 
-  //Codeforces solved problems
+  // Codeforces solved problems
   const fetchCodeforcesSolvedProblems = async (username) => {
     try {
       let solvedProblems = new Set();
@@ -67,7 +66,6 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
 
         if (response.data.status === "OK") {
           const submissions = response.data.result;
-
           submissions.forEach((submission) => {
             if (submission.verdict === "OK") {
               const problemId = `${submission.problem.contestId}-${submission.problem.index}`;
@@ -79,7 +77,6 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
           if (submissions.length < count) {
             break;
           }
-
           from += count;
         } else {
           console.error("Unexpected API response status:", response.data.status);
@@ -102,6 +99,12 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
       try {
         setLoader(true);
         const response = await axios.get(`${apiEndpoint}/${username}`);
+
+        if (!response || !response.data) {
+          throw new Error("No data returned from API");
+        }
+
+
         setUserData(response.data);
 
         let total = 0;
@@ -109,7 +112,7 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
           total = await fetchCodeforcesSolvedProblems(username);
         }
 
-        const user = response?.data?.data;
+        const user = response.data.data || {};
         const easy =
           user?.matchedUser?.submitStats?.acSubmissionNum.find(
             (submission) => submission.difficulty === "Easy"
@@ -127,12 +130,11 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
 
         const rank =
           platformUser === "leetcodeUser"
-            ? Math.round(response?.data?.data?.userContestRanking?.rating)
+            ? Math.round(response.data.data?.userContestRanking?.rating || 0)
             : platformUser === "codechefUser"
-            ? response.data.currentRating
-            : response.data.result?.[0]?.rating;
+            ? response.data.currentRating || 0
+            : response.data.result?.[0]?.rating || 0;
 
-        // Update rank in backend with problem counts
         const token = localStorage.getItem("token");
         await axios.put(
           `${backendUrl}/api/user/rank`,
@@ -140,7 +142,7 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching user data:", error.message);
         setShowUpdateMessage(true);
       } finally {
         setLoader(false);
@@ -151,14 +153,12 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
         const response = await axios.get(
           `${backendUrl}/api/user/college-rank/${username}`,
           {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
         setRankData(response.data);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching rank data:", error.message);
       }
     };
 
@@ -172,7 +172,7 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
           <p className="text-red-500 font-semibold">Please Update Profile</p>
           <button
             className="custom-button h-14 w-48 my-1"
-            onClick={() => navigate('/update')}
+            onClick={() => navigate("/update")}
           >
             Please Update
           </button>
@@ -183,26 +183,19 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
         </div>
       ) : (
         <div>
-          {platformUser === "leetcodeUser" && (
-            <LeetCodeDesign
-              data={data}
-              userData={userData}
-              rankData={rankData}
-            />
+          {platformUser === "leetcodeUser" && data && (
+            <LeetCodeDesign data={data} userData={userData} rankData={rankData} />
           )}
-          {platformUser === "codechefUser" && (
-            <CodeChefDesign
-              data={data}
-              userData={userData}
-              rankData={rankData}
-            />
+          {platformUser === "codechefUser" && data && (
+            <CodeChefDesign data={data} userData={userData} rankData={rankData} />
           )}
-          {platformUser === "codeforcesUser" && (
-            <CodeForcesDesign
-              data={data}
-              userData={userData}
-              rankData={rankData}
-            />
+          {platformUser === "codeforcesUser" && data && (
+            <CodeForcesDesign data={data} userData={userData} rankData={rankData} />
+          )}
+          {(!platformUser || !data) && (
+            <div className="flex flex-col gap-6 items-center justify-center mt-40 m-auto">
+              <p className="text-gray-500">No data available for this platform.</p>
+            </div>
           )}
         </div>
       )}
