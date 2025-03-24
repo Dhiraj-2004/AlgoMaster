@@ -20,13 +20,13 @@ const AllUserData = () => {
   const [sortColumn, setSortColumn] = useState(null);
   const [sortOrder, setSortOrder] = useState("asc");
   const { theme } = useContext(ThemeContext);
-  const [loader, setLoader] = useState(true);
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [entriesPerPage, setEntriesPerPage] = useState(10);
   const [year, setYear] = useState("Select year");
   const [isOpen, setIsOpen] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -209,8 +209,8 @@ const AllUserData = () => {
 
         <div className={`mt-6 rounded-2xl overflow-hidden shadow-xl ${theme === "dark" ? "bg-zinc-800" : "bg-white"}`}>
           {loader ? (
-            <div className="flex justify-center items-center h-64">
-              <div className={`w-12 h-12 border-4 rounded-full animate-spin ${theme === "dark" ? "border-teal-500 border-t-transparent" : "border-teal-400 border-t-transparent"}`}></div>
+            <div className="flex flex-col gap-6 items-center justify-center mt-40 m-auto">
+              <div className="loader"></div>
             </div>
           ) : errorMessage ? (
             <div className={`p-6 text-center ${theme === "dark" ? "text-red-400" : "text-red-500"}`}>{errorMessage}</div>
@@ -380,7 +380,7 @@ const AllUserData = () => {
         </div>
       )}
 
-    <Toaster position="top-right" reverseOrder={false}/>
+      <Toaster position="top-right" reverseOrder={false} />
     </div>
   );
 };
