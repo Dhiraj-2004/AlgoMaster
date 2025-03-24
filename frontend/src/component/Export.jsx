@@ -64,6 +64,7 @@ const Export = () => {
                     ? await error.response.data.text().then((text) => JSON.parse(text).error)
                     : error.message;
             toast.error(`Error: ${errorMessage || "Failed to download file"}`, { duration: 2000 });
+            setLoader(false);
         }
         finally{
             setLoader(false);
