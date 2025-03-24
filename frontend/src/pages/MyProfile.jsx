@@ -22,6 +22,7 @@ const MyProfile = ({ platformUser, apiEndpoint }) => {
   useEffect(() => {
     const fetchUsername = async () => {
       try {
+        setLoader(true)
         const token = localStorage.getItem("token");
         const response = await axios.get(`${backendUrl}/api/user/profile`, {
           headers: { Authorization: `Bearer ${token}` },
