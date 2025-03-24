@@ -65,6 +65,9 @@ const Export = () => {
                     : error.message;
             toast.error(`Error: ${errorMessage || "Failed to download file"}`, { duration: 2000 });
         }
+        finally{
+            setLoader(false);
+        }
     };
 
     return (
