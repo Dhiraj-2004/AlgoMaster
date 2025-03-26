@@ -88,7 +88,7 @@ const AllUserData = () => {
   };
 
   const handleSort = (column) => {
-    const sortableColumns = ["Roll No", "Solved", "Rank"];
+    const sortableColumns = ["Roll No", "Solved", "Rating"];
     if (sortableColumns.includes(column)) {
       const newSortOrder = sortColumn === column && sortOrder === "asc" ? "desc" : "asc";
       setSortColumn(column);
@@ -102,7 +102,7 @@ const AllUserData = () => {
   };
 
   const getSortingIcon = (column) => {
-    const sortableColumns = ["Roll No", "Solved", "Rank"];
+    const sortableColumns = ["Roll No", "Solved", "Rating"];
     if (!sortableColumns.includes(column)) return null;
 
     const isActive = sortColumn === column;
@@ -133,7 +133,7 @@ const AllUserData = () => {
           aValue = Number(a.platformSpecificData?.[platform.toLowerCase()]) || 0;
           bValue = Number(b.platformSpecificData?.[platform.toLowerCase()]) || 0;
           break;
-        case "Rank":
+        case "Rating":
           aValue = Number(a.ranks?.globalRank) || 0;
           bValue = Number(b.ranks?.globalRank) || 0;
           break;
