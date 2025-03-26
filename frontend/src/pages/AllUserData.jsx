@@ -249,7 +249,7 @@ const AllUserData = () => {
                           <span>{user.name}</span>
                           <span className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>Solved:</span>
                           <span className="text-green-500 font-medium">{user?.platformSpecificData?.[platform.toLowerCase()] || "N/A"}</span>
-                          <span className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>Rank:</span>
+                          <span className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>Rating:</span>
                           <div className="flex items-center gap-2">
                             <FaTrophy className="text-amber-500" />
                             <span className="text-amber-500 font-medium">{user.ranks?.globalRank || "N/A"}</span>
@@ -264,7 +264,7 @@ const AllUserData = () => {
                   <table className="w-full">
                     <thead className={theme === "dark" ? "bg-zinc-700" : "bg-zinc-300"}>
                       <tr>
-                        {["#", "UserName", "Roll No", `${platform} ID`, "Name", "Solved", "Rank"].map((header) => (
+                        {["#", "UserName", "Roll No", `${platform} ID`, "Name", "Solved", "Rating"].map((header) => (
                           <th
                             key={header}
                             className={`p-4 text-left font-semibold cursor-pointer transition-colors duration-200`}
