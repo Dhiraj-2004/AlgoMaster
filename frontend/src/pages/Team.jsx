@@ -115,9 +115,6 @@ const Team = () => {
         </p>
       </div>
 
-      <div className="m-8 p-5 text-center sm:text-xl">
-        <p className="italic">Empowering coders to track, grow, and challenge their problem-solving prowess across the world’s top platforms.</p>
-      </div>
     </div>
   );
 };
