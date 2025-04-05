@@ -105,6 +105,19 @@ const Team = () => {
           ))}
         </div>
       </div>
+
+      <div className='text-center mt-20 pt-10'>
+        <h2 className="manrope-bold text-lg sm:text-2xl font-semibold text-indigo-600 dark:text-indigo-400">
+            Get Involved
+        </h2>
+        <p className="mt-2 text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+            We’re constantly looking for ways to improve our platform. If you have suggestions, feature requests, or feedback, we’d love to hear from you. Contact us at <a href="mailto:algomasters25@gmail.com" className="text-orange-600 dark:text-orange-400 underline">algomasters25@gmail.com</a>.
+        </p>
+      </div>
+
+      <div className="m-8 p-5 text-center sm:text-xl">
+        <p className="italic">Empowering coders to track, grow, and challenge their problem-solving prowess across the world’s top platforms.</p>
+      </div>
     </div>
   );
 };
