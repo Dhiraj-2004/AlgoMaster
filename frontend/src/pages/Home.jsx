@@ -63,9 +63,7 @@ const Home = () => {
   return (
     <div className="manrope-regular min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors">
       <div className="relative h-screen w-full overflow-hidden">
-        {/* Hero Section */}
         <div className="relative h-full w-full">
-          {/* Scattered Platform Logos */}
           <img 
             className="absolute h-12 w-12 -rotate-12 animate-float md:h-16 md:w-16"
             style={{ top: '15%', left: '20%' }}

@@ -200,8 +200,8 @@
 }
 
 .glowCard {
-  --glow-color-light: #4f46e5;  /* indigo-600 */
-  --glow-color-dark: #722cce;   /* indigo-700 */
+  --glow-color-light: #4f46e5; 
+  --glow-color-dark: #722cce; 
   isolation: isolate;
   position: relative;
   border-radius: 1rem;
