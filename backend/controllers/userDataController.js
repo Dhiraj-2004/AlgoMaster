@@ -55,6 +55,7 @@ exports.updateUsernames = async (req, res) => {
         }
 
         const { leetcodeUser, codechefUser, codeforcesUser, year, roll, amcatkey, department } = req.body;
+        console.log()
         const updateFields = {};
         const platformUpdateFields = {};
 

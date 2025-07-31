@@ -10,6 +10,7 @@ require('dotenv').config();
 
 const app = express();
 app.use(cors());
+cronJob.start();
 connectDB();
 app.use(express.json());
 
