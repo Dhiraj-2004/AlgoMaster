@@ -22,7 +22,6 @@ const About = () => {
 
           {/* Text Content */}
           <div className="mt-5 lg:mt-0 w-full lg:w-1/2 space-y-6">
-            {/* Who We Are Section */}
             <div>
               <h2 className="manrope-bold text-lg sm:text-2xl text-indigo-600 dark:text-indigo-400">
                 Who We Are
@@ -32,7 +31,6 @@ const About = () => {
               </p>
             </div>
 
-            {/* What We Do Section */}
             <div>
               <h2 className="manrope-bold text-lg sm:text-2xl text-orange-600 dark:text-orange-400">
                 What We Do
@@ -45,11 +43,9 @@ const About = () => {
                   "Stay motivated by analyzing personalized progress reports and milestone achievements."
                 ].map((item, index) => (
                   <li key={index} className="flex items-start">
-                    {/* Custom Bullet */}
                     <span className="w-5 h-5 flex-shrink-0 rounded-full bg-indigo-500 text-white flex items-center justify-center font-bold text-sm mt-1 dark:bg-indigo-400">
                       {index + 1}
                     </span>
-                    {/* List Item Content */}
                     <p className="ml-4 text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
                       {item}
                     </p>
@@ -66,9 +62,7 @@ const About = () => {
         {/* Image and Content */}
         <div className="flex flex-col lg:flex-row items-center lg:items-start lg:gap-5 p-2">
 
-          {/* Text Content */}
           <div className="mt-5 lg:mt-0 w-full lg:w-1/2 space-y-6">
-            {/* Why We Built This Section */}
             <div>
               <h2 className="manrope-bold text-lg sm:text-2xl font-semibold text-indigo-600 dark:text-indigo-400">
                 Why We Built This
@@ -78,7 +72,6 @@ const About = () => {
               </p>
             </div>
 
-            {/* Our Vision Section */}
             <div>
               <h2 className="manrope-bold text-lg sm:text-2xl font-semibold text-orange-600 dark:text-orange-400">
                 Our Vision
@@ -100,7 +93,6 @@ const About = () => {
         </div>
       </div>
       
-      {/* Content 3 */}
       <div className="flex flex-col justify-center items-center text-center mt-10 space-y-6">
         <div>
           <h2 className="manrope-bold text-lg sm:text-2xl font-semibold text-indigo-600 dark:text-indigo-400">

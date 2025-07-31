@@ -114,7 +114,7 @@ const LeetCodeDesign = ({ data,userData,rankData}) => {
       <div className="p-5 pt-10 mx-5 my-10">
         <LeetCodeRatingGraph attendedContests={data.data.attendedContests} />
       </div>
-      <div className="p-5 mt-10 pt-10">
+      <div className="p-5 mt-10">
         <LeetcodeDailyData dailyChallenge={data.data.dailyChallenge} />
       </div>
       
